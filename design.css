@@ -1,0 +1,41 @@
+.navbar-nav > li{
+  padding-left:40px;
+  padding-right:40px;
+}
+#lastlink{
+  margin-right:125px;
+}
+.btn{
+margin-left:5px;
+margin-right:5px;
+}
+
+#pull{
+margin-right:140px;
+}
+
+elec{
+  width: 3000px;
+  height: 500px;
+  margin: 20px 20px 20px 20px;
+}
+.jumbotron-billboard .img {
+    margin-bottom: 0px;
+    opacity: 0.2;
+    color: #fff;
+    background: #000 url("https://wallpapercave.com/wp/MTFGvNm.jpg") center center;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
+
+
+  position:absolute;
+  top:0;left:0;
+  z-index:1;
+}
+.jumbotron {position:relative;padding:50px;}
+.jumbotron .container {z-index:2;
+ position:relative;
+  z-index:2;
+}
