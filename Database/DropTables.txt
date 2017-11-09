@@ -1,0 +1,4 @@
+DROP TABLE Users;
+DROP TABLE Items;
+DROP TABLE Orders;
+DROP TABLE OrderItems;
