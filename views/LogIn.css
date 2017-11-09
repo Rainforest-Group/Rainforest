@@ -1,0 +1,29 @@
+#home{
+  margin-left:965px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#pull{
+margin-right:10px;
+}
+
+#Logform{
+  padding-right: 50px;
+  width: 500px;
+  margin: 60px 60px 60px 60px;
+}
+
+#padd{
+  padding: 30px 30px 30px 30px;
+}
+#note{
+  width: 450px;
+  margin-right: 250px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+#buttonLeft{
+  margin-top: 0px;
+  margin-left: 450px;
+}
