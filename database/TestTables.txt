@@ -1,0 +1,136 @@
+DROP TABLE OrderItems;
+DROP TABLE Orders;
+DROP TABLE Users;
+DROP TABLE Items;
+
+
+CREATE TABLE Users (
+    username VARCHAR(50) NOT NULL,
+    user_password VARCHAR(50),
+    email VARCHAR(50),
+    street VARCHAR(50),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    country VARCHAR(50),
+    zip INT,
+    PRIMARY KEY (username)
+);
+
+CREATE TABLE Items (
+    item_id INT AUTO_INCREMENT,
+    title VARCHAR(50),
+    price DECIMAL(13,2),
+    description VARCHAR(255),
+    expired BOOLEAN,
+    quantity_in_stock INT,
+    PRIMARY KEY (item_id)
+);
+
+CREATE TABLE Orders (
+    order_id INT AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    PRIMARY KEY (order_id),
+    FOREIGN KEY (username) REFERENCES Users(username)
+);
+
+CREATE TABLE OrderItems (
+    order_id INT NOT NULL,
+    item_id INT NOT NULL,
+    item_quantity INT,
+    PRIMARY KEY (order_id, item_id),
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (item_id) REFERENCES Items(item_id)
+);
+
+
+INSERT INTO Users (username, user_password, email, street, city, state, country, zip) VALUES (
+    'bjones',
+    'password',
+    'bjones@gmail.com',
+    '100 Cool Street',
+    'Epic',
+    'Mississippi',
+    'United States',
+    39110
+);
+
+INSERT INTO Users (username, user_password, email, street, city, state, country, zip) VALUES (
+    'darthvader',
+    'darkside1',
+    'vader@sithlord.com',
+    '1 Sith Lord Row',
+    'Death Star',
+    NULL,
+    'Intergalactic Space',
+    99999
+);
+
+INSERT INTO Users (username, user_password, email, street, city, state, country, zip) VALUES (
+    'oldme',
+    'california',
+    'oldme@yahoo.com',
+    '1025 Bermuda Drive',
+    'Concord',
+    'California',
+    'United States',
+    '94518'
+);
+
+INSERT INTO Items (title, price, description, expired, quantity_in_stock) VALUES
+(
+    'Nuke',
+    999999.99,
+    'A weapon of mass destruction.  Purchase at your own risk.',
+    FALSE,
+    12
+);
+
+INSERT INTO Items (title, price, description, expired, quantity_in_stock) VALUES
+(
+    'Quantum Computer',
+    2.00,
+    'Just your everyday quantum computer.  1000TB storage, 20TB memory.  Computation at it\'s finest, right at your fingertips.',
+    FALSE,
+    1000
+);
+
+INSERT INTO Items (title, price, description, expired, quantity_in_stock) VALUES
+(
+    'Red Lightsaber',
+    1199.99,
+    'Red-colored lightsaber.  An elegant weapon.',
+    FALSE,
+    10
+);
+
+INSERT INTO Orders (username) VALUES
+(
+    'bjones'
+);
+
+INSERT INTO Orders (username) VALUES
+(
+    'oldme'
+);
+
+INSERT INTO OrderItems(order_id, item_id, item_quantity) VALUES
+(
+    1,
+    1,
+    1
+);
+
+INSERT INTO OrderItems(order_id, item_id, item_quantity) VALUES
+(
+    2,
+    2,
+    1
+);
+
+INSERT INTO OrderItems(order_id, item_id, item_quantity) VALUES
+(
+    2,
+    3,
+    2
+);
+
