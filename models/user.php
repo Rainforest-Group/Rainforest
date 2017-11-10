@@ -8,7 +8,6 @@ class User {
     public $state;
     public $address;
     public $zip;
-    public $cart; // id of the cart
 
     function __construct($username, $password, $address, $city, $state, $zip, $cart)
     {
@@ -24,6 +23,20 @@ class User {
     function displayAddress()
     {
         return "$this->address\n$this->city, $this->state $this->zip";
+    }
+}
+
+class Admin extends User {
+    public $orders;
+}
+
+class Customer extends User {
+    public $cart; // id of the cart
+    public $past_orders;
+
+    function chargeOrder($orderID)
+    {
+        // Append to $past_orders
     }
 }
 
