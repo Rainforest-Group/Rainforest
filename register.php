@@ -9,6 +9,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+	  function logIn(){  window.location='LogIn.html';  }
+	   function Home(){  window.location='main.html';  }
+  </script>
 </head>
 <body>
 
@@ -27,9 +31,9 @@
           <button class="btn btn-info" type="submit" id="pull">Search</button>
         </form>
 		
-        <button type="button" class="btn btn-light" id="login"><a href="LogIn.html"><b>Log In</b></a></button>
-        <button type="button" class="btn btn-light" id="home"><a href="main.html"><b>Home</b></a></button>
-    </nav>
+        <button type="button" class="btn btn-success" id="login" onclick="logIn();">Log In</button>
+        <button type="button" class="btn btn-success" id="home" onclick="Home();">Home</button>    
+		</nav>
   </header>
   
   

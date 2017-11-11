@@ -9,6 +9,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+	  function register(){  window.location='register.html';  }
+	   function Home(){  window.location='main.html';  }
+  </script>
 </head>
 <body>
 <header>
@@ -25,9 +29,7 @@
           <input  id="pull" class="form-control input-lg" type="text" placeholder="Search">
           <button class="btn btn-info" type="submit" id="pull">Search</button>
         </form>
-		
-		
-        <button type="button" class="btn btn-light" id="home"><a href="main.html"><b color="white">Home</b></a></button>
+        <button type="button" class="btn btn-success" id="home" onclick="Home();">Home</button>
     </nav>
 	
   </header>
@@ -59,7 +61,7 @@
 		</div>
 
 		<div class="col-xs-6"><h2 class="display-4 py-5 mt-5 text-right" id="note">Or join the family</h2>
-		<button type="button" class="btn btn-success" id="buttonLeft">Create an Account</button></div>  <!-- button !-->
+		<button type="button" class="btn btn-success" onclick="register();" id="buttonLeft">Create an Account</button></div>  <!-- button !-->
 
 
   </mid>
