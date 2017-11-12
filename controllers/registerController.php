@@ -1,6 +1,6 @@
 <?php
 
-function validateProfile($username, $password, $address, $city, $state, $zip)
+function validateProfile($username, $password, $verify_password, $address, $city, $state, $zip)
 {
     $errors = "";
     if (!$username) {
@@ -8,6 +8,9 @@ function validateProfile($username, $password, $address, $city, $state, $zip)
     }
     if (!$password) {
         $errors = $errors . "<br>Must specify a password.";
+    }
+    else if ($verify_password != $password) {
+        $errors = $errors . "<br>Passwords do not match.";
     }
     if (!$address) {
         $errors = $errors . "<br>Must specify address.";
