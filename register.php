@@ -42,28 +42,49 @@
 		<div class="modal-dialog">
 		<div class="modal-content" id="padd"> <!--  adds boarders to the window!-->
 		<div class="modal-header"><h3>Registeration</h3></div>
-						<form method="GET" action="AccountIn">
-							<div class="form-group">
-								<label for="username" class="control-label">First Name</label>
-								<input type="text" class="form-control" id="lastname" name="firstname" value="" required="" placeholder="First name">
-								<label for="username" class="control-label">Last name</label>
-								<input type="text" class="form-control" id="lastname" name="lastname" value="" required=""  placeholder="Last name">
-								<label for="username" class="control-label">Username</label>
-								<input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="example@gmail.com">
-								<label for="password" class="control-label">Password</label>
-								<input type="password" class="form-control" id="password" name="password" value="" required=""  placeholder="your password">
-								<label for="password" class="control-label">Confirm Password</label>
-								<input type="password" class="form-control" id="password" name="password" value="" required=""  placeholder="Confirm password">
-							</div>
-							<button type="submit" class="btn btn-success">Sign up</button>
-						</form>
-		</div>  </div> </div>
+                    <form method="GET" action="register.php">
+                        <div class="form-group">
+<?php
+require_once("controllers/registerController.php");
+if (isset($_POST["createProfile"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $address  = $_POST["address"];
+    $state    = $_POST["state"];
+    $city     = $_POST["city"];
+    $zip      = $_POST["zip"];
+    $errors = validateProfile($username, $password, $address, $state, $city, $zip);
+}
+?>
+                            <label for="username" class="control-label">First Name</label>
+                            <input type="text" class="form-control" id="lastname" name="firstname" value="" required="" placeholder="First name">
+                            <label for="username" class="control-label">Last name</label>
+                            <input type="text" class="form-control" id="lastname" name="lastname" value="" required=""  placeholder="Last name">
+                            <label for="username" class="control-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="example@gmail.com">
+                            <label for="password" class="control-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" value="" required=""  placeholder="your password">
+                            <label for="password" class="control-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="password" name="password" value="" required=""  placeholder="Confirm password">
+
+                            <label for="address" class="control-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" required="" />
+
+                            <label for="city" class="control-label">City</label>
+                            <input type="text" class="form-control" id="city" name="city" required="" />
+ 
+                            <label for="zip" class="control-label">Zip</label>
+                            <input type="text" class="form-control" id="zip" name="zip" required="" />
+                        </div>
+                        <button type="submit" name="createProfile" value="submit" class="btn btn-success">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 
 
   </mid>
-
-
 
     </div><!-- end .container -->
       </body>

@@ -42,7 +42,7 @@
 		<div class="modal-dialog">
 		<div class="modal-content" id="padd"> <!--  adds boarders to the window!-->
 		<div class="modal-header"><h3>Log In</h3></div>
-						<form method="GET" action="AccountIn">
+						<form method="POST" action="login.php">
 						
 							<div class="form-group">
 								<label for="username" class="control-label">Username</label>
