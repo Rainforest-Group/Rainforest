@@ -10,15 +10,47 @@
 /*============================================================================*/
 
     class Item {
+        public $itemID;
         public $itemType;
         public $itemDesc;
         public $itemPrice;
         
-        function __construct($sentType = "", $sentDesc = "", $sentPrice = 0.0)
+        function __construct($sentID = 1234, $sentType = "", $sentDesc = "", $sentPrice = 0.0)
         {
+            $this->$itemID = $sentID;
             $this->$itemType = $sentType;
             $this->$itemDesc = $sentDesc;
             $this->$itemPrice = $sentPrice;
+        }
+    }
+
+/*============================================================================*/
+
+    class Inventory {
+        public $itemList = array();
+        public $quantList = array();
+        
+        function addItem($sentItem, $sentQuant)
+        {
+
+        }
+
+        function deleteItem($itemID)
+        {
+            // Delete item and quantity of that item from inventory
+        }
+
+        function decItem($itemID, $quantRemoved)
+        {
+            // Reduce the quantity of an item.
+            // Do not remove more than the inventory actually has.
+            // Return an int with the amount actually removed; -1 (?) if item doesnt exist.
+        }
+
+        function incItem($itemID, $quantAdded)
+        {
+            // Increase the quantity of an item.
+            // Return true if item added; false if item does not exist in inv.
         }
     }
 
