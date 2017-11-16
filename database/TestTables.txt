@@ -4,6 +4,7 @@ DROP TABLE Users;
 DROP TABLE Items;
 
 
+
 CREATE TABLE Users (
     username VARCHAR(50) NOT NULL,
     user_password VARCHAR(50),
@@ -13,6 +14,7 @@ CREATE TABLE Users (
     state VARCHAR(50),
     country VARCHAR(50),
     zip INT,
+    is_admin BOOLEAN,
     PRIMARY KEY (username)
 );
 
@@ -43,7 +45,8 @@ CREATE TABLE OrderItems (
 );
 
 
-INSERT INTO Users (username, user_password, email, street, city, state, country, zip) VALUES (
+INSERT INTO Users (username, user_password, email, street, city, state, country, zip, is_admin) 
+VALUES (
     'bjones',
     'ER2pfldKRAK6bl9AYoiQOQ==',
     'bjones@gmail.com',
@@ -52,9 +55,11 @@ INSERT INTO Users (username, user_password, email, street, city, state, country,
     'Mississippi',
     'United States',
     39110
-);
+,	FALSE);
 
-INSERT INTO Users (username, user_password, email, street, city, state, country, zip) VALUES (
+
+INSERT INTO Users (username, user_password, email, street, city, state, country, zip, is_admin) 
+VALUES (
     'darthvader',
     'darkside1',
     'vader@sithlord.com',
@@ -62,10 +67,12 @@ INSERT INTO Users (username, user_password, email, street, city, state, country,
     'Death Star',
     NULL,
     'Intergalactic Space',
-    99999
+    99999, TRUE
 );
 
-INSERT INTO Users (username, user_password, email, street, city, state, country, zip) VALUES (
+
+INSERT INTO Users (username, user_password, email, street, city, state, country, zip, is_admin) 
+VALUES (
     'oldme',
     'california',
     'oldme@yahoo.com',
@@ -73,8 +80,9 @@ INSERT INTO Users (username, user_password, email, street, city, state, country,
     'Concord',
     'California',
     'United States',
-    '94518'
+    '94518', FALSE
 );
+
 
 INSERT INTO Items (title, price, description, expired, quantity_in_stock) VALUES
 (
@@ -85,6 +93,7 @@ INSERT INTO Items (title, price, description, expired, quantity_in_stock) VALUES
     12
 );
 
+
 INSERT INTO Items (title, price, description, expired, quantity_in_stock) VALUES
 (
     'Quantum Computer',
@@ -93,6 +102,7 @@ INSERT INTO Items (title, price, description, expired, quantity_in_stock) VALUES
     FALSE,
     1000
 );
+
 
 INSERT INTO Items (title, price, description, expired, quantity_in_stock) VALUES
 (
