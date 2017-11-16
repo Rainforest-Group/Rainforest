@@ -47,7 +47,7 @@ CREATE TABLE OrderItems (
 
 INSERT INTO Users (username, user_password, email, street, city, state, country, zip, is_admin) 
 VALUES (
-    'bjones',
+    'bjones1',
     'ER2pfldKRAK6bl9AYoiQOQ==',
     'bjones@gmail.com',
     '100 Cool Street',
