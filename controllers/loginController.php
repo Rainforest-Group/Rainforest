@@ -37,19 +37,9 @@ function currentLogin()
  
 function checkCredentials($username, $password)
 {
-    $conn = new mysqli($hn, $un, $pw, $db);
-    if ($conn->connect_error) die($conn->connect_error);
+    $user = User::getByUsername($username);
 
-    $query = $conn->prepare("SELECT username,user_password,type FROM
-      users WHERE username=?");
-
-    $query->bind_param('s', $username);
-    $query->execute();
-    $results = $query->get_result();
-
-    $row = $results->fetch_array(MYSQLI_ASSOC);
-
-    return encrypt($password) == $row['user_password'];
+    return encrypt($password) == $user->getPassword();
 }
 
 /*****
@@ -62,6 +52,14 @@ function createSession($username, $password)
   $_SESSION['username'] = $username;
   $_SESSION['forename'] = $row['forename'];
   $_SESSION['type'] = $row['type'];
+}
+
+function encrypt($pwd)
+{
+    $salt1    = "qm&h*";
+    $salt2    = "pg!@";
+
+    return hash('ripemd128', "$salt1$pwd$salt2");
 }
 
 ?>
