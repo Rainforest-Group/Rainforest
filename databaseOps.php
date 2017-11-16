@@ -5,11 +5,13 @@
     require_once 'login_creds.php';
     
     // newItem inserts a new Item into the database and returns it's item id.
-    //function newItem($title, $price, $description, $quantity) {
-    //    
-    //}
-    
-    //
+    function getUserInfo($username) {
+        $query = "SELECT * FROM Users WHERE username = $username";
+        $result = executeQuery($query);
+        $result->data_seek(0);
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+        return $row;
+    }
     
 /******************************************************************************/
 /*                              Helper Functions                              */
@@ -23,6 +25,7 @@
         }
         
         $result = $conn->query($query);
+        $conn->close();
         return $result;
     }
 ?>
