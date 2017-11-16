@@ -4,26 +4,35 @@
   Author: Steven Hillerman
   Created: 11/13/17
   
-  Contains all of the classes to be used by the server, in alphabetical order.
+  Contains all of the classes to be used by the server.
   Include this file in all files that require classes.
 *******************************************************************************/
 
-    /*class Cart {
-        private $user_id;
-        private $item_list;
-        private $quant_list;
+    class Cart {
+        public $username;
+        public $item_list = array();
+        public $quant_list = array();
         
-        public function __construct() {
-            
+        public function __construct($username, $i_list = null, $q_list = null) {
+            $this->username = $username;
+            if ($i_list == null xor $q_list == null) {
+                throw new Exception('Must provide both $i_list and $q_list, or neither');
+            }
+            if ($i_list != null) {
+                $this->item_list = $i_list;
+                if ($q_list != null) {
+                    $this->quant_list = $q_list;
+                }
+            }
         }
-    }*/
+    }
 
 /*============================================================================*/
     
     /*
       The Order class contains information about each individual order.
       
-      Constructor: Order(int user_id, int order_id, array<Item> item_list);
+      Constructor: Order(int username, int order_id, array<Item> item_list);
                                                       ^optional final param
                                                         
       Methods:
@@ -32,11 +41,11 @@
     class Order 
     {        
         public $item_list = array();
-        public $user_id = -1;
-        public $order_id = -1;
+        public $username;
+        public $order_id;
         
-        function __construct($u_id, $o_id, $i_list = null) {
-            $this->user_id = $u_id;
+        function __construct($username, $o_id, $i_list = null) {
+            $this->username = $username;
             $this->order_id = $o_id;
             if ($i_list != null) {
                 $this->item_list = $i_list;
