@@ -41,6 +41,32 @@
 		<div class="col-xs-6">  <div id="Logform">     <!--  Allow adjacent divs login and the big note-->
 		<div class="modal-dialog">
 		<div class="modal-content" id="padd"> <!--  adds boarders to the window!-->
+<?php
+
+require_once("controllers/loginController.php");
+
+
+// Check to see if the form has been submitted
+if (isset($_POST["login"])) {
+
+    if (checkCredentials($_POST[$username], $_POST[$password])) {
+        // Correct credentials
+        createSession($username, $password);
+        // Redirect to correct page
+        currentLogin();
+    }
+    else {
+        // Incorrect credentials
+        ;
+    }
+}
+else {
+    // Find out if the user is already logged in
+    // and redirect if needed
+    currentLogin();
+}
+?>
+    
 		<div class="modal-header"><h3>Log In</h3></div>
 						<form method="POST" action="login.php">
 						
@@ -51,7 +77,7 @@
 								<input type="password" class="form-control" id="password" name="password" value="" required="" placeholder="your password">
 							</div>
 							
-							<button type="submit" class="btn btn-success">Login</button>
+							<button type="submit" name="login" value="submit" class="btn btn-success">Login</button>
 							<a href="#Optional" class="btn btn-default btn-block">Forgot My Password</a>
 							
 						</form>
