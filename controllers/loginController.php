@@ -7,6 +7,11 @@ require_once("../database/login_creds.php");
 // page. (HINT: Implement this last, you cannot test this until
 //              someone can log in.)
 
+/*****
+ * currentLogin
+ * Find out if a user is logged in. If so, redirect to the
+ * appropriate page.
+ *****/
 function currentLogin()
 {
     session_start();
@@ -35,8 +40,8 @@ function checkCredentials($username, $password)
     $conn = new mysqli($hn, $un, $pw, $db);
     if ($conn->connect_error) die($conn->connect_error);
 
-    $query = $conn->prepare("SELECT username,password,type,forename FROM
-      lab5_users WHERE username=?");
+    $query = $conn->prepare("SELECT username,user_password,type FROM
+      users WHERE username=?");
 
     $query->bind_param('s', $username);
     $query->execute();
@@ -44,9 +49,13 @@ function checkCredentials($username, $password)
 
     $row = $results->fetch_array(MYSQLI_ASSOC);
 
-    return encrypt($password) == $row['password'];
+    return encrypt($password) == $row['user_password'];
 }
 
+/*****
+ * createSession
+ * Use sessions to login the user.
+ *****/
 function createSession($username, $password)
 {
   session_start();
