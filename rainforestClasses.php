@@ -6,7 +6,23 @@
   
   Contains all of the classes to be used by the server.
   Include this file in all files that require classes.
-*******************************************************************************/
+
+/*============================================================================*/
+
+    class Item {
+        public $itemType;
+        public $itemDesc;
+        public $itemPrice;
+        
+        function __construct($sentType = "", $sentDesc = "", $sentPrice = 0.0)
+        {
+            $this->$itemType = $sentType;
+            $this->$itemDesc = $sentDesc;
+            $this->$itemPrice = $sentPrice;
+        }
+    }
+
+/*******************************************************************************/
 
     class Cart {
         public $username;
@@ -126,5 +142,4 @@
         }
     }
 
-    
 ?>
