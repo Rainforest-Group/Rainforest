@@ -28,4 +28,24 @@
         $conn->close();
         return $result;
     }
+
+    function modifyAttribute($sentTable, $sentAtt, $sentVal) {
+        return false; // return success/failure
+    }
+
+    function addItem($sentItem, $sentQuant) {
+        return false; // return success/failure
+    }
+
+    function addUser($sentUser) {
+        return false; // return success/failure
+    }
+
+    function addOrder($sentOrder) {
+        return false; // return success/failure
+    }
+
+    function addOrderItem($sentOrderID, $sentItemID, $sentQuant) {
+        return false; // return success/failure
+    }
 ?>
