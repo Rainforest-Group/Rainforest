@@ -29,15 +29,53 @@
     class Inventory {
         public $itemList = array();
         public $quantList = array();
-        
-        function addItem($sentItem, $sentQuant)
-        {
 
+        function __construct() {
+            // Pull items from database, store in item/quant array.
         }
 
-        function deleteItem($itemID)
+        function updateDatabase() {
+            // Update database with new items and quantities.
+        }
+
+        function addNewItem($sentID = 1234, $sentType = "", $sentDesc = "", $sentPrice = 0.0, $sentQuant = 0)
+        {
+            // Ensure that the item doesn't already exist.
+            // Check if itemID exists in an item in the itemList
+            $newItem = new Item($sentID, $sentType, $sentDesc, $sentPrice);
+            $itemFound = self.addExisitingItem($newItem, $sentQuant);
+
+            if (!$itemFound) {
+                // If it does not exist, create and add new item.
+                $itemList[$newItem] = $sentQuant;
+            }
+        }
+        
+        function addExisitingItem($sentItem, $sentQuant)
+        {
+            $itemFound = false;
+            foreach($itemList as $key => $value) {
+                if ($key.itemID == $sentID) {
+                    $itemFound = true;
+                    self.incItem($sentID, $sentQuant);
+                    break;
+                }
+            }
+            return $itemFound;
+        }
+
+        function deleteItem($sentID)
         {
             // Delete item and quantity of that item from inventory
+            $itemFound = false;
+            foreach($itemList as $key => $value) {
+                if ($key.itemID == $sentID) {
+                    $itemFound = true;
+                    unset($itemList[$key]);
+                    break;
+                }
+            }
+            return $itemFound;
         }
 
         function decItem($itemID, $quantRemoved)
@@ -45,12 +83,36 @@
             // Reduce the quantity of an item.
             // Do not remove more than the inventory actually has.
             // Return an int with the amount actually removed; -1 (?) if item doesnt exist.
+            // Delete item and quantity of that item from inventory
+            $numRemoved = -1;
+            foreach($itemList as $key => $value) {
+                if ($key.itemID == $sentID) {
+                    if ($itemList[$key] < $quantRemoved) {
+                        $numRemoved = $itemList[$key];
+                        $itemList[$key] = 0;
+                    } else {
+                        $numRemoved = $quantRemoved;
+                        $itemList[$key] = $itemList[$key] - $quantRemoved;
+                    }
+                    break;
+                }
+            }
+            return $numRemoved;
         }
 
         function incItem($itemID, $quantAdded)
         {
             // Increase the quantity of an item.
             // Return true if item added; false if item does not exist in inv.
+            $successfulAdd = false;
+            foreach($itemList as $key => $value) {
+                if ($key.itemID == $sentID) {
+                    $itemList[$key] = $itemList[$key] + $quantAdded;
+                    $successfulAdd = true;
+                    break;
+                }
+            }
+            return $successfulAdd;
         }
     }
 
