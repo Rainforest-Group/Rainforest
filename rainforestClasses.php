@@ -4,24 +4,51 @@
  * Author: Steven Hillerman
  * Created: 11/13/17
  * 
- * Contains all of the classes to be used by the server.  Any changes made in the
+ * Contains all of the classes to be used by the server.  Any changes made in
+ * the classes using setters will automatically by uploaded to the database.
  * 
  * Include this file in all files that require classes.
+ * 
+ * IMPORTANT: whenever you call a constructor, put in in a try/catch statement.
+ * The classes will throw exceptions if the constructor is not called properly.
  */
 
 /*============================================================================*/
-class Item {
-    public $itemID;
-    public $itemType;
-    public $itemDesc;
-    public $itemPrice;
+class Item 
+{
+    private $id;
+    private $name;
+    private $description;
+    private $price;
+    private $expired;
     
-    function __construct($sentID = 1234, $sentType = "", $sentDesc = "", $sentPrice = 0.0)
+    /*
+     * When calling the constructor for Item, either give it only the id, or
+     * everything but the ID (at least name and price).  If ou only give it the 
+     * ID, the constructor will automatically fill in the rest of the 
+     * information from the database. If you give it everything but the ID, it 
+     * will keep the default id of -1 until you add it to the database, which 
+     * will assign it a new ID.
+     */
+    function __construct($id = -1, $name = "", $price = -1, $description = "",
+                         $expired = FALSE)
     {
-        $this->$itemID = $sentID;
-        $this->$itemType = $sentType;
-        $this->$itemDesc = $sentDesc;
-        $this->$itemPrice = $sentPrice;
+        // Verifying that the constructor was called correctly
+        if ($id != -1 xor ($name != "" and $price != -1)) {
+            if ($id != -1) {
+                // TODO: get item info from database, set variables to match.
+                
+            } else {
+                $this->id = $id;
+                $this->name = $name;
+                $this->description = $description;
+                $this->price = $price;
+                $this->expired = $expired;
+            }
+        } else {
+            throw new Exception("You must provide either the id or the name and"
+                    . "price, not both or nether.");
+        }
     }
 }
 
