@@ -28,6 +28,9 @@
 
   <mid>
   <div class="container">
+    <br>
+    <h2>Your Shopping Cart</h2>
+    <br>
   	<table class="table table-condensed">
       				<thead>
   						<tr>
