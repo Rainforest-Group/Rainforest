@@ -30,14 +30,16 @@ class Item
      * will keep the default id of -1 until you add it to the database, which 
      * will assign it a new ID.
      */
-    function __construct($id = -1, $name = "", $price = -1, $description = "",
+    public function __construct($id = -1, $name = "", $price = -1, $desc = "",
                          $expired = FALSE)
     {
         // Verifying that the constructor was called correctly
         if ($id != -1 xor ($name != "" and $price != -1)) {
+            // If the ID was provided, get info from the database.
             if ($id != -1) {
                 // TODO: get item info from database, set variables to match.
-                
+            
+            // If ID was not provided, set to parameter values.
             } else {
                 $this->id = $id;
                 $this->name = $name;
@@ -47,66 +49,93 @@ class Item
             }
         } else {
             throw new Exception("You must provide either the id or the name and"
-                    . "price, not both or nether.");
+                    . "price, not both or neither.");
         }
+    }
+    
+    public function getID() {
+        return $this->id;
+    }
+    
+    // TODO: Fill out
+    public function setID($id) {
+
+    }
+    
+    public function getName() {
+        
+    }
+    
+    public function setName($name) {
+        
+    }
+    
+    public function getDescription() {
+        
+    }
+    
+    public function setDescription($desc) {
+        
+    }
+    
+    public function getPrice() {
+        
+    }
+    
+    public function setPrice($price) {
+        
+    }
+    
+    public function isExpired() {
+        
+    }
+    
+    public function setExpired($exp) {
+        
     }
 }
 
 /*============================================================================*/
+
 class Inventory {
-    public $itemList = array();
-    public $quantList = array();
-    function __construct() {
+    // itemList will store items, indexed by item id
+    private $item_list = array();
+    // quant_list will store item quantities, indexed by item id
+    private $quant_list = array();
+    
+    public function __construct() {
         // Pull items from database, store in item/quant array.
     }
-    function updateDatabase() {
-        // Update database with new items and quantities.
-    }
-    function addNewItem($sentID = 1234, $sentType = "", $sentDesc = "", $sentPrice = 0.0, $sentQuant = 0)
+    
+    // Attempts to add the item to the inventory.  Returns true if successful,
+    // or false if the item was already in the inventory.
+    public function addItem($item, $quant)
     {
-        // Ensure that the item doesn't already exist.
-        // Check if itemID exists in an item in the itemList
-        $newItem = new Item($sentID, $sentType, $sentDesc, $sentPrice);
-        $itemFound = self.addExisitingItem($newItem, $sentQuant);
-        if (!$itemFound) {
-            // If it does not exist, create and add new item.
-            $itemList[$newItem] = $sentQuant;
+        if (!key_exists($item->getID(), $this->item_list)) {
+            $this->item_list[$item->getID()] = $item;
+            $this->quant_list[$item->getID()] = $quant;
+            return true;
+        }
+        return false;
+    }
+    
+    public function deleteItem($id)
+    {
+        // Delete item and quantity of that item from inventory
+        if (key_exists($id, $this->item_list)) {
+            unset($this->item_list[$id]);
+            unset($this->quant_list[$id]);
         }
     }
     
-    function addExisitingItem($sentItem, $sentQuant)
-    {
-        $itemFound = false;
-        foreach($itemList as $key => $value) {
-            if ($key.itemID == $sentID) {
-                $itemFound = true;
-                self.incItem($sentID, $sentQuant);
-                break;
-            }
-        }
-        return $itemFound;
-    }
-    function deleteItem($sentID)
-    {
-        // Delete item and quantity of that item from inventory
-        $itemFound = false;
-        foreach($itemList as $key => $value) {
-            if ($key.itemID == $sentID) {
-                $itemFound = true;
-                unset($itemList[$key]);
-                break;
-            }
-        }
-        return $itemFound;
-    }
-    function decItem($itemID, $quantRemoved)
+    function decItem($itemID, $quantRemoved) // <<<<<< This will need editing, as well as incItem
     {
         // Reduce the quantity of an item.
         // Do not remove more than the inventory actually has.
         // Return an int with the amount actually removed; -1 (?) if item doesnt exist.
         // Delete item and quantity of that item from inventory
         $numRemoved = -1;
-        foreach($itemList as $key => $value) {
+        foreach($this->itemList as $key => $value) {
             if ($key.itemID == $sentID) {
                 if ($itemList[$key] < $quantRemoved) {
                     $numRemoved = $itemList[$key];
@@ -379,5 +408,21 @@ class Customer extends User
         // TODO: update database
     }
 }
+
+
+
+
+/*  This may or may not be used, but I didn't want to take it out completely.
+    function addNewItem($sentID = -1, $sentType = "", $sentDesc = "", $sentPrice = 0.0, $sentQuant = 0)
+    {
+        // Ensure that the item doesn't already exist.
+        // Check if itemID exists in an item in the itemList
+        $newItem = new Item($sentID, $sentType, $sentDesc, $sentPrice);
+        $itemFound = self.addExisitingItem($newItem, $sentQuant);
+        if (!$itemFound) {
+            // If it does not exist, create and add new item.
+            $itemList[$newItem] = $sentQuant;
+        }
+    }*/
 
 ?>
