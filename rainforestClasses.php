@@ -59,39 +59,39 @@ class Item
     
     // TODO: Fill out
     public function setID($id) {
-
+        $this->id = $id;
     }
     
     public function getName() {
-        
+        return $this->name;
     }
     
     public function setName($name) {
-        
+        $this->name = $name;
     }
     
     public function getDescription() {
-        
+        return $this->description;
     }
     
     public function setDescription($desc) {
-        
+        $this->description = $desc;
     }
     
     public function getPrice() {
-        
+        return $this->price;
     }
     
     public function setPrice($price) {
-        
+        $this->price = $price;
     }
     
     public function isExpired() {
-        
+        return $this->expired;
     }
     
     public function setExpired($exp) {
-        
+        $this->expired = $exp;
     }
 }
 
