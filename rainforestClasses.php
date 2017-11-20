@@ -361,7 +361,6 @@ class User
         // TODO: update database
     }
 
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>> Do we want to allow this? <<<<<<<<<<<<<<<<<<<<
     function getPassword() {
         return $this->password;
     }

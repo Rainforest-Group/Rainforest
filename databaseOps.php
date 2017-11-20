@@ -3,6 +3,7 @@
     // Make sure that this file is in the same directory as login_creds,
     // or specify a path to login_creds.php
     require_once 'login_creds.php';
+    require_once 'rainforestClasses.php';
     
     /***************************************************************************
      * The following functions are getters.  The ask for the primary key of the
@@ -31,7 +32,7 @@
     function getOrderInfo($order_id) {
         $query = "SELECT * FROM Orders WHERE order_id = $order_id";
         $result = getAssocArray($query);
-        if ($results == false) {
+        if ($result == false) {
             return false;
         }
         $items_info = getItemsInOrder($order_id);
@@ -43,10 +44,19 @@
     // Returns an array of size 2, with element "items" being an array of item
     // ids, and element "quants" being an array of quantities.
     function getItemsInOrder($order_id) {
-        // TODO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         $query = "SELECT * FROM OrderItems WHERE order_id = $order_id";
         $result = getAssocArray($query);
-        
+        $item_ids = array();
+        $item_quants = array();
+        for ($i = 0; $i < count($result); $i++) {
+            $item_ids[] = $result[$i]["item_id"];
+            $item_quants[] = $result[$i]["item_quantity"];
+        }
+        $items = array();
+        for ($j = 0; $j < count($item_ids); $j++) {
+            $new_item = new Item($item_ids[$j]);
+            $items[$j] = $new_item;
+        }
     }
     
     function modifyUser($username, $attribute, $val) {
