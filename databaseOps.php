@@ -72,28 +72,95 @@
     }
     
     function modifyItem($item_id, $attribute, $val) {
+        $query = "UPDATE Item SET $attribute = $val WHERE item_id = $item_id";
+        $result = executeQuery($query);
+        if (!$result) {
+            return false;
+        }
+        return true;
+    }
+    
+    // Takes an Item object and adds it to the database
+    function addItem($item, $quant) {
+        $id = $item->getID();
+        $name = $item->getName();
+        $desc = $item->getDescription();
+        $price = $item->getPrice();
+        $exp = $item->isExpired();
         
+        $query = "INSERT INTO Items (item_id, title, price, description, "
+                . "expired, quantity_in_stock) VALUES ($id, $name, $price, "
+                . "$desc, $exp, $quant";
+        
+        $result = executeQuery($query);
+        if (!$result) {
+            return false;
+        }
+        return true;
     }
 
-    function addItem($sentItem, $sentQuant) {
-        return false; // return success/failure
+    // Takes a User object and adds it to the database
+    function addUser($user) {
+        $username = $user->getUsername();
+        $password = $user->getPassword(); // May need to change this
+        $email = $user->getEmail();
+        $street = $user->getStreetAddress();
+        $city = $user->getCity();
+        $state = $user->getState();
+        $country = $user->getCountry();
+        $zip = $user->getZip();
+        $admin = $user->isAdmin();
+        
+        $query = "INSERT INTO Users (username, user_password, email, "
+                . "street, city, state, country, zip, is_admin) VALUES ("
+                . "$username, $password, $email, $street, $city, $state, "
+                . "$country, $zip, $admin)";
+        
+        $result = executeQuery($query);
+        if (!$result) {
+            return false;
+        }
+        return true;
     }
-
-    function addUser($sentUser) {
-        return false; // return success/failure
-    }
-
-    function addOrder($sentOrder) {
-        return false; // return success/failure
-    }
-
-    function addOrderItem($sentOrderID, $sentItemID, $sentQuant) {
-        return false; // return success/failure
+    
+    // Takes an Order object and adds it to the database
+    function addOrder($order) {
+        $username = $order->getUsername();
+        $order_id = $order->getOrderId();
+        $items = $order->getItemList();
+        
+        $query1 = "INSERT INTO Orders (order_id, username) VALUES "
+                . "($order_id, $username)";
+        
+        $result = executeQuery($query);
+        if (!$result) {
+            return false;
+        }
+        
+        foreach ($items as $item_id => $quant) {
+            $result = addOrderItem($order_id, $item_id, $quant);
+            if (!result) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
 /******************************************************************************/
-/*                              Helper Functions                              */
+/*                      Helper Functions - Do Not Call                        */
 /******************************************************************************/
+    
+    function addOrderItem($orderID, $itemID, $quant) {
+        $query = "INSERT INTO OrderItems (order_id, item_id, item_quantity)"
+                . "VALUES ($orderID, $itemID, $quant";
+        
+        $result = executeQuery($query);
+        if (!$result) {
+            return false;
+        }
+        return true;
+    }
     
     function executeQuery($query) {
         // create connection to the database

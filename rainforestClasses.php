@@ -218,7 +218,8 @@ class Cart {
 * addItem($item) - adds an item to the order.
 */
 class Order 
-{        
+{      
+    // item_list has the item_id as the key, and quantity as the value
     private $item_list = array();
     private $username;
     private $order_id;
@@ -229,6 +230,18 @@ class Order
         if ($i_list != null) {
             $this->item_list = $i_list;
         }
+    }
+    
+    function getUsername() {
+        return $this->username;
+    }
+    
+    function getOrderId() {
+        return $this->order_id;
+    }
+    
+    function getItemList() {
+        return $this->item_list;
     }
 
     // This function adds the given Item to the list of items in the order.
