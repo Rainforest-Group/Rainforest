@@ -43,7 +43,7 @@ class Item
             } else {
                 $this->id = $id;
                 $this->name = $name;
-                $this->description = $description;
+                $this->description = $desc;
                 $this->price = $price;
                 $this->expired = $expired;
             }
@@ -57,9 +57,10 @@ class Item
         return $this->id;
     }
     
-    // TODO: Fill out
     public function setID($id) {
         $this->id = $id;
+        
+        // TODO: update database
     }
     
     public function getName() {
@@ -68,6 +69,8 @@ class Item
     
     public function setName($name) {
         $this->name = $name;
+        
+        // TODO: update database
     }
     
     public function getDescription() {
@@ -76,6 +79,8 @@ class Item
     
     public function setDescription($desc) {
         $this->description = $desc;
+        
+        // TODO: update database
     }
     
     public function getPrice() {
@@ -84,6 +89,8 @@ class Item
     
     public function setPrice($price) {
         $this->price = $price;
+        
+        // TODO: update database
     }
     
     public function isExpired() {
@@ -92,6 +99,8 @@ class Item
     
     public function setExpired($exp) {
         $this->expired = $exp;
+        
+        // TODO: update database
     }
 }
 
@@ -112,8 +121,8 @@ class Inventory {
     public function addItem($item, $quant)
     {
         if (!key_exists($item->getID(), $this->item_list)) {
-            $this->item_list[$item->getID()] = $item;
-            $this->quant_list[$item->getID()] = $quant;
+            $this->item_list["$item->getID()"] = $item;
+            $this->quant_list["$item->getID()"] = $quant;
             return true;
         }
         return false;
@@ -123,45 +132,14 @@ class Inventory {
     {
         // Delete item and quantity of that item from inventory
         if (key_exists($id, $this->item_list)) {
-            unset($this->item_list[$id]);
-            unset($this->quant_list[$id]);
+            unset($this->item_list["$id"]);
+            unset($this->quant_list["$id"]);
         }
     }
     
-    function decItem($itemID, $quantRemoved) // <<<<<< This will need editing, as well as incItem
-    {
-        // Reduce the quantity of an item.
-        // Do not remove more than the inventory actually has.
-        // Return an int with the amount actually removed; -1 (?) if item doesnt exist.
-        // Delete item and quantity of that item from inventory
-        $numRemoved = -1;
-        foreach($this->itemList as $key => $value) {
-            if ($key.itemID == $sentID) {
-                if ($itemList[$key] < $quantRemoved) {
-                    $numRemoved = $itemList[$key];
-                    $itemList[$key] = 0;
-                } else {
-                    $numRemoved = $quantRemoved;
-                    $itemList[$key] = $itemList[$key] - $quantRemoved;
-                }
-                break;
-            }
-        }
-        return $numRemoved;
-    }
-    function incItem($itemID, $quantAdded)
-    {
-        // Increase the quantity of an item.
-        // Return true if item added; false if item does not exist in inv.
-        $successfulAdd = false;
-        foreach($itemList as $key => $value) {
-            if ($key.itemID == $sentID) {
-                $itemList[$key] = $itemList[$key] + $quantAdded;
-                $successfulAdd = true;
-                break;
-            }
-        }
-        return $successfulAdd;
+    // Returns the number of items that can be added or removed.
+    public function modifyQuantity($item_id, $change_in_quant) {
+        // TODO
     }
 }
 
@@ -171,13 +149,13 @@ class Inventory {
 /*
  * The Cart class represent each customer's cart.
  * 
- * Constructor: Cart(string username, { array<Item> item_list,
+ * Constructor: Cart(string username, { array<int> item_list,
  *                                      array<int> quant_list } )
  *                                         ^Final 2 params are optional;
  *                                          must put neither or both.
  * 
  * Methods:
- * addToCart(Item item, int quantity) - inserts $quantity items into the cart
+ * addToCart(int item, int quantity) - inserts $quantity item ids into the cart
  * clearCart() - removes all items from the user's cart.
  * 
  * Getters and Setters:
@@ -185,7 +163,7 @@ class Inventory {
  */
 class Cart {
     private $username;
-    private $item_list = array();
+    private $item_list = array(); // stores item ids
     private $quant_list = array();
 
     public function __construct($username, $i_list = null, $q_list = null) {
@@ -202,9 +180,9 @@ class Cart {
         }
     }
 
-    // Adds the given Item and Quantity to the cart.
-    public function addToCart($item, $quantity) {
-        $this->item_list[] = $item;
+    // Adds the given item id and quantity to the cart.
+    public function addToCart($item_ids, $quantity) {
+        $this->item_list[] = $item_ids;
         $this->quant_list[] = $quantity;
 
         // TODO: update database
@@ -220,6 +198,11 @@ class Cart {
 
     public function getUsername() {
         return $this->username;
+    }
+    
+    // Turn cart into an order, then process that order
+    public function checkOut() {
+        
     }
 }
 
@@ -251,8 +234,21 @@ class Order
     // This function adds the given Item to the list of items in the order.
     function addItem($item) {
         $this->item_list[] = $item;
+    }
+    
+    /*
+     * Adds all order info to Orders and OrderItems tables in database, and
+     * creates a new PastOrder object.  Returns the new PastOrder.
+     */
+    public function processOrder() {
+        
+    }
+}
 
-        // TODO: update database
+class PastOrder extends Order
+{
+    public function processOrder() {
+        return null;
     }
 }
 
@@ -279,8 +275,12 @@ class User
     protected $state;
     protected $zip;
     protected $country;
-
-    function __construct($username, $password, $address = "", $city = "", 
+    protected $cart;
+    protected $is_admin; // whether the user is an admin or customer
+    protected $past_orders; // an array of PastOrder objects
+    
+    // Need to allow for just the ID.
+    /*function __construct($username, $password, $address = "", $city = "", 
                         $state = "", $zip = "", $country = "", $cart = NULL)
     {
         $this->username = $username;
@@ -291,6 +291,22 @@ class User
         $this->zip = $zip;
         $this->country = $country;
         $this->cart = $cart;
+    }*/
+    
+    /*
+     * In this constructor, providing only the username will make it
+     * automatically fill in the rest of the info from the database.  Providing
+     * everything else will automatically create a new user in the database
+     * with the provided information.  It will return true if successful or
+     * false if unsuccessful.
+     */
+    function __construct($username, $password = "", $address = "", $city = "", 
+                        $state = "", $zip = "", $country = "", $cart = NULL,
+                        $is_admin = false) {
+        // pull user info from database
+        
+        // pull past order info from the database
+            // create new PastOrder objects, and put them in $past_orders
     }
 
     // Returns a string with the full address of the User, properly formatted.
@@ -380,6 +396,27 @@ class User
         
         // TODO: update database
     }
+    
+    // Returns the order ids associated with the user.
+    function getOrderIds() {
+        // TODO: fill in
+    }
+    
+    // Add a PastOrder to past_orders
+    function addPastOrder($pastorder) {
+        // TODO: fill in
+    }
+    
+    //Returns true if the user is an admin, flase otherwise.
+    function isAdmin() {
+        return $this->is_admin;
+    }
+    
+    function setAdmin($is_admin) {
+        $this->is_admin = $is_admin;
+        
+        //TODO: update database
+    }
 }
 
 /*============================================================================*/
@@ -387,17 +424,16 @@ class User
 /*
  >>>>>>>>>>>>>>>>>>>>>>>>>>>>> TALK ABOUT THIS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 */
-class Admin extends User
+/*class Admin extends User
 {   
     // A pointer to the list of orders
     public $orders;
 }
 
-/*============================================================================*/
+//==============================================================================
 
 class Customer extends User
 {
-    public $cart;
     public $past_order_ids;
 
     function chargeOrder($orderID)
@@ -406,7 +442,7 @@ class Customer extends User
         $this->cart->clearCart();
         // TODO: update database
     }
-}
+}*/
 
 
 
