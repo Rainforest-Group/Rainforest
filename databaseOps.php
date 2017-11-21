@@ -45,23 +45,30 @@
     // ids, and element "quants" being an array of quantities.
     function getItemsInOrder($order_id) {
         $query = "SELECT * FROM OrderItems WHERE order_id = $order_id";
-        $result = getAssocArray($query);
+        $result = executeQuery($query);
         $item_ids = array();
         $item_quants = array();
-        for ($i = 0; $i < count($result); $i++) {
-            $item_ids[] = $result[$i]["item_id"];
-            $item_quants[] = $result[$i]["item_quantity"];
+        $rows = $result->num_rows;
+        for ($i = 0; $i < $rows; $i++) {
+            $result->data_seek($i);
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+            $item_ids[] = $row["item_id"];
+            $item_quants[] = $row["item_quantity"];
         }
-        $items = array();
-        for ($j = 0; $j < count($item_ids); $j++) {
-            $new_item = new Item($item_ids[$j]);
-            $items[$j] = $new_item;
-        }
+        $result->close();
+        $return_array = array();
+        $return_array["items"] = $item_ids;
+        $return_array["quants"] = $item_quants;
+        return $return_array;
     }
     
     function modifyUser($username, $attribute, $val) {
         $query = "UPDATE User SET $attribute = $val WHERE username = $username";
-        return false; // return success/failure
+        $result = executeQuery($query);
+        if (!$result) {
+            return false;
+        }
+        return true;
     }
     
     function modifyItem($item_id, $attribute, $val) {
