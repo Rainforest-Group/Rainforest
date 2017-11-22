@@ -63,7 +63,9 @@
     }
     
     function modifyUser($username, $attribute, $val) {
-        $query = "UPDATE User SET $attribute = $val WHERE username = $username";
+        // need to check val type.  If it is a string, need to put quotes around it.
+        $query = "UPDATE User SET $attribute = " . quoteStrings($val) . 
+                " WHERE username = \"$username\"";
         $result = executeQuery($query);
         if (!$result) {
             return false;
@@ -72,7 +74,8 @@
     }
     
     function modifyItem($item_id, $attribute, $val) {
-        $query = "UPDATE Item SET $attribute = $val WHERE item_id = $item_id";
+        $query = "UPDATE Item SET $attribute = " . quoteStrings($val) . 
+                " WHERE item_id = $item_id";
         $result = executeQuery($query);
         if (!$result) {
             return false;
@@ -89,8 +92,8 @@
         $exp = $item->isExpired();
         
         $query = "INSERT INTO Items (item_id, title, price, description, "
-                . "expired, quantity_in_stock) VALUES ($id, $name, $price, "
-                . "$desc, $exp, $quant";
+                . "expired, quantity_in_stock) VALUES ($id, \"$name\", $price, "
+                . "\"$desc\", $exp, $quant";
         
         $result = executeQuery($query);
         if (!$result) {
@@ -113,8 +116,8 @@
         
         $query = "INSERT INTO Users (username, user_password, email, "
                 . "street, city, state, country, zip, is_admin) VALUES ("
-                . "$username, $password, $email, $street, $city, $state, "
-                . "$country, $zip, $admin)";
+                . "\"$username\", \"$password\", \"$email\", \"$street\", "
+                . "\"$city\", \"$state\", \"$country\", $zip, $admin)";
         
         $result = executeQuery($query);
         if (!$result) {
@@ -130,9 +133,9 @@
         $items = $order->getItemList();
         
         $query1 = "INSERT INTO Orders (order_id, username) VALUES "
-                . "($order_id, $username)";
+                . "($order_id, \"$username\")";
         
-        $result = executeQuery($query);
+        $result = executeQuery($query1);
         if (!$result) {
             return false;
         }
@@ -184,5 +187,14 @@
             $result->close();
             return $row;
         }
+    }
+    
+    function quoteStrings($val) {
+        $ret_val = $val;
+        if (gettype($val) == "string" and strtolower($val) != "true" and
+                strtolower($val) != "false") {
+            $ret_val = "\"$val\"";
+        }
+        return $ret_val;
     }
 ?>
