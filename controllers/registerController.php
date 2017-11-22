@@ -1,10 +1,18 @@
 <?php
+require_once("rainforestClasses.php");
 
 function validateProfile($username, $password, $verify_password, $address, $city, $state, $zip)
 {
     $errors = "";
     if (!$username) {
         $errors = $errors . "<br>Must specify username.";
+    }
+    else {
+        // Check if username exists
+        $user = User::fetchUser($username);
+        if ($user) {
+            $errors = $errors . "<br>Username taken.";
+        }
     }
     if (!$password) {
         $errors = $errors . "<br>Must specify a password.";
@@ -26,6 +34,14 @@ function validateProfile($username, $password, $verify_password, $address, $city
     }
     
     return $errors;
+}
+
+function createAccount($username, $password, $address, $city, $state, $zip)
+{
+    // Assume all the fields are valid
+    $new_user = new User($username, $password);
+
+    return $new_user;
 }
 
 ?>

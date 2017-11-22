@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-	  function register(){  window.location='register.html';  }
+	  function register(){  window.location='register.php';  }
 	   function Home(){  window.location='main.html';  }
   </script>
 </head>
@@ -64,6 +64,7 @@ else {
     // Find out if the user is already logged in
     // and redirect if needed
     currentLogin();
+
 }
 ?>
     
@@ -72,7 +73,10 @@ else {
 						
 							<div class="form-group">
 								<label for="username" class="control-label">Username</label>
-								<input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="example@gmail.com">
+<?php
+    $username = isset($_GET["username"]) ? $_GET["username"] : ""; 
+    echo "<input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" value=\"$username\" required=\"\"  placeholder=\"example@gmail.com\">";
+?>
 								<label for="password" class="control-label">Password</label>
 								<input type="password" class="form-control" id="password" name="password" value="" required="" placeholder="your password">
 							</div>

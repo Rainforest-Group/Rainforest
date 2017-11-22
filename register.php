@@ -16,6 +16,7 @@
 </head>
 <body>
 <?php
+require_once("controllers/registerController.php");
 
 $errors = "";
 ?>
@@ -57,13 +58,25 @@ if (isset($_POST["createProfile"])) {
     $city     = $_POST["city"];
     $zip      = $_POST["zip"];
     $errors   = validateProfile($username, $password, $verify_password, $address, $state, $city, $zip);
-}
 
-
-if ($errors) {
-    echo '<div class="alert alert-danger">';
-    echo $errors; 
-    echo '</div>';
+    if ($errors) {
+        echo '<div class="alert alert-danger">';
+        echo $errors; 
+        echo '</div>';
+    }
+    else {
+        $success = createAccount($username, $password, $address, $state, $city, $zip);
+        if (!$success) {
+            echo '<div class="alert alert-danger">';
+            echo 'The server encountered an issue creating your account.';
+            echo '</div>';
+        }
+        else {
+            // Redirect to login page
+            header("Location: login.php?username=$username");
+            die();
+        }
+    }
 }
                     ?>
                     <form method="POST" action="register.php">

@@ -322,6 +322,19 @@ class User
             // create new PastOrder objects, and put them in $past_orders
     }
 
+    /*
+     * Fetchs a user with the given username
+     */
+    public static function fetchUser($username) {
+    // stub code
+        if ($username == "bob") {
+            return new User("bob", "aoeunth"); // return stub user
+        }
+        else {
+            return false;
+        }
+    }
+
     // Returns a string with the full address of the User, properly formatted.
     function getFullAddress() {
         return "$this->address<br>$this->city, "

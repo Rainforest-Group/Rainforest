@@ -2,7 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once("../database/login_creds.php");
 // Is someone already logged in? If so, forward them to the correct
 // page. (HINT: Implement this last, you cannot test this until
 //              someone can log in.)
@@ -37,7 +36,7 @@ function currentLogin()
  
 function checkCredentials($username, $password)
 {
-    $user = User::getByUsername($username);
+    $user = User::fetchUser($username);
 
     return encrypt($password) == $user->getPassword();
 }
