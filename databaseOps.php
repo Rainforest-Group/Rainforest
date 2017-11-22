@@ -2,8 +2,8 @@
     
     // Make sure that this file is in the same directory as login_creds,
     // or specify a path to login_creds.php
-    require_once 'login_creds.php';
-    require_once 'rainforestClasses.php';
+    require_once('database/login_creds.php');
+    require_once('rainforestClasses.php');
     
     /***************************************************************************
      * The following functions are getters.  The ask for the primary key of the
@@ -16,7 +16,7 @@
     
     // Returns info from the User table, or False if the user doesn't exist.
     function getUserInfo($username) {
-        $query = "SELECT * FROM Users WHERE username = $username";
+        $query = "SELECT * FROM Users WHERE username = \"$username\"";
         $result = getAssocArray($query);
         return $result;
     }
@@ -164,6 +164,7 @@
     
     function executeQuery($query) {
         // create connection to the database
+        global $hn, $un, $pw, $db;
         $conn = new mysqli($hn, $un, $pw, $db);
         if ($conn->connect_error) {
             die($conn->connect_error);
@@ -175,7 +176,7 @@
     
     function getAssocArray($query) {
         $result = executeQuery($query);
-        if ($result == False) {
+        if ($result == false) {
             return false;
         } else {
             $result->data_seek(0);
