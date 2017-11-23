@@ -42,9 +42,29 @@ function testGetItem() {
     echo "<td>" . test(getItemInfo(5)) . "</td></tr>";
 }
 
+function testGetOrderInfo() {
+    echo "<tr><td rowspan=\"2\">getOrderInfo()</td>";
+    echo "<td>1 (existing)</td>";
+    echo "<td>" . test(getOrderInfo(1)) . "</td></tr>";
+
+    echo "<td> 5 (nonexisting)</td>";
+    echo "<td>" . test(getOrderInfo(5)) . "</td></tr>";
+}
+
+function testGetItemsInOrder() {
+    echo "<tr><td rowspan=\"2\">getItemsInOrder()</td>";
+    echo "<td>1 (existing)</td>";
+    echo "<td>" . test(getItemsInOrder(1)) . "</td></tr>";
+
+    echo "<tr><td>5 (nonexisting)</td>";
+    echo "<td>" . test(getItemsInOrder(5)) . "</td></tr>";
+}
+
 
 testGetUser();
 testGetItem();
+testGetOrderInfo();
+testGetItemsInOrder();
 
 ?>
 

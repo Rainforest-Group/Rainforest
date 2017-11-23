@@ -49,6 +49,8 @@
         $item_ids = array();
         $item_quants = array();
         $rows = $result->num_rows;
+        if (!$rows) return false;
+
         for ($i = 0; $i < $rows; $i++) {
             $result->data_seek($i);
             $row = $result->fetch_array(MYSQLI_ASSOC);
