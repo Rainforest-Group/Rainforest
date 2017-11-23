@@ -26,13 +26,13 @@ function testGetUser() {
     //echo "<td>bjones1 (existing)</td>";
     $val = getUserInfo("bjones");
     echo "<td>" . test($val['username']) . "</td>";
-    echo "<td>" . test($val['user_password']) . "</td>";
+    echo "<td>" . test($val['password']) . "</td>";
     echo "<td>" . test($val['street']) . "</td></tr>";
 
     //echo "<tr><td>fakeuser (nonexisting)</td>";
     $val = getUserInfo("fakeuser");
     echo "<td>" . test($val['username']) . "</td>";
-    echo "<td>" . test($val['user_password']) . "</td>";
+    echo "<td>" . test($val['password']) . "</td>";
     echo "<td>" . test($val['street']) . "</td></tr></table><br><br>";
 }
 
@@ -41,7 +41,7 @@ function testGetItem() {
     echo "<tr><th>Item</th><th>item ID</th><th>description</th><th>price</th></tr>\n\n";
     echo "<tr><td rowspan=\"2\">getItemInfo()</td>";
 
-    $val = getItemInfo(2);
+    $val = getItemInfo(3);
     echo "<td>" . test($val['item_id']) . "</td>";
     echo "<td>" . test($val['description']) . "</td>";
     echo "<td>" . test($val['price']) . "</td></tr>";
@@ -70,11 +70,25 @@ function testGetOrder() {
     echo "</td></tr></table><br><br>";
 }
 
+function testModifyUser() {
+    modifyUser("bjones", "password", "newpassword");
+    testGetUser("bjones");
+    modifyUser("bjones", "password", "password");
+}
+
+function testModifyItem() {
+    modifyItem(3, "price", 10);
+    testGetItem(3);
+    modifyItem(3, "price", 1999.95);
+}
+
 
 
 testGetUser();
 testGetItem();
 testGetOrder();
+testModifyUser();
+testModifyItem();
 
 ?>
 

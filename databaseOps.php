@@ -66,7 +66,7 @@
     
     function modifyUser($username, $attribute, $val) {
         // need to check val type.  If it is a string, need to put quotes around it.
-        $query = "UPDATE User SET $attribute = " . quoteStrings($val) . 
+        $query = "UPDATE Users SET $attribute = " . quoteStrings($val) . 
                 " WHERE username = \"$username\"";
         $result = executeQuery($query);
         if (!$result) {
@@ -76,7 +76,7 @@
     }
     
     function modifyItem($item_id, $attribute, $val) {
-        $query = "UPDATE Item SET $attribute = " . quoteStrings($val) . 
+        $query = "UPDATE Items SET $attribute = " . quoteStrings($val) . 
                 " WHERE item_id = $item_id";
         $result = executeQuery($query);
         if (!$result) {
@@ -116,7 +116,7 @@
         $zip = $user->getZip();
         $admin = $user->isAdmin();
         
-        $query = "INSERT INTO Users (username, user_password, email, "
+        $query = "INSERT INTO Users (username, password, email, "
                 . "street, city, state, country, zip, is_admin) VALUES ("
                 . "\"$username\", \"$password\", \"$email\", \"$street\", "
                 . "\"$city\", \"$state\", \"$country\", $zip, $admin)";

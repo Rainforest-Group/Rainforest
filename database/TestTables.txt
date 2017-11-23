@@ -7,7 +7,7 @@ DROP TABLE Items;
 
 CREATE TABLE Users (
     username VARCHAR(50) NOT NULL,
-    user_password VARCHAR(50),
+    password VARCHAR(50),
     email VARCHAR(50),
     street VARCHAR(50),
     city VARCHAR(50),
@@ -45,10 +45,10 @@ CREATE TABLE OrderItems (
 );
 
 
-INSERT INTO Users (username, user_password, email, street, city, state, country, zip, is_admin) 
+INSERT INTO Users (username, password, email, street, city, state, country, zip, is_admin) 
 VALUES (
-    'bjones1',
-    'ER2pfldKRAK6bl9AYoiQOQ==',
+    'bjones',
+    'password',
     'bjones@gmail.com',
     '100 Cool Street',
     'Epic',
@@ -58,7 +58,7 @@ VALUES (
 ,	FALSE);
 
 
-INSERT INTO Users (username, user_password, email, street, city, state, country, zip, is_admin) 
+INSERT INTO Users (username, password, email, street, city, state, country, zip, is_admin) 
 VALUES (
     'darthvader',
     'darkside1',
@@ -71,7 +71,7 @@ VALUES (
 );
 
 
-INSERT INTO Users (username, user_password, email, street, city, state, country, zip, is_admin) 
+INSERT INTO Users (username, password, email, street, city, state, country, zip, is_admin) 
 VALUES (
     'oldme',
     'california',
