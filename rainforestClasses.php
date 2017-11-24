@@ -1,4 +1,5 @@
 <?php
+require_once 'databaseOps.php';
 /*
  * File: Rainforest Classes
  * Author: Steven Hillerman
@@ -37,15 +38,22 @@ class Item
         if ($id != -1 xor ($name != "" and $price != -1)) {
             // If the ID was provided, get info from the database.
             if ($id != -1) {
-                // TODO: get item info from database, set variables to match.
+                $item_info = getItemInfo($id);
+                if ($item_info) {
+                    setVariables($item_info);
+                } else {
+                    throw new Exception('The given ID does not correspond to '
+                            . 'any Item in the database.');
+                }
             
             // If ID was not provided, set to parameter values.
             } else {
-                $this->id = $id;
+                $this->id = -1;
                 $this->name = $name;
                 $this->description = $desc;
                 $this->price = $price;
                 $this->expired = $expired;
+                addItem($this);
             }
         } else {
             throw new Exception("You must provide either the id or the name and"
@@ -60,7 +68,7 @@ class Item
     public function setID($id) {
         $this->id = $id;
         
-        // TODO: update database
+        modifyItem($this->id, "item_id", $id);
     }
     
     public function getName() {
@@ -70,7 +78,7 @@ class Item
     public function setName($name) {
         $this->name = $name;
         
-        // TODO: update database
+        modifyItem($this->id, "title", $name);
     }
     
     public function getDescription() {
@@ -80,7 +88,7 @@ class Item
     public function setDescription($desc) {
         $this->description = $desc;
         
-        // TODO: update database
+        modifyItem($this->id, "description", $desc);
     }
     
     public function getPrice() {
@@ -90,7 +98,7 @@ class Item
     public function setPrice($price) {
         $this->price = $price;
         
-        // TODO: update database
+        modifyItem($this->id, "price", $price);
     }
     
     public function isExpired() {
@@ -100,7 +108,15 @@ class Item
     public function setExpired($exp) {
         $this->expired = $exp;
         
-        // TODO: update database
+        modifyItem($this->id, "expired", $exp);
+    }
+    
+    private function setVariables($val_arr) {
+        $this->id = $val_arr['id'];
+        $this->name = $val_arr['title'];
+        $this->description = $val_arr['description'];
+        $this->price = $val_arr['prive'];
+        $this->expired = $val_arr['expired'];
     }
 }
 
