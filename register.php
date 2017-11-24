@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-	  function logIn(){  window.location='LogIn.html';  }
+	  function logIn(){  window.location='login.php';  }
 	   function Home(){  window.location='main.html';  }
   </script>
 </head>

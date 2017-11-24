@@ -353,6 +353,11 @@ class User
         return $user;
     }
 
+    // Saves the user in the database
+    function save() {
+        return addUser($this);
+    }
+
     // Returns a string with the full address of the User, properly formatted.
     function getFullAddress() {
         return "$this->address<br>$this->city, "

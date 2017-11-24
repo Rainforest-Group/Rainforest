@@ -54,12 +54,6 @@ function createSession($username, $password)
     $_SESSION['type'] = $user->isAdmin() ? 'admin' : 'customer';
 }
 
-function encrypt($pwd)
-{
-    $salt1    = "qm&h*";
-    $salt2    = "pg!@";
 
-    return hash('ripemd128', "$salt1$pwd$salt2");
-}
 
 ?>

@@ -137,7 +137,7 @@
         $zip = $user->getZip();
         $admin = quoteStrings($user->isAdmin());
         
-        $query = "INSERT INTO Users (username, password, email, "
+        $query = "INSERT INTO Users (username, user_password, email, "
                 . "street, city, state, country, zip, is_admin) VALUES ("
                 . "\"$username\", \"$password\", \"$email\", \"$street\", "
                 . "\"$city\", \"$state\", \"$country\", $zip, $admin)";
@@ -230,4 +230,12 @@
         }
         return $ret_val;
     }
+
+function encrypt($pwd)
+{
+    $salt1    = "qm&h*";
+    $salt2    = "pg!@";
+
+    return hash('ripemd128', "$salt1$pwd$salt2");
+}
 ?>
