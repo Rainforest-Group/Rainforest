@@ -12,6 +12,7 @@
     <script type="text/javascript">
 	  function logIn(){  window.location='login.php';  }
 	   function Home(){  window.location='main.html';  }
+          function logOut() { window.location='logout.php'; }
   </script>
 </head>
 <body>
@@ -40,9 +41,19 @@
 			  <input class="form-control input-lg" type="text" placeholder="Search">
 			  <button class="btn btn-info" type="submit" id="pull">Search</button>
 			</form>
+
+<?php
+session_start();
+
+$loggedIn = isset($_SESSION['username']);
+
+?>
+
 			
 				  <!-- buttons -->
-					<button type="button" class="btn btn-success" id="login" onclick="logIn();">Log In</button>
+<?php if (!$loggedIn) echo '<button type="button" class="btn btn-success" id="login" onclick="logIn();">Log In</button>';
+      else            echo '<button type="button" class="btn btn-success" id="login" onclick="logOut();">Logout</button>';
+?>
 					<button type="button" class="btn btn-success" id="home" onclick="Home();">Home</button>
 
     </nav>
