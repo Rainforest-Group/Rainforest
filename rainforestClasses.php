@@ -31,7 +31,7 @@ class Item
      * will assign it a new ID.
      */
     public function __construct($id = -1, $name = "", $price = -1, $desc = "",
-                         $expired = FALSE)
+                         $expired = false)
     {
         // Verifying that the constructor was called correctly
         if ($id != -1 xor ($name != "" and $price != -1)) {
@@ -293,27 +293,28 @@ class User
     protected $past_orders; // an array of PastOrder objects
     
     // Need to allow for just the ID.
-    /*function __construct($username, $password, $address = "", $city = "", 
+    function __construct($username, $password, $email, $address = "", $city = "", 
                         $state = "", $zip = "", $country = "", $cart = NULL)
     {
         $this->username = $username;
         $this->password = $password;
+        $this->email = $email;
         $this->address = $address;
         $this->city = $city;
         $this->state = $state;
         $this->zip = $zip;
         $this->country = $country;
         $this->cart = $cart;
-    }*/
+    }
     
     /*
      * In this constructor, providing only the username will make it
      * automatically fill in the rest of the info from the database.  Providing
-     * everything else will automatically create a new user in the database
+     * anything else will automatically create a new user in the database
      * with the provided information.  It will return true if successful or
      * false if unsuccessful.
      */
-    function __construct($username, $password = "", $address = "", $city = "", 
+    /*function __construct($username, $password = "", $address = "", $city = "", 
                         $state = "", $zip = "", $country = "", $cart = NULL,
                         $is_admin = false) {
         // pull user info from database
@@ -323,7 +324,7 @@ class User
     }
 
     /*
-     * Fetchs a user with the given username
+     * Fetches a user with the given username
      */
     public static function fetchUser($username) {
     // stub code
@@ -409,6 +410,16 @@ class User
     
     function setPassword($password) {
         $this->password = $password;
+        
+        // TODO: update database
+    }
+    
+    function getEmail() {
+        return $this->email;
+    }
+    
+    function setEmail() {
+        $this->email = $email;
         
         // TODO: update database
     }

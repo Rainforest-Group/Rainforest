@@ -30,13 +30,13 @@ function testGetUser() {
     echo "<td>" . test($val['street']) . "</td></tr>";
 
     //echo "<tr><td>fakeuser (nonexisting)</td>";
-    $val = getUserInfo("fakeuser");
+    $val = getUserInfo("newusername");
     echo "<td>" . test($val['username']) . "</td>";
     echo "<td>" . test($val['password']) . "</td>";
     echo "<td>" . test($val['street']) . "</td></tr></table><br><br>";
 }
 
-function testGetItem() {
+function testGetItem($num) {
     echo "<table border=\"1\">\n";
     echo "<tr><th>Item</th><th>item ID</th><th>description</th><th>price</th></tr>\n\n";
     echo "<tr><td rowspan=\"2\">getItemInfo()</td>";
@@ -46,7 +46,7 @@ function testGetItem() {
     echo "<td>" . test($val['description']) . "</td>";
     echo "<td>" . test($val['price']) . "</td></tr>";
 
-    $val = getItemInfo(5);
+    $val = getItemInfo($num);
     echo "<td>" . test($val['item_id']) . "</td>";
     echo "<td>" . test($val['description']) . "</td>";
     echo "<td>" . test($val['price']) . "</td></tr></table><br><br>";
@@ -78,17 +78,31 @@ function testModifyUser() {
 
 function testModifyItem() {
     modifyItem(3, "price", 10);
-    testGetItem(3);
+    testGetItem(5);
     modifyItem(3, "price", 1999.95);
+}
+
+function testAddItem() {
+    $item = new Item(-1, "New Item", 12.12, "Epic Item");
+    $id = addItem($item, 4);
+    testGetItem($id);
+}
+
+function testAddUser() {
+    $user = new User("newusername", "pw", "email@gmail.com", "street1", "city", "st", 09989, "country");
+    echo addUser($user);
+    testGetUser();
 }
 
 
 
 testGetUser();
-testGetItem();
+testGetItem(5);
 testGetOrder();
 testModifyUser();
 testModifyItem();
+testAddItem();
+testAddUser();
 
 ?>
 

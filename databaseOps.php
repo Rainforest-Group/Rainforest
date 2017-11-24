@@ -3,7 +3,7 @@
     // Make sure that this file is in the same directory as login_creds,
     // or specify a path to login_creds.php
     require_once('database/login_creds.php');
-    require_once('rainforestClasses.php');
+    require_once('rainforestClasses.php'); 
     
     /***************************************************************************
      * The following functions are getters.  The ask for the primary key of the
@@ -64,6 +64,13 @@
         return $return_array;
     }
     
+    /***************************************************************************
+     * The following functions are modifiers.  They ask for the primary key of
+     * the item you want to modify, as well as the name of the attribute you
+     * want to modify and the value that should go there.  Returns true if
+     * successful, false if unsuccessful for any reason.
+     **************************************************************************/
+     
     function modifyUser($username, $attribute, $val) {
         // need to check val type.  If it is a string, need to put quotes around it.
         $query = "UPDATE Users SET $attribute = " . quoteStrings($val) . 
@@ -85,23 +92,36 @@
         return true;
     }
     
-    // Takes an Item object and adds it to the database
+    // Takes an Item object and adds it to the database.  Returns Item ID.
     function addItem($item, $quant) {
-        $id = $item->getID();
+        global $hn, $un, $pw, $db;
         $name = $item->getName();
         $desc = $item->getDescription();
         $price = $item->getPrice();
         $exp = $item->isExpired();
         
-        $query = "INSERT INTO Items (item_id, title, price, description, "
-                . "expired, quantity_in_stock) VALUES ($id, \"$name\", $price, "
-                . "\"$desc\", $exp, $quant";
+        if (!$exp) {
+            $exp = "false";
+        } else {
+            $exp = "true";
+        }
         
-        $result = executeQuery($query);
+        $query = "INSERT INTO Items (title, price, description, "
+                . "expired, quantity_in_stock) VALUES (\"$name\", $price, "
+                . "\"$desc\", $exp, $quant)";
+        
+        $conn = new mysqli($hn, $un, $pw, $db);
+        if ($conn->connect_error) {
+            die($conn->connect_error);
+        }
+        $result = $conn->query($query);
+        $id = $conn->insert_id;
+        
+        $conn->close();
         if (!$result) {
             return false;
         }
-        return true;
+        return $id;
     }
 
     // Takes a User object and adds it to the database
@@ -114,7 +134,7 @@
         $state = $user->getState();
         $country = $user->getCountry();
         $zip = $user->getZip();
-        $admin = $user->isAdmin();
+        $admin = quoteStrings($user->isAdmin());
         
         $query = "INSERT INTO Users (username, password, email, "
                 . "street, city, state, country, zip, is_admin) VALUES ("
@@ -123,7 +143,7 @@
         
         $result = executeQuery($query);
         if (!$result) {
-            return false;
+            return $query;
         }
         return true;
     }
@@ -158,7 +178,7 @@
     
     function addOrderItem($orderID, $itemID, $quant) {
         $query = "INSERT INTO OrderItems (order_id, item_id, item_quantity)"
-                . "VALUES ($orderID, $itemID, $quant";
+                . "VALUES ($orderID, $itemID, $quant)";
         
         $result = executeQuery($query);
         if (!$result) {
@@ -196,6 +216,16 @@
         if (gettype($val) == "string" and strtolower($val) != "true" and
                 strtolower($val) != "false") {
             $ret_val = "\"$val\"";
+        }
+        if (gettype($val) == "boolean") {
+            if ($val == true) {
+                $ret_val = "true";
+            } else {
+                $ret_val = "false";
+            }
+        }
+        if (gettype($val) == "NULL") {
+            $ret_val = "NULL";
         }
         return $ret_val;
     }
