@@ -18,12 +18,10 @@ function currentLogin()
     session_start();
     if (isset($_SESSION['username'])) {
       if ($_SESSION['type'] == 'admin') {
-          // TODO: Fill in url
-          $url = "<admin page>";
+          $url = "index.php";
       }
-      else if ($_SESSION['type'] == 'user') {
-          // TODO: Fill in url
-          $url = "<customer page>";
+      else if ($_SESSION['type'] == 'customer') {
+          $url = "index.php";
       }
       header("Location: $url");
       die();
@@ -49,10 +47,11 @@ function checkCredentials($username, $password)
  *****/
 function createSession($username, $password)
 {
-  session_start();
-  $_SESSION['username'] = $username;
-  $_SESSION['forename'] = $row['forename'];
-  $_SESSION['type'] = $row['type'];
+    // Assume user exists
+    $user = User::fetchUser($username);
+    session_start();
+    $_SESSION['username'] = $username;
+    $_SESSION['type'] = $user->isAdmin() ? 'admin' : 'customer';
 }
 
 function encrypt($pwd)
