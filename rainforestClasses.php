@@ -224,7 +224,7 @@ class Order
     private $username;
     private $order_id;
 
-    function __construct($username, $o_id, $i_list = null) {
+    function __construct($username, $o_id = -1, $i_list = null) {
         $this->username = $username;
         $this->order_id = $o_id;
         if ($i_list != null) {

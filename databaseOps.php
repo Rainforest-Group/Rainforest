@@ -92,19 +92,20 @@
         return true;
     }
     
+    /***************************************************************************
+     * The following functions are adders.  They ask for an object to add to
+     * the database, as well as any other needed info.
+     * 
+     * Returns true if successful, false if unsuccessful for any reason.
+     **************************************************************************/
+    
     // Takes an Item object and adds it to the database.  Returns Item ID.
     function addItem($item, $quant) {
         global $hn, $un, $pw, $db;
         $name = $item->getName();
         $desc = $item->getDescription();
         $price = $item->getPrice();
-        $exp = $item->isExpired();
-        
-        if (!$exp) {
-            $exp = "false";
-        } else {
-            $exp = "true";
-        }
+        $exp = quoteStrings($item->isExpired());
         
         $query = "INSERT INTO Items (title, price, description, "
                 . "expired, quantity_in_stock) VALUES (\"$name\", $price, "
@@ -148,28 +149,28 @@
         return true;
     }
     
-    // Takes an Order object and adds it to the database
+    // Takes an Order object and adds it to the database.  Returns the order ID.
     function addOrder($order) {
+        global $hn, $un, $pw, $db;
         $username = $order->getUsername();
-        $order_id = $order->getOrderId();
         $items = $order->getItemList();
+        $query = "INSERT INTO Orders (username) VALUES (\"$username\")";
         
-        $query1 = "INSERT INTO Orders (order_id, username) VALUES "
-                . "($order_id, \"$username\")";
-        
-        $result = executeQuery($query1);
-        if (!$result) {
-            return false;
+        $conn = new mysqli($hn, $un, $pw, $db);
+        if ($conn->connect_error) {
+            die($conn->connect_error);
         }
+        $result = $conn->query($query);
+        $order_id = $conn->insert_id;
+        $conn->close();
         
         foreach ($items as $item_id => $quant) {
             $result = addOrderItem($order_id, $item_id, $quant);
-            if (!result) {
+            if (!$result) {
                 return false;
             }
         }
-        
-        return true;
+        return $order_id;
     }
     
 /******************************************************************************/

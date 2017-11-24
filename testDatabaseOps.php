@@ -52,21 +52,25 @@ function testGetItem($num) {
     echo "<td>" . test($val['price']) . "</td></tr></table><br><br>";
 }
 
-function testGetOrder() {
+function testGetOrder($id) {
     echo "<table border=\"1\">\n";
     echo "<tr><th>Order</th><th>order ID</th><th>username</th><th>item ids</th></tr>\n\n";
     echo "<tr><td rowspan=\"2\">getItemInfo()</td>";
 
     $val = getOrderInfo(2);
     echo "<td>" . test($val['order_id']) . "</td>";
-    echo "<td>" . test($val['username']) . "</td>";
-    echo "<td>" . $val['item_list'][1] . "(" . $val['quant_list'][1] . ")";
+    echo "<td>" . test($val['username']) . "</td><td>";
+    for ($i = 0; $i < count($val['item_list']); $i++) {
+        echo $val['item_list'][$i] . "(" . $val['quant_list'][$i] . "),";
+    }
     echo "</td></tr>";
 
-    $val = getOrderInfo(5);
+    $val = getOrderInfo($id);
     echo "<td>" . test($val['order_id']) . "</td>";
-    echo "<td>" . test($val['username']) . "</td>";
-    echo "<td>" . test($val['item_list'][0]);
+    echo "<td>" . test($val['username']) . "</td><td>";
+    for ($i = 0; $i < count($val['item_list']); $i++) {
+        echo $val['item_list'][$i] . "(" . $val['quant_list'][$i] . "),";
+    }
     echo "</td></tr></table><br><br>";
 }
 
@@ -90,19 +94,30 @@ function testAddItem() {
 
 function testAddUser() {
     $user = new User("newusername", "pw", "email@gmail.com", "street1", "city", "st", 09989, "country");
-    echo addUser($user);
+    addUser($user);
     testGetUser();
+}
+
+function testAddOrder() {
+    $items = array();
+    $items[1] = 2;
+    $items[2] = 4;
+    $items[3] = 1;
+    $order = new Order("bjones", -1, $items);
+    $id = addOrder($order);
+    testGetOrder($id);
 }
 
 
 
 testGetUser();
 testGetItem(5);
-testGetOrder();
+testGetOrder(5);
 testModifyUser();
 testModifyItem();
 testAddItem();
 testAddUser();
+testAddOrder();
 
 ?>
 
