@@ -2,6 +2,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once("rainforestClasses.php");
+
 // Is someone already logged in? If so, forward them to the correct
 // page. (HINT: Implement this last, you cannot test this until
 //              someone can log in.)
@@ -38,7 +40,7 @@ function checkCredentials($username, $password)
 {
     $user = User::fetchUser($username);
 
-    return encrypt($password) == $user->getPassword();
+    return $user && encrypt($password) == $user->getPassword();
 }
 
 /*****

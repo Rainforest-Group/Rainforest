@@ -344,12 +344,13 @@ class User
      */
     public static function fetchUser($username) {
     // stub code
-        if ($username == "bob") {
-            return new User("bob", "aoeunth"); // return stub user
-        }
-        else {
-            return false;
-        }
+        $user_data = getUserInfo($username);
+        if (!$user_data) return false;
+
+        $user = new User($user_data['username'], $user_data['user_password'], $user_data['email'],
+            $user_data['street'], $user_data['city'], $user_data['state'], $user_data['zip'], $user_data['country']);
+
+        return $user;
     }
 
     // Returns a string with the full address of the User, properly formatted.

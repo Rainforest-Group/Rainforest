@@ -45,19 +45,20 @@
 
 require_once("controllers/loginController.php");
 
+$errors = "";
 
 // Check to see if the form has been submitted
 if (isset($_POST["login"])) {
 
-    if (checkCredentials($_POST[$username], $_POST[$password])) {
+    if (checkCredentials($_POST["username"], $_POST["password"])) {
         // Correct credentials
-        createSession($username, $password);
+        createSession($_POST["username"], $_POST["password"]);
         // Redirect to correct page
         currentLogin();
     }
     else {
         // Incorrect credentials
-        ;
+        $errors = "Incorrect username/password combination.";
     }
 }
 else {
@@ -85,6 +86,9 @@ else {
 							<a href="#Optional" class="btn btn-default btn-block">Forgot My Password</a>
 							
 						</form>
+                                             <?php
+                                             if ($errors) echo "<div class=\"alert alert-danger\">$errors</div>";
+                                             ?>
 					</div> 
 				</div>
 			</div>
