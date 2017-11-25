@@ -128,39 +128,58 @@ class Inventory {
     // itemList will store items, indexed by item id
     private $item_list = array();
     
-    
     /*
      * The inventory constructor will pull all item IDs from the database,
      * create new Items from all of them, and add them to the item_list.
      */
     public function __construct() {
         $ids = getAllItemIDs();
+        for ($i = 0; $i < count($ids); $i++) {
+            $new_item = new Item($ids[$i]);
+            $this->item_list[$ids[$i]] = $new_item;
+        }
     }
     
     // Attempts to add the item to the inventory.  Returns true if successful,
     // or false if the item was already in the inventory.
-    public function addItem($item, $quant)
+    public function addItem($item)
     {
         if (!key_exists($item->getID(), $this->item_list)) {
-            $this->item_list["$item->getID()"] = $item;
-            $this->quant_list["$item->getID()"] = $quant;
+            $this->item_list[$item->getID()] = $item;
             return true;
         }
         return false;
     }
     
-    public function deleteItem($id)
-    {
-        // Delete item and quantity of that item from inventory
-        if (key_exists($id, $this->item_list)) {
-            unset($this->item_list["$id"]);
-            unset($this->quant_list["$id"]);
+    /*
+     * Returns the number of items that can be removed after the operation has
+     * taken place.  If you try to remove too many items, it will not remove 
+     * any, and will return the number of items that you can remove.
+     */
+    public function modifyQuantity($item_id, $change_in_quant) {
+        $curr_quant = $this->item_list[$item_id].getQuantity();
+        $new_quant = $curr_quant + $change_in_quant;
+        if ($new_quant >= 0) {
+            $this->item_list[$item_id].setQuantity($new_quant);
+            return $new_quant;
+        } else {
+            return $curr_quant;
         }
     }
     
-    // Returns the number of items that can be added or removed.
-    public function modifyQuantity($item_id, $change_in_quant) {
-        // TODO
+    // Returns the Item object with the given ID.  Returns false if there is no
+    // Item with the given ID.
+    public function getItem($id) {
+        if (array_key_exists($id, $this->item_list)) {
+            return $this->item_list[$id];
+        } else {
+            return false;
+        }
+    }
+    
+    // Returns a list of all Item IDs in the inventory;
+    public function getItemList() {
+        return array_keys($this->item_list);
     }
 }
 
