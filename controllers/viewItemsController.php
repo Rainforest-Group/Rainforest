@@ -1,6 +1,7 @@
 <?
 require_once("rainforestClasses.php");
 require_once("databaseOps.php");
+require_once("controllers/helpers.php");
 
 function getItems() {
     $item_ids = getAllItemIDs();

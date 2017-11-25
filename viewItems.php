@@ -23,7 +23,12 @@
           <input  id="pull" class="form-control input-lg" type="text" placeholder="Search">
           <button class="btn btn-info" type="submit" id="pull">Search</button>
         </form>
-        <button type="button" class="btn btn-light" id="login" href="#main.html"><a href="login.php"><b color="white">Log In</b></a></button>
+
+<?php
+require_once("controllers/viewItemsController.php");
+
+getLoginButton();
+?>
     </nav>
   </header>
   <mid>
@@ -42,7 +47,6 @@
         </tr>
 
 <?php
-require_once("controllers/viewItemsController.php");
 
 $items = getItems();
 
