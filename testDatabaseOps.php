@@ -87,7 +87,7 @@ function testModifyItem() {
 }
 
 function testAddItem() {
-    $item = new Item(-1, "New Item", 12.12, "Epic Item");
+    $item = new Item(-1, "New Item", 12.12, "Epic Item", false, 1);
     $id = addItem($item, 4);
     testGetItem($id);
 }

@@ -22,53 +22,44 @@ class Item
     private $description;
     private $price;
     private $expired;
+    private $quantity;
     
     /*
      * When calling the constructor for Item, either give it only the id, or
-     * everything but the ID (at least name and price).  If ou only give it the 
-     * ID, the constructor will automatically fill in the rest of the 
-     * information from the database. If you give it everything but the ID, it 
-     * will keep the default id of -1 until you add it to the database, which 
-     * will assign it a new ID.
+     * a negative ID and other params.  If you only give it the ID, the 
+     * constructor will attempt to automatically fill in the rest of the 
+     * information from the database. If you give it a negative ID, it 
+     * will automatically create a new Item in the database, and will assign
+     * itself a new ID.
      */
     public function __construct($id = -1, $name = "", $price = -1, $desc = "",
-                         $expired = false)
+                         $expired = false, $quantity = 0)
     {
-        // Verifying that the constructor was called correctly
-        if ($id != -1 xor ($name != "" and $price != -1)) {
-            // If the ID was provided, get info from the database.
-            if ($id != -1) {
-                $item_info = getItemInfo($id);
-                if ($item_info) {
-                    setVariables($item_info);
-                } else {
-                    throw new Exception('The given ID does not correspond to '
-                            . 'any Item in the database.');
-                }
-            
-            // If ID was not provided, set to parameter values.
+        // If the ID was provided, get info from the database.
+        if ($id > 0) {
+            $item_info = getItemInfo($id);
+            if ($item_info) {
+                $this->setVariables($item_info);
             } else {
-                $this->id = -1;
-                $this->name = $name;
-                $this->description = $desc;
-                $this->price = $price;
-                $this->expired = $expired;
-                addItem($this);
+                throw new Exception('The given ID does not correspond to '
+                        . 'any Item in the database.');
             }
+        // If ID is 0 or negative, set to parameter values.
         } else {
-            throw new Exception("You must provide either the id or the name and"
-                    . "price, not both or neither.");
+            $this->id = -1;
+            $this->name = $name;
+            $this->description = $desc;
+            $this->price = $price;
+            $this->expired = $expired;
+            $this->quantity = $quantity;
+            $this->id = addItem($this);
+            $info = getItemInfo($this->id);
+            $this->setVariables($info);
         }
     }
     
     public function getID() {
         return $this->id;
-    }
-    
-    public function setID($id) {
-        $this->id = $id;
-        
-        modifyItem($this->id, "item_id", $id);
     }
     
     public function getName() {
@@ -111,12 +102,23 @@ class Item
         modifyItem($this->id, "expired", $exp);
     }
     
+    public function getQuantity() {
+        return $this->quantity;
+    }
+    
+    public function setQuantity($quant) {
+        $this->quantity = $quant;
+        
+        modifyItem($this->id, "quantity_in_stock", $quant);
+    }
+    
     private function setVariables($val_arr) {
-        $this->id = $val_arr['id'];
+        $this->id = $val_arr['item_id'];
         $this->name = $val_arr['title'];
         $this->description = $val_arr['description'];
-        $this->price = $val_arr['prive'];
+        $this->price = $val_arr['price'];
         $this->expired = $val_arr['expired'];
+        $this->quantity = $val_arr['quantity_in_stock'];
     }
 }
 

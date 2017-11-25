@@ -100,12 +100,13 @@
      **************************************************************************/
     
     // Takes an Item object and adds it to the database.  Returns Item ID.
-    function addItem($item, $quant) {
+    function addItem($item) {
         global $hn, $un, $pw, $db;
         $name = $item->getName();
         $desc = $item->getDescription();
         $price = $item->getPrice();
         $exp = quoteStrings($item->isExpired());
+        $quant = $item->getQuantity();
         
         $query = "INSERT INTO Items (title, price, description, "
                 . "expired, quantity_in_stock) VALUES (\"$name\", $price, "
