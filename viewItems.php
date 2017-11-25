@@ -19,8 +19,8 @@
     <!-- add logo Image   !-->
       </a>
         <!--Search form -->
-        <form class="form-inline" >
-          <input  id="pull" class="form-control input-lg" type="text" placeholder="Search">
+        <form class="form-inline" method="get" action="viewItems.php">
+        <input  name="q" id="pull" class="form-control input-lg" type="text" placeholder="Search" value="<?php if (isset($_REQUEST["q"])) echo $_REQUEST["q"]; ?>">
           <button class="btn btn-info" type="submit" id="pull">Search</button>
         </form>
 
@@ -48,7 +48,12 @@ getLoginButton();
 
 <?php
 
-$items = getItems();
+if (isset($_REQUEST["q"])) {
+    $items = getItems($_REQUEST["q"]);
+}
+else {
+    $items = getItems(false);
+}
 
 foreach ($items as $item) {
     $name = $item->getName();
