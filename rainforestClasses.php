@@ -81,6 +81,11 @@ class Item
         
         modifyItem($this->id, "description", $desc);
     }
+
+    public function getSummary() {
+        if (strlen($this->description) <= 55) return $this->description;
+        return substr($this->description, 0, 55) . "...";
+    }
     
     public function getPrice() {
         return $this->price;

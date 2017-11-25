@@ -23,8 +23,7 @@
           <input  id="pull" class="form-control input-lg" type="text" placeholder="Search">
           <button class="btn btn-info" type="submit" id="pull">Search</button>
         </form>
-        <button type="button" class="btn btn-light" id="login" href="#main.html"><a href="LogIn.html"><b color="white">Log In</b></a></button>
-        <button type="button" class="btn btn-light" id="home" href="#main.html"><a href="main.html"><b color="white">Home</b></a></button>
+        <button type="button" class="btn btn-light" id="login" href="#main.html"><a href="login.php"><b color="white">Log In</b></a></button>
     </nav>
   </header>
   <mid>
@@ -32,32 +31,34 @@
 
       <div class="container" id="margin">
         <div><h2>Items in stock: </h2></div>
+
     <table class="table table-hover">
         <tr>
           <!-- dummy data should be a PHP loop instead!-->
           <th>Name</th>
-          <th>ID</th>
+          <th>Description</th>
           <th>Quantity</th>
           <th>Price</th>
         </tr>
-        <tr>
-          <td>Car</td>
-          <td>23543453</td>
-          <td>1333</td>
-          <td>19,999$</td>
-        </tr>
-        <tr>
-          <td>Car</td>
-          <td>23543453</td>
-          <td>1333</td>
-          <td>19,999$</td>
-        </tr>
-        <tr>
-          <td>Car</td>
-          <td>23543453</td>
-          <td>1333</td>
-          <td>19,999$</td>
-        </tr>
+
+<?php
+require_once("controllers/viewItemsController.php");
+
+$items = getItems();
+
+foreach ($items as $item) {
+    $name = $item->getName();
+    $summary = $item->getSummary();
+    $quantity = $item->getQuantity();
+    $price = $item->getPrice();
+    echo "<tr>";
+    echo "<td>$name</td>";
+    echo "<td>$summary</td>";
+    echo "<td>$quantity</td>";
+    echo "<td>$price</td>";
+    echo "</tr>";
+}
+?>
     </table>
   </div>
 </div>
