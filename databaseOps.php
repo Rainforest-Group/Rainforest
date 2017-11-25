@@ -49,7 +49,9 @@
         $item_ids = array();
         $item_quants = array();
         $rows = $result->num_rows;
-        if (!$rows) return false;
+        if (!$rows) {
+            return false;
+        }
 
         for ($i = 0; $i < $rows; $i++) {
             $result->data_seek($i);
@@ -172,6 +174,24 @@
             }
         }
         return $order_id;
+    }
+    
+    // Returns a numerical array of all item IDs in the database.
+    function getAllItemIDs() {
+        $query = "SELECT item_id FROM Items";
+        $result = executeQuery($query);
+        $rows = $result->num_rows;
+        $ids = array();
+        if (!$rows) {
+            return false;
+        }
+        for ($i = 0; $i < $rows; $i++) {
+            $result->data_seek($i);
+            $row = $result->fetch_array(MYSQLI_NUM);
+            $ids[] = $row[0];
+        }
+        $result->close();
+        return $ids;
     }
     
 /******************************************************************************/

@@ -88,7 +88,7 @@ function testModifyItem() {
 
 function testAddItem() {
     $item = new Item(-1, "New Item", 12.12, "Epic Item", false, 1);
-    $id = addItem($item, 4);
+    $id = $item->getID();
     testGetItem($id);
 }
 
@@ -108,6 +108,15 @@ function testAddOrder() {
     testGetOrder($id);
 }
 
+function testGetAllItemIDs() {
+    echo "<p>Item IDs: ";
+    $ids = getAllItemIDs();
+    for ($i = 0; $i < count($ids) - 1; $i++) {
+        echo $ids[$i] . ", ";
+    }
+    echo $ids[count($ids) - 1] . "</p>";
+}
+
 
 
 testGetUser();
@@ -118,6 +127,7 @@ testModifyItem();
 testAddItem();
 testAddUser();
 testAddOrder();
+testGetAllItemIDs()
 
 ?>
 

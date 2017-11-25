@@ -127,11 +127,14 @@ class Item
 class Inventory {
     // itemList will store items, indexed by item id
     private $item_list = array();
-    // quant_list will store item quantities, indexed by item id
-    private $quant_list = array();
     
+    
+    /*
+     * The inventory constructor will pull all item IDs from the database,
+     * create new Items from all of them, and add them to the item_list.
+     */
     public function __construct() {
-        // Pull items from database, store in item/quant array.
+        $ids = getAllItemIDs();
     }
     
     // Attempts to add the item to the inventory.  Returns true if successful,
