@@ -10,5 +10,14 @@ function getLoginButton() {
 
 }
 
+function getCurrentUser() {
+
+    session_start();
+
+    if (!isset($_SESSION['username'])) return false;
+
+    return User::fetchUser($_SESSION['username']);
+}
+
 ?>
 
