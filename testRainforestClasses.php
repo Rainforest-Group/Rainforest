@@ -34,6 +34,54 @@ function testItem() {
     printItem($newitem);
 }
 
+function testInventory() {
+    //TODO: Test constructor
+    //TODO: Test updateInventory()
+    //TODO: Test addItem()
+    //TODO: Test modifyQuantity()
+    //TODO: Test getItem()
+    //TODO: Test getItemList()
+}
+
+function testOrder() {
+    //TODO: Test constructor
+    //TODO: Test getUsername()
+    //TODO: Test isFilled()
+    //TODO: Test setFilled()
+    //TODO: Test isPlaced()
+    //TODO: Test getOrderId()
+    //TODO: Test getItemList()
+    //TODO: Test addItem()
+    //TODO: Test deleteItem()
+    //TODO: Test clearOrder()
+    //TODO: Test processOrder()
+}
+
+function testUser() {
+    //TODO: Test constructor
+    //TODO: Test getFullAddress()
+    //TODO: Test getCart()
+    //TODO: Test setCart()
+    //TODO: Test getCountry()
+    //TODO: Test setCountry()
+    //TODO: Test getZip()
+    //TODO: Test setZip()
+    //TODO: Test getState()
+    //TODO: Test getCity()
+    //TODO: Test setCity()
+    //TODO: Test getStreetAddress()
+    //TODO: Test getPassword()
+    //TODO: Test setPassword()
+    //TODO: Test getEmail()
+    //TODO: Test setEmail()
+    //TODO: Test getUsername()
+    //TODO: Test setUsername()
+    //TODO: Test getOrderIds()
+    //TODO: Test updatePastOrders()
+    //TODO: Test isAdmin()
+    //TODO: Test setAdmin()
+}
+
 function printItem($item) {
     echo "<table border=\"1\">\n";
     echo "<tr><th>source<th>item_id</th><th>name</th><th>description</th>"
