@@ -15,6 +15,12 @@ require_once 'databaseOps.php';
  */
 
 /*============================================================================*/
+
+/*
+ * Be sure to put the constructor for Item in a try/catch block when pulling
+ * info from the database (by giving the constructor the item ID).  Be sure to
+ * always add new Items to your Inventory, or call updateInventory().
+ */
 class Item 
 {
     private $id;
@@ -62,6 +68,7 @@ class Item
         return $this->id;
     }
     
+    // Returns the name or title of the Item
     public function getName() {
         return $this->name;
     }
@@ -82,9 +89,13 @@ class Item
         modifyItem($this->id, "description", $desc);
     }
 
+    // Returns a shortened version of the description (55 chars or less)
     public function getSummary() {
-        if (strlen($this->description) <= 55) return $this->description;
-        return substr($this->description, 0, 55) . "...";
+        if (strlen($this->description) <= 55) {
+            return $this->description;
+        } else {
+            return substr($this->description, 0, 55) . "...";
+        }
     }
     
     public function getPrice() {
@@ -97,6 +108,7 @@ class Item
         modifyItem($this->id, "price", $price);
     }
     
+    // Returns whether or not the Item is expired (no longer being sold)
     public function isExpired() {
         return $this->expired;
     }
@@ -107,16 +119,19 @@ class Item
         modifyItem($this->id, "expired", $exp);
     }
     
+    // Returns the amount of this Item that is in stock
     public function getQuantity() {
         return $this->quantity;
     }
     
+    // Easier to use Inventory's modifyQuantity() method
     public function setQuantity($quant) {
         $this->quantity = $quant;
         
         modifyItem($this->id, "quantity_in_stock", $quant);
     }
     
+    // Private helper function
     private function setVariables($val_arr) {
         $this->id = $val_arr['item_id'];
         $this->name = $val_arr['title'];
@@ -129,13 +144,17 @@ class Item
 
 /*============================================================================*/
 
+/*
+ * Use this class when interacting with Item objects.  This class should be the
+ * only thing storing Item objects.
+ */
 class Inventory {
     // itemList will store items, indexed by item id
     private $item_list = array();
     
     /*
      * The inventory constructor will pull all item IDs from the database,
-     * create new Items from all of them, and add them to the item_list.
+     * create new Item objects from all of them, and add them to the item_list.
      */
     public function __construct() {
         $ids = getAllItemIDs();
@@ -145,8 +164,16 @@ class Inventory {
         }
     }
     
-    // Attempts to add the item to the inventory.  Returns true if successful,
-    // or false if the item was already in the inventory.
+    // Updates the inventory by re-checking the database for any new Items.
+    public function updateInventory() {
+        $this->__construct();
+    }
+    
+    /* Attempts to add the item to the inventory.  Returns true if successful,
+     * or false if the item was already in the inventory
+     * .  
+     * May be better to use updateInventory();
+     */
     public function addItem($item)
     {
         if (!key_exists($item->getID(), $this->item_list)) {
@@ -187,69 +214,6 @@ class Inventory {
         return array_keys($this->item_list);
     }
 }
-
-
-/******************************************************************************/
-
-/*
- * The Cart class represent each customer's cart.
- * 
- * Constructor: Cart(string username, { array<int> item_list,
- *                                      array<int> quant_list } )
- *                                         ^Final 2 params are optional;
- *                                          must put neither or both.
- * 
- * Methods:
- * addToCart(int item, int quantity) - inserts $quantity item ids into the cart
- * clearCart() - removes all items from the user's cart.
- * 
- * Getters and Setters:
- * getUsername - returns the username of the cart's owner
- */
-/*class Cart {
-    private $username;
-    private $item_list = array(); // stores item ids
-    private $quant_list = array();
-
-    public function __construct($username, $i_list = null, $q_list = null) {
-        $this->username = $username;
-        if ($i_list == null xor $q_list == null) {
-            throw new Exception('Must provide both $i_list and $q_list, '
-                              . 'or neither one of them');
-        }
-        if ($i_list != null) {
-            $this->item_list = $i_list;
-            if ($q_list != null) {
-                $this->quant_list = $q_list;
-            }
-        }
-    }
-
-    // Adds the given item id and quantity to the cart.
-    public function addToCart($item_ids, $quantity) {
-        $this->item_list[] = $item_ids;
-        $this->quant_list[] = $quantity;
-
-        // TODO: update database
-    }
-
-    // Removes all items from the user's cart.
-    public function clearCart() {
-        $this->item_list = array();
-        $this->quant_list = array();
-
-        // TODO: update database
-    }
-
-    public function getUsername() {
-        return $this->username;
-    }
-    
-    // Turn cart into an order, then process that order
-    public function checkOut() {
-        
-    }
-}*/
 
 /*============================================================================*/
 
@@ -301,55 +265,65 @@ class Order
         }
     }
     
+    // Returns the username associated with the order.
     function getUsername() {
         return $this->username;
     }
     
+    // Returns a boolean indicating whether or not the order has been fulfilled.
     function isFilled() {
         return $this->filled;
     }
     
+    // Takes a boolean parameter indicating if the order has been fulfilled.
     function setFilled($filled) {
         $this->filled = $filled;
         
         modifyOrder($this->order_id, "filled", $this->filled);
     }
     
+    // Returns a boolean indicating whether or not the order has been placed.
     function isPlaced() {
         return $this->placed;
     }
     
+    // Returns an int - the order ID.
     function getOrderId() {
         return $this->order_id;
     }
     
+    // Returns an array of item quantities, indexed by Item ID.
     function getItemList() {
         return $this->item_list;
     }
 
-    // This function adds the given Item to the list of items in the order.
-    function addItem($item) {
-        if (!placed) {
-            $this->item_list[] = $item;
+    // Takes an item id (int) and quantity (int) and adds them to the order.
+    // This cannot happen once the order has been processed.
+    function addItem($item_id, $quant) {
+        if (!$this->placed) {
+            $this->item_list[$item_id] = $quant;
         }
     }
     
-    // Because the order is not saved to the database until it is placed, there
-    // is never any need to delete items from the database.
+    // Takes an item ID (int) and deletes that item from the order.  This cannot
+    // happen once the order has been processed.
     function deleteItem($item_id) {
-        if (!placed) {
+        if (!$this->placed) {
             unset($this->item_list[$item_id]);
         }
     }
     
-    // Removes all items from the user's cart.
+    // Removes all items from the order.  This cannot take place once the order
+    // has been processed.
     public function clearOrder() {
-        $this->item_list = array();
+        if (!$this->placed) {
+            $this->item_list = array();
+        }
     }
     
     /*
-     * Adds all order info to Orders and OrderItems tables in database, and
-     * creates a new PastOrder object.  Once an order is processed, it cannot be
+     * Adds all order info to the Orders and OrderItems tables in database, and
+     * marks the order as placed. Once an order is processed, it cannot be
      * changed or deleted from the database.
      */
     function processOrder() {
@@ -359,13 +333,6 @@ class Order
         }
     }
 }
-
-/*class PastOrder extends Order
-{
-    function processOrder() {
-        return null;
-    }
-}*/
 
 /*============================================================================*/
 
@@ -567,42 +534,76 @@ class User
 /*============================================================================*/
 
 /*
- >>>>>>>>>>>>>>>>>>>>>>>>>>>>> TALK ABOUT THIS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-*/
-/*class Admin extends User
-{   
-    // A pointer to the list of orders
-    public $orders;
-}
+ * Everything below here is stuff that may be removed, but is currently only
+ * commented out.
+ */
 
-//==============================================================================
+/******************************************************************************/
 
-class Customer extends User
-{
-    public $past_order_ids;
+/*
+ * The Cart class represent each customer's cart.
+ * 
+ * Constructor: Cart(string username, { array<int> item_list,
+ *                                      array<int> quant_list } )
+ *                                         ^Final 2 params are optional;
+ *                                          must put neither or both.
+ * 
+ * Methods:
+ * addToCart(int item, int quantity) - inserts $quantity item ids into the cart
+ * clearCart() - removes all items from the user's cart.
+ * 
+ * Getters and Setters:
+ * getUsername - returns the username of the cart's owner
+ */
+/*class Cart {
+    private $username;
+    private $item_list = array(); // stores item ids
+    private $quant_list = array();
 
-    function chargeOrder($orderID)
-    {
-        $this->past_order_ids[] = $orderID;
-        $this->cart->clearCart();
+    public function __construct($username, $i_list = null, $q_list = null) {
+        $this->username = $username;
+        if ($i_list == null xor $q_list == null) {
+            throw new Exception('Must provide both $i_list and $q_list, '
+                              . 'or neither one of them');
+        }
+        if ($i_list != null) {
+            $this->item_list = $i_list;
+            if ($q_list != null) {
+                $this->quant_list = $q_list;
+            }
+        }
+    }
+
+    // Adds the given item id and quantity to the cart.
+    public function addToCart($item_ids, $quantity) {
+        $this->item_list[] = $item_ids;
+        $this->quant_list[] = $quantity;
+
         // TODO: update database
+    }
+
+    // Removes all items from the user's cart.
+    public function clearCart() {
+        $this->item_list = array();
+        $this->quant_list = array();
+
+        // TODO: update database
+    }
+
+    public function getUsername() {
+        return $this->username;
+    }
+    
+    // Turn cart into an order, then process that order
+    public function checkOut() {
+        
     }
 }*/
 
-
-
-
-/*  This may or may not be used, but I didn't want to take it out completely.
-    function addNewItem($sentID = -1, $sentType = "", $sentDesc = "", $sentPrice = 0.0, $sentQuant = 0)
-    {
-        // Ensure that the item doesn't already exist.
-        // Check if itemID exists in an item in the itemList
-        $newItem = new Item($sentID, $sentType, $sentDesc, $sentPrice);
-        $itemFound = self.addExisitingItem($newItem, $sentQuant);
-        if (!$itemFound) {
-            // If it does not exist, create and add new item.
-            $itemList[$newItem] = $sentQuant;
-        }
-    }*/
-
+/*class PastOrder extends Order
+{
+    function processOrder() {
+        return null;
+    }
+}*/
 ?>
