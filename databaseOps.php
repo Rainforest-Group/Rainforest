@@ -94,6 +94,16 @@
         return true;
     }
     
+    function modifyOrder($order_id, $attribute, $val) {
+        $query = "UPDATE Orders SET $attribute = " . quoteStrings($val) . 
+                " WHERE order_id = $order_id";
+        $result = executeQuery($query);
+        if (!$result) {
+            return false;
+        }
+        return true;
+    }
+    
     /***************************************************************************
      * The following functions are adders.  They ask for an object to add to
      * the database, as well as any other needed info.
@@ -157,7 +167,9 @@
         global $hn, $un, $pw, $db;
         $username = $order->getUsername();
         $items = $order->getItemList();
-        $query = "INSERT INTO Orders (username) VALUES (\"$username\")";
+        $filled = quoteStrings($order->isFilled());
+        $query = "INSERT INTO Orders (username, filled) VALUES"
+                . " (\"$username\", $filled)";
         
         $conn = new mysqli($hn, $un, $pw, $db);
         if ($conn->connect_error) {

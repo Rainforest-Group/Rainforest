@@ -206,7 +206,7 @@ class Inventory {
  * Getters and Setters:
  * getUsername - returns the username of the cart's owner
  */
-class Cart {
+/*class Cart {
     private $username;
     private $item_list = array(); // stores item ids
     private $quant_list = array();
@@ -249,36 +249,74 @@ class Cart {
     public function checkOut() {
         
     }
-}
+}*/
 
 /*============================================================================*/
 
 /*
-* The Order class contains information about each individual order.
-* 
-* Constructor: Order(string username, int order_id, array<Item> item_list);
-*                                                 ^optional final param
-*                                                   
-* Methods:
-* addItem($item) - adds an item to the order.
-*/
+ * The Order class also functions as the cart.  Nothing is saved to the database
+ * until the order is processed.  So all carts are temporary (not saved to the
+ * database).
+ */
 class Order 
 {      
     // item_list has the item_id as the key, and quantity as the value
     private $item_list = array();
-    private $username;
+    private $username; // username of the associated user.
     private $order_id;
+    private $placed; // has the order been placed (cart checkout)
+    private $filled; // has the order been fulfilled
 
-    function __construct($username, $o_id = -1, $i_list = null) {
-        $this->username = $username;
-        $this->order_id = $o_id;
-        if ($i_list != null) {
-            $this->item_list = $i_list;
+    /*
+     * When calling the constructor, giving it a positive order ID will make it
+     * fill in the data from the database associated with that order id.  Giving
+     * it a negative order ID will make it use the parameters given to it to
+     * create a new order.  The order will not be added to the database, and
+     * thus not given a new order ID, until processOrder has been called (when
+     * the order is placed).
+     */
+    function __construct($o_id, $username = "", $i_list = null, 
+            $order_placed = false, $order_filled = false) {
+        if($o_id > 0) {
+            // If they gave a positive ID, get info from the database
+            $data = getOrderInfo($o_id);
+            $this->order_id = $o_id;
+            $this->username = $data['username'];
+            $this->placed = true;
+            $this->filled = $data['filled'];
+            for ($i = 0; $i < count($data['item_list']); $i++) {
+                $item_id = $data['item_list'][$i];
+                $quant = $data['quant_list'][$i];
+                $this->item_list[$item_id] = $quant;
+            }
+        } else {
+            // If they gave a negative ID, set info from parameters
+            $this->order_id = -1;
+            $this->username = $username;
+            $this->filled = $order_filled;
+            $this->placed = $order_placed;
+            if ($i_list != null) {
+                $this->item_list = $i_list;
+            }
         }
     }
     
     function getUsername() {
         return $this->username;
+    }
+    
+    function isFilled() {
+        return $this->filled;
+    }
+    
+    function setFilled($filled) {
+        $this->filled = $filled;
+        
+        modifyOrder($this->order_id, "filled", $this->filled);
+    }
+    
+    function isPlaced() {
+        return $this->placed;
     }
     
     function getOrderId() {
@@ -291,24 +329,43 @@ class Order
 
     // This function adds the given Item to the list of items in the order.
     function addItem($item) {
-        $this->item_list[] = $item;
+        if (!placed) {
+            $this->item_list[] = $item;
+        }
+    }
+    
+    // Because the order is not saved to the database until it is placed, there
+    // is never any need to delete items from the database.
+    function deleteItem($item_id) {
+        if (!placed) {
+            unset($this->item_list[$item_id]);
+        }
+    }
+    
+    // Removes all items from the user's cart.
+    public function clearOrder() {
+        $this->item_list = array();
     }
     
     /*
      * Adds all order info to Orders and OrderItems tables in database, and
-     * creates a new PastOrder object.  Returns the new PastOrder.
+     * creates a new PastOrder object.  Once an order is processed, it cannot be
+     * changed or deleted from the database.
      */
-    public function processOrder() {
-        
+    function processOrder() {
+        if (!placed) {
+            $this->placed = true;
+            $this->order_id = addOrder($this);
+        }
     }
 }
 
-class PastOrder extends Order
+/*class PastOrder extends Order
 {
-    public function processOrder() {
+    function processOrder() {
         return null;
     }
-}
+}*/
 
 /*============================================================================*/
 
