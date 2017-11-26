@@ -66,6 +66,43 @@
         return $return_array;
     }
     
+    // Returns a numerical array of all item IDs in the database.  No parameters
+    function getAllItemIDs() {
+        $query = "SELECT item_id FROM Items";
+        $result = executeQuery($query);
+        $rows = $result->num_rows;
+        $ids = array();
+        if (!$rows) {
+            return false;
+        }
+        for ($i = 0; $i < $rows; $i++) {
+            $result->data_seek($i);
+            $row = $result->fetch_array(MYSQLI_NUM);
+            $ids[] = $row[0];
+        }
+        $result->close();
+        return $ids;
+    }
+    
+    // Returns a numerical array with all the order IDs associated with the
+    // given username.
+    function getAllUserOrders($username) {
+        $query = "SELECT order_id FROM Orders WHERE username = \"$username\"";
+        $result = executeQuery($query);
+        $rows = $result->num_rows;
+        $ids = array();
+        if (!$rows) {
+            return false;
+        }
+        for ($i = 0; $i < $rows; $i++) {
+            $result->data_seek($i);
+            $row = $result->fetch_array(MYSQLI_NUM);
+            $ids[] = $row[0];
+        }
+        $result->close();
+        return $ids;
+    }
+    
     /***************************************************************************
      * The following functions are modifiers.  They ask for the primary key of
      * the item you want to modify, as well as the name of the attribute you
@@ -186,24 +223,6 @@
             }
         }
         return $order_id;
-    }
-    
-    // Returns a numerical array of all item IDs in the database.
-    function getAllItemIDs() {
-        $query = "SELECT item_id FROM Items";
-        $result = executeQuery($query);
-        $rows = $result->num_rows;
-        $ids = array();
-        if (!$rows) {
-            return false;
-        }
-        for ($i = 0; $i < $rows; $i++) {
-            $result->data_seek($i);
-            $row = $result->fetch_array(MYSQLI_NUM);
-            $ids[] = $row[0];
-        }
-        $result->close();
-        return $ids;
     }
     
 /******************************************************************************/

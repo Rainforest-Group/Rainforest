@@ -64,32 +64,36 @@ class Item
         }
     }
     
+    // Returns the Item ID (int)
     public function getID() {
         return $this->id;
     }
     
-    // Returns the name or title of the Item
+    // Returns the name or title of the Item (string)
     public function getName() {
         return $this->name;
     }
     
+    // Takes the new name (string) as a parameter
     public function setName($name) {
         $this->name = $name;
         
         modifyItem($this->id, "title", $name);
     }
     
+    // Returns the item's full description (string)
     public function getDescription() {
         return $this->description;
     }
     
+    // Takes the item description (string) as a parameter.
     public function setDescription($desc) {
         $this->description = $desc;
         
         modifyItem($this->id, "description", $desc);
     }
 
-    // Returns a shortened version of the description (55 chars or less)
+    // Returns a shortened version of the description (55 char string or less)
     public function getSummary() {
         if (strlen($this->description) <= 55) {
             return $this->description;
@@ -98,33 +102,37 @@ class Item
         }
     }
     
+    // Returns the item's price (float)
     public function getPrice() {
         return $this->price;
     }
     
+    // Takes a the new price (float with 2 decimals) as a parameter.
     public function setPrice($price) {
         $this->price = $price;
         
         modifyItem($this->id, "price", $price);
     }
     
-    // Returns whether or not the Item is expired (no longer being sold)
+    // Returns a boolean stating if the item is expired (no longer being sold)
     public function isExpired() {
         return $this->expired;
     }
     
+    // Takes a boolean indicating whether the item is expired.
     public function setExpired($exp) {
         $this->expired = $exp;
         
         modifyItem($this->id, "expired", $exp);
     }
     
-    // Returns the amount of this Item that is in stock
+    // Returns the amount of this Item that is in stock (int)
     public function getQuantity() {
         return $this->quantity;
     }
     
-    // Easier to use Inventory's modifyQuantity() method
+    // Takes the new quantity (int) as a parameter.
+    // Easier to use Inventory's modifyQuantity() method.
     public function setQuantity($quant) {
         $this->quantity = $quant;
         
@@ -169,7 +177,9 @@ class Inventory {
         $this->__construct();
     }
     
-    /* Attempts to add the item to the inventory.  Returns true if successful,
+    /* Takes an Item object as a parameter.
+     * 
+     * Attempts to add the item to the inventory.  Returns true if successful,
      * or false if the item was already in the inventory
      * .  
      * May be better to use updateInventory();
@@ -183,10 +193,13 @@ class Inventory {
         return false;
     }
     
-    /*
+    /* 
+     * Takes the item ID (int) and a change in quantity (int) as parameters.
      * Returns the number of items that can be removed after the operation has
      * taken place.  If you try to remove too many items, it will not remove 
-     * any, and will return the number of items that you can remove.
+     * any, and will return the number of items that you can remove.  Use a
+     * negative change in quantity to remove and a positive change in quantity
+     * to add items.
      */
     public function modifyQuantity($item_id, $change_in_quant) {
         $curr_quant = $this->item_list[$item_id].getQuantity();
@@ -200,7 +213,7 @@ class Inventory {
     }
     
     // Returns the Item object with the given ID.  Returns false if there is no
-    // Item with the given ID.
+    // Item with the given ID (int).
     public function getItem($id) {
         if (array_key_exists($id, $this->item_list)) {
             return $this->item_list[$id];
@@ -209,7 +222,7 @@ class Inventory {
         }
     }
     
-    // Returns a list of all Item IDs in the inventory;
+    // Returns an array of all Item IDs in the inventory;
     public function getItemList() {
         return array_keys($this->item_list);
     }
@@ -337,21 +350,13 @@ class Order
 /*============================================================================*/
 
 /*
-* The User class stores info that all users (admins and customers) have.
-*  
-* Constructor: User(string username, string password, { string address,
-*                   string city, string state, int zip, string country,
-*                   Cart * cart } );
-*                   
-*                   ^params that are surrounded by {} are optional)
-*                                                   
-* Methods:
-* getFullAddress() - returns the full address of the user in string format.
-*/
+ * User class
+ */
 class User 
 {
     protected $username;
     protected $password;
+    protected $email;
     protected $address;
     protected $city;
     protected $state;
@@ -359,164 +364,160 @@ class User
     protected $country;
     protected $cart;
     protected $is_admin; // whether the user is an admin or customer
-    protected $past_orders; // an array of PastOrder objects
+    protected $past_orders; // a list of order IDs
     
-    // Need to allow for just the ID.
-    function __construct($username, $password, $email, $address = "", $city = "", 
-                        $state = "", $zip = "", $country = "", $cart = NULL)
+    /*
+     * If no password is given, the constructor will automatically fill in the
+     * remaining info from the database, using the username provided.
+     * If at least a username and password are given, a new user will be created
+     * in the database using the given info.
+     */
+    function __construct($username, $password = "", $email = "", $address = "", $city = "", 
+                        $state = "", $zip = "", $country = "", $is_admin = false)
     {
-        $this->username = $username;
-        $this->password = $password;
-        $this->email = $email;
-        $this->address = $address;
-        $this->city = $city;
-        $this->state = $state;
-        $this->zip = $zip;
-        $this->country = $country;
-        $this->cart = $cart;
-    }
-    
-    /*
-     * In this constructor, providing only the username will make it
-     * automatically fill in the rest of the info from the database.  Providing
-     * anything else will automatically create a new user in the database
-     * with the provided information.  It will return true if successful or
-     * false if unsuccessful.
-     */
-    /*function __construct($username, $password = "", $address = "", $city = "", 
-                        $state = "", $zip = "", $country = "", $cart = NULL,
-                        $is_admin = false) {
-        // pull user info from database
-        
-        // pull past order info from the database
-            // create new PastOrder objects, and put them in $past_orders
+        if ($password == "") {
+            $data = getUserInfo($username);
+            $this->setVariables($data);
+            $this->past_orders = getAllUserOrders($username);
+        } else {
+            $this->username = $username;
+            $this->password = $password;
+            $this->email = $email;
+            $this->address = $address;
+            $this->city = $city;
+            $this->state = $state;
+            $this->zip = $zip;
+            $this->country = $country;
+            $this->is_admin = $is_admin;
+            addUser($this);
+        }
     }
 
-    /*
-     * Fetches a user with the given username
-     */
-    public static function fetchUser($username) {
-    // stub code
-        $user_data = getUserInfo($username);
-        if (!$user_data) return false;
-
-        $user = new User($user_data['username'], $user_data['user_password'], $user_data['email'],
-            $user_data['street'], $user_data['city'], $user_data['state'], $user_data['zip'], $user_data['country']);
-
-        return $user;
-    }
-
-    // Saves the user in the database
-    function save() {
-        return addUser($this);
-    }
-
-    // Returns a string with the full address of the User, properly formatted.
+    // Returns a string with the full address of the User, HTML formatted.
     function getFullAddress() {
         return "$this->address<br>$this->city, "
              . "$this->state $this->zip<br>$this->country";
     }
     
-    // Standard getters and setters:
-
+    // Returns the order object that is the user's cart.
     function getCart() {
         return $this->cart;
     }
 
+    // Takes an Order object and sets it as the user's cart.
     function setCart($cart) {
         $this->cart = $cart;
-
-        // TODO: update database
     }
 
+    // Returns the user's country (string)
     function getCountry() {
         return $this->country;
     }
 
+    // Takes a string as a parameter: the user's country
     function setCountry($country) {
         $this->country = $country;
 
-        // TODO: update database
+        modifyUser($this->username, "country", $country);
     }
 
+    // Returns the users ZIP code (int)
     function getZip() {
         return $this->zip;
     }
     
+    // Takes an int as a parameter (the user's zip code) 
     function setZip($zip) {
         $this->zip = $zip;
         
-        // TODO: update database
+        modifyUser($this->username, "zip", $zip);
     }
 
+    // Returns the user's State (strinng)
     function getState() {
         return $this->state;
     }
     
+    // Takes the user's state as a parameter (string)
     function setState($state) {
         $this->state = $state;
         
-        // TODO: update database
+        modifyUser($this->username, "state", $state);
     }
 
+    // Returns the user's city (string)
     function getCity() {
         return $this->city;
     }
     
+    // Takes the user's city as a parameter (string)
     function setCity($city) {
         $this->city = $city;
         
-        // TODO: update database
+        modifyUser($this->username, "city", $city);
     }
 
+    // Returns the user's street address (string)
     function getStreetAddress() {
         return $this->address;
     }
     
+    // Takes the user's street address as a parameter (string)
     function setStreetAddress($address) {
         $this->address = $address;
         
-        // TODO: update database
+        modifyUser($this->username, "address", $address);
     }
 
+    // Returns the user's password (string)
     function getPassword() {
         return $this->password;
     }
     
+    // Takes the user's password as a param (string).
+    // Does not encrypt the password.
     function setPassword($password) {
         $this->password = $password;
         
-        // TODO: update database
+        modifyUser($this->username, "password", $password);
     }
     
+    // Returns the user's email (string)
     function getEmail() {
         return $this->email;
     }
     
+    // Takes the user's email as a parameter (string)
     function setEmail() {
         $this->email = $email;
         
-        // TODO: update database
+        modifyUser($this->username, "email", $email);
     }
 
+    // Returns the user's username (string)
     function getUsername() {
         return $this->username;
     }
     
+    // Takes the username as a param (string)
     function setUsername($username) {
         $this->username = $username;
         
-        // TODO: update database
+        modifyUser($this->username, "username", $username);
     }
     
-    // Returns the order ids associated with the user.
+    // Returns an array of order ids associated with the user.
     function getOrderIds() {
-        // TODO: fill in
+        $this->updatePastOrders();
+        return $this->past_orders;
     }
     
-    // Add a PastOrder to past_orders
-    function addPastOrder($pastorder) {
-        // TODO: fill in
+    /*
+     * Updates the list of past orders.  This is automatically called in
+     * getOrderIds().
+     */
+    function updatePastOrders() {
+        $this->past_orders = getAllUserOrders($this->username);
     }
     
     //Returns true if the user is an admin, flase otherwise.
@@ -524,10 +525,24 @@ class User
         return $this->is_admin;
     }
     
+    // Takes a boolean indicating whether the user is an admin.
     function setAdmin($is_admin) {
         $this->is_admin = $is_admin;
         
-        //TODO: update database
+        modifyUser($this->username, "is_admin", $is_admin);
+    }
+    
+    // Private helper method.
+    private function setVariables($data) {
+        $this->username = $data['username'];
+        $this->password = $data['password'];
+        $this->email = $data['email'];
+        $this->address = $data['address'];
+        $this->city = $data['city'];
+        $this->state = $data['state'];
+        $this->zip = $data['zip'];
+        $this->country = $data['country'];
+        $this->is_admin = $data['is_admin'];
     }
 }
 
@@ -606,4 +621,23 @@ class User
         return null;
     }
 }*/
+
+/*
+     * Fetches a user with the given username
+     */
+    /*public static function fetchUser($username) {
+    // stub code
+        $user_data = getUserInfo($username);
+        if (!$user_data) return false;
+
+        $user = new User($user_data['username'], $user_data['user_password'], $user_data['email'],
+            $user_data['street'], $user_data['city'], $user_data['state'], $user_data['zip'], $user_data['country']);
+
+        return $user;
+    }
+
+    // Saves the user in the database
+    function save() {
+        return addUser($this);
+    }*/
 ?>
