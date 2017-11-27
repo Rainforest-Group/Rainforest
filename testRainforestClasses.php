@@ -170,9 +170,61 @@ function testOrder() {
     if($testPass) { echo(" Pass (2/2)<br/>"); }
     else { echo(" Fail (2/2)<br/>"); }
 
-    //TODO: Test deleteItem()
-    //TODO: Test clearOrder()
-    //TODO: Test processOrder()
+    //Test deleteItem()
+    echo("deleteItem...");
+    $testPass = true;
+    $newOrder->deleteItem(1);
+    $tempItemList = $newOrder->getItemList();
+    foreach ($tempItemList as $key => $value) {
+        if ($key == 1) {
+            $testPass = false;
+        }
+    }
+    if($testPass) {
+        echo(" Pass (1/2) ");
+        $testPass = false;
+    } else {
+        echo(" Fail (1/2) ");
+    }
+
+    $oldOrder->deleteItem(1);
+    $tempItemList = $oldOrder->getItemList();
+    foreach ($tempItemList as $key => $value) {
+        if ($key == 1) {
+            $testPass = true;
+        }
+    }
+    if($testPass) { echo(" Pass (2/2)<br/>"); }
+    else { echo(" Fail (2/2)<br/>"); }
+
+    //Test clearOrder()
+    echo("clearOrder...");
+    $newOrder->clearOrder();
+    $tempItemList = $newOrder->getItemList();
+    if(count($tempItemList) == 0) { echo(" Pass (1/2) "); }
+    else { echo(" Fail (1/2) "); }
+    $tempItemList = $oldOrder->getItemList();
+    if(count($tempItemList) > 0) { echo(" Pass (2/2)<br/>"); }
+    else { echo(" Fail (2/2)<br/>"); }
+
+    //Test processOrder()
+    echo("processOrder (assuming order not placed yet)...");
+    
+    $newOrder->addItem(1, 3);
+    $newOrder->addItem(2, 5);
+    $newOrder->addItem(3, 6);
+    
+    if($newOrder->isPlaced() == false) { echo(" Pass (1/2) "); }
+    else { echo(" Fail (1/2) "); }
+    $newOrder->processOrder();
+    if($newOrder->isPlaced() == true) { echo(" Pass (2/2)<br/>"); }
+    else { echo(" Fail (2/2)<br/>"); }
+
+    echo("Items placed in new order:<br/>");
+    $tempItemList = $newOrder->getItemList();
+    foreach ($tempItemList as $key => $value) {
+        echo("ItemID:" . $key . " | Quant:" . $value . "<br/>");
+    }
 }
 
 function testUser() {

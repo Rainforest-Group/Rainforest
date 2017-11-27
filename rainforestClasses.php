@@ -316,7 +316,13 @@ class Order
     // This cannot happen once the order has been processed.
     function addItem($item_id, $quant) {
         if (!$this->placed) {
-            $this->item_list[$item_id] += $quant;
+            foreach ($this->item_list as $key=>$value) {
+                if ($key == $item_id) {
+                    $this->item_list[$item_id] += $quant;
+                    return;
+                }
+            }
+            $this->item_list[$item_id] = $quant;
         }
     }
     
@@ -342,7 +348,7 @@ class Order
      * changed or deleted from the database.
      */
     function processOrder() {
-        if (!placed) {
+        if (!$this->placed) {
             $this->placed = true;
             $this->order_id = addOrder($this);
         }
