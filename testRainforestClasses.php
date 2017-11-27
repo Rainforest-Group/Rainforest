@@ -35,12 +35,45 @@ function testItem() {
 }
 
 function testInventory() {
-    //TODO: Test constructor
-    //TODO: Test updateInventory()
-    //TODO: Test addItem()
+    //Test constructor
+    //$item1 = new Item(-1, "testItem", 113, "test description", false, 10);
+    //$item2 = new Item(2, "Apple", 12.5, "A red apple.", false, 6);
+    //$item3 = new Item(2, "Old Item", 37.0, "An expired item.", true, 25);
+    $testInv = new Inventory();
+    
+    //Test updateInventory()
+    echo("Testing update...");
+    $testInv->updateInventory();
+    echo(" Pass<br/>");
+
+    //Test addItem()
+    echo("Adding item...<br/>");
+    $item2 = new Item(-1, "Apple", 12.5, "A red apple.", false, 6);
+    $addPass = $testInv->addItem($item2);
+    if ($addPass) {
+        echo("Pass<br/>");
+    } else {
+        echo("Fail<br/>");
+    }
+
     //TODO: Test modifyQuantity()
+
     //TODO: Test getItem()
-    //TODO: Test getItemList()
+    echo("Getting item info...");
+    $getItem = $testInv->getItem(2);
+    if ($getItem) {
+        echo("<br/");
+        printItem();
+    } else {
+        echo(" Failed<br/>");
+    }
+
+    //Test getItemList()
+    $itemList = $testInv->getItemList();
+    echo("Item IDs:<br/>");
+    foreach ($itemList as $curVal) {
+        echo($curVal . ", ");
+    }
 }
 
 function testOrder() {
@@ -103,7 +136,11 @@ function printItem($item) {
             . "</td><td>$dbprice</td><td>$dbexp</td></tr></table><br><br>";
 }
 
-testItem();
+echo("Testing Item class...<br/><br/>");
+//testItem(); // Disable to prevent item creations.
+
+echo("<br/><br/>Testing Inventory class...<br/><br/>");
+testInventory();
 
 ?>
 
