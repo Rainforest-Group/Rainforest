@@ -539,7 +539,7 @@ class User
         $this->username = $data['username'];
         $this->password = $data['password'];
         $this->email = $data['email'];
-        $this->address = $data['address'];
+        $this->address = $data['street'];
         $this->city = $data['city'];
         $this->state = $data['state'];
         $this->zip = $data['zip'];
