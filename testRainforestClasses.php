@@ -35,10 +35,6 @@ function testItem() {
 }
 
 function testInventory() {
-    //Test constructor
-    //$item1 = new Item(-1, "testItem", 113, "test description", false, 10);
-    //$item2 = new Item(2, "Apple", 12.5, "A red apple.", false, 6);
-    //$item3 = new Item(2, "Old Item", 37.0, "An expired item.", true, 25);
     $testInv = new Inventory();
     
     //Test updateInventory()
@@ -47,25 +43,35 @@ function testInventory() {
     echo(" Pass<br/>");
 
     //Test addItem()
-    echo("Adding item...<br/>");
+    echo("Adding item...");
     $item2 = new Item(-1, "Apple", 12.5, "A red apple.", false, 6);
     $addPass = $testInv->addItem($item2);
     if ($addPass) {
-        echo("Pass<br/>");
+        echo(" Pass<br/>");
     } else {
-        echo("Fail<br/>");
+        echo(" Fail<br/>");
     }
 
-    //TODO: Test modifyQuantity()
+    //Test modifyQuantity()
+    echo("Modifying Quantities...");
+    $modTestsPass = true;
+    $modTestsPass = $modTestsPass and $testInv->modifyQuantity(1, 3);
+    $modTestsPass = $modTestsPass and $testInv->modifyQuantity(1, -3);
+    $modTestsPass = $modTestsPass and !$testInv->modifyQuantity(3, 12);
+    if ($modTestsPass) {
+        echo(" Pass<br/>");
+    } else {
+        echo(" Fail<br/>");
+    }
 
-    //TODO: Test getItem()
+    //Test getItem()
     echo("Getting item info...");
     $getItem = $testInv->getItem(2);
     if ($getItem) {
-        echo("<br/");
-        printItem();
+        echo(" Pass<br/><br/>");
+        printItem($getItem);
     } else {
-        echo(" Failed<br/>");
+        echo(" Fail<br/>");
     }
 
     //Test getItemList()
@@ -139,7 +145,7 @@ function printItem($item) {
 echo("Testing Item class...<br/><br/>");
 //testItem(); // Disable to prevent item creations.
 
-echo("<br/><br/>Testing Inventory class...<br/><br/>");
+echo("Testing Inventory class...<br/><br/>");
 testInventory();
 
 ?>
