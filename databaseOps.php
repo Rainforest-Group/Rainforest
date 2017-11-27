@@ -187,7 +187,7 @@
         $zip = $user->getZip();
         $admin = quoteStrings($user->isAdmin());
         
-        $query = "INSERT INTO Users (username, user_password, email, "
+        $query = "INSERT INTO Users (username, password, email, "
                 . "street, city, state, country, zip, is_admin) VALUES ("
                 . "\"$username\", \"$password\", \"$email\", \"$street\", "
                 . "\"$city\", \"$state\", \"$country\", $zip, $admin)";
