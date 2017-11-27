@@ -41,8 +41,6 @@ function createAccount($username, $password, $address, $city, $state, $zip)
     // Assume all the fields are valid
     $new_user = new User($username, encrypt($password), "", $address, $city, $state, $zip);
 
-    echo $new_user->save();
-
     return $new_user;
 }
 
