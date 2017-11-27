@@ -385,8 +385,12 @@ class User
     {
         if ($password == "") {
             $data = getUserInfo($username);
+			if (!$data) {
+				return false;
+			}
             $this->setVariables($data);
             $this->past_orders = getAllUserOrders($username);
+			return true;
         } else {
             $this->username = $username;
             $this->password = $password;
