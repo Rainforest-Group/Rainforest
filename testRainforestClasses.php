@@ -83,14 +83,93 @@ function testInventory() {
 }
 
 function testOrder() {
-    //TODO: Test constructor
-    //TODO: Test getUsername()
-    //TODO: Test isFilled()
-    //TODO: Test setFilled()
-    //TODO: Test isPlaced()
-    //TODO: Test getOrderId()
-    //TODO: Test getItemList()
-    //TODO: Test addItem()
+    //Test constructor
+    $itemList[1] = 3;
+    $itemList[2] = 5;
+    $itemList[3] = 6;
+    $newOrder = new Order(-1, "oldme", $itemList, false, false);
+    $oldOrder = new Order(1);
+
+    //Test getUsername()
+    echo("getUsername... ");
+    if ($newOrder->getUsername() == "oldme") { echo(" Pass (1/2) "); }
+    else { echo(" Fail (1/2) "); }
+
+    if ($oldOrder->getUsername() == "bjones") { echo(" Pass (2/2)<br/>"); }
+    else { echo(" Fail (2/2)<br/>"); }
+
+    //Test isFilled()
+    echo("isFilled... ");
+    if ($newOrder->isFilled() == false) { echo(" Pass (1/2) "); }
+    else { echo(" Fail (1/2) "); }
+
+    if ($oldOrder->isFilled() == true) { echo(" Pass (2/2)<br/>"); }
+    else { echo(" Fail (2/2)<br/>"); }
+
+    //Test setFilled()
+    echo("setFilled...");
+    $newOrder->setFilled(true);
+    if ($newOrder->isFilled() == true) { echo(" Pass (1/2) "); }
+    else { echo(" Fail (1/2) "); }
+
+    $newOrder->setFilled(false);
+    if ($newOrder->isFilled() == false) { echo(" Pass (2/2)<br/>"); }
+    else { echo(" Fail (2/2)<br/>"); }
+
+    //Test isPlaced()
+    echo("isPlaced...");
+    if ($newOrder->isPlaced() == false) { echo(" Pass (1/2) "); }
+    else { echo(" Fail (1/2) "); }
+
+    if ($oldOrder->isPlaced() == true) { echo(" Pass (2/2)<br/>"); }
+    else { echo(" Fail (2/2)<br/>"); }
+
+    //Test getOrderId()
+    echo("getOrderID...");
+    if($newOrder->getOrderId() == -1) { echo(" Pass (1/2) "); }
+    else { echo(" Fail (1/2) "); }
+    if($oldOrder->getOrderId() == 1) { echo(" Pass (2/2)<br/>"); }
+    else { echo(" Fail (2/2)<br/>"); }
+
+    //Test getItemList()
+    echo("getItemList...<br/>");
+    echo("New Oder items:<br/>");
+    $tempItemList = $newOrder->getItemList();
+    foreach ($tempItemList as $key => $value) {
+        echo($key . ": " . $value . "<br/>");
+    }
+
+    echo("<br/>Old Order items:<br/>");
+    $tempItemList = $oldOrder->getItemList();
+    foreach ($tempItemList as $key => $value) {
+        echo($key . ": " . $value . "<br/>");
+    }
+
+    //Test addItem()
+    echo("addItem...");
+    $testPass = false;
+    $newOrder->addItem(1, 3);
+    $tempItemList = $newOrder->getItemList();
+    foreach ($tempItemList as $key => $value) {
+        if ($key == 1 and $value == 6) {
+            $testPass = true;
+        }
+    }
+    if($testPass) {
+        echo(" Pass (1/2) ");
+        $testPass = false;
+    } else { echo(" Fail (1/2) "); }
+
+    $oldOrder->addItem(1, 3);
+    $tempItemList = $oldOrder->getItemList();
+    foreach ($tempItemList as $key => $value) {
+        if ($key == 1 and $value == 1) {
+            $testPass = true;
+        }
+    }
+    if($testPass) { echo(" Pass (2/2)<br/>"); }
+    else { echo(" Fail (2/2)<br/>"); }
+
     //TODO: Test deleteItem()
     //TODO: Test clearOrder()
     //TODO: Test processOrder()
@@ -146,7 +225,10 @@ echo("Testing Item class...<br/><br/>");
 //testItem(); // Disable to prevent item creations.
 
 echo("Testing Inventory class...<br/><br/>");
-testInventory();
+//testInventory(); // Disable to prevent item creations.
+
+echo("Testing Order class...<br/>");
+testOrder();
 
 ?>
 

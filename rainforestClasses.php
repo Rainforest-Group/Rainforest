@@ -316,7 +316,7 @@ class Order
     // This cannot happen once the order has been processed.
     function addItem($item_id, $quant) {
         if (!$this->placed) {
-            $this->item_list[$item_id] = $quant;
+            $this->item_list[$item_id] += $quant;
         }
     }
     
