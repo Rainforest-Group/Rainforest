@@ -62,6 +62,8 @@ $errors = "";
                             <input type="text" class="form-control" id="city" name="city" required="" />
                             <br>
                               <button type="submit" name="createProfile" value="submit" class="btn btn-success">Save changes</button>
+							                                <br>
+                              <button type="submit" name="createProfile" value="submit" class="btn btn-danger">Delete Item</button>
                         </div>
 
                     </form>
