@@ -36,7 +36,7 @@ function currentLogin()
  
 function checkCredentials($username, $password)
 {
-    $user = User::fetchUser($username);
+    $user = new User($username);
 
     return $user && encrypt($password) == $user->getPassword();
 }
@@ -48,7 +48,7 @@ function checkCredentials($username, $password)
 function createSession($username, $password)
 {
     // Assume user exists
-    $user = User::fetchUser($username);
+    $user = new User($username);
     session_start();
     $_SESSION['username'] = $username;
     $_SESSION['type'] = $user->isAdmin() ? 'admin' : 'customer';

@@ -539,7 +539,7 @@ class User
         $this->username = $data['username'];
         $this->password = $data['password'];
         $this->email = $data['email'];
-        $this->address = $data['address'];
+        $this->address = $data['street'];
         $this->city = $data['city'];
         $this->state = $data['state'];
         $this->zip = $data['zip'];
@@ -572,6 +572,47 @@ class User
  * Getters and Setters:
  * getUsername - returns the username of the cart's owner
  */
+class Cart {
+    private $items = array();
+    private $quantities = array();
+
+    public function __construct($item_list = array(), $quantity_list = array()) {
+        $this->items = $item_list;
+        $this->quantities = $quantity_list;
+    }
+
+    // Return a cart object from a given cookie's payload.
+    // The cookie should be of the form "id1,id2,id3;quantity1,quantity2,quantity3"
+    public static function getFromCookie($cookie_data) {
+        $payload = explode(";", $cookie_data);
+        $item_s = $payload[0];
+        $quant_s = $payload[1];
+
+        $cart = new Cart(explode(",", $item_s), explode(",", $quant_s));
+        return $cart;
+    }
+
+    // Return a string to set as the cookie's payload
+    public function toCookie() {
+        $item_s = join(",", $this->items);
+        $quant_s = join(",", $this->quantities);
+
+        return $item_s . ";" . $quant_s;
+    }
+
+    public function addItem($item_id) {
+        // If item is already in the cart, increment quantity
+        $key = array_search($item_id, $this->items);
+        if ($key === FALSE) {
+            $this->items[] = $item_id;
+            $this->quantities[] = 1;
+        }
+        else {
+            $this->quantities[$key] += 1;
+        }
+    }
+}
+
 /*class Cart {
     private $username;
     private $item_list = array(); // stores item ids
