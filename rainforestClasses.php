@@ -195,20 +195,22 @@ class Inventory {
     
     /* 
      * Takes the item ID (int) and a change in quantity (int) as parameters.
-     * Returns the number of items that can be removed after the operation has
-     * taken place.  If you try to remove too many items, it will not remove 
-     * any, and will return the number of items that you can remove.  Use a
-     * negative change in quantity to remove and a positive change in quantity
-     * to add items.
+     * Returns true after the operation has taken place.  If you try to
+     * remove too many items, it will not remove any, and will return false.
+     * Use a negative change in quantity to remove and a positive change in
+     * quantity to add items.
      */
     public function modifyQuantity($item_id, $change_in_quant) {
-        $curr_quant = $this->item_list[$item_id].getQuantity();
+        if (!key_exists($item_id, $this->item_list)) {
+            return false;
+        }
+        $curr_quant = $this->item_list[$item_id]->getQuantity();
         $new_quant = $curr_quant + $change_in_quant;
         if ($new_quant >= 0) {
-            $this->item_list[$item_id].setQuantity($new_quant);
-            return $new_quant;
+            $this->item_list[$item_id]->setQuantity($new_quant);
+            return true;
         } else {
-            return $curr_quant;
+            return false;
         }
     }
     
