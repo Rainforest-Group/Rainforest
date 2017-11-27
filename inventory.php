@@ -43,6 +43,7 @@ getLoginButton();
 
   <mid>
 
+<form action="inventory.php" method="POST">
 <?php
 
 if (isset($_REQUEST["q"])) {
@@ -52,15 +53,21 @@ else {
     $items = getItems(false);
 }
 
+if (isset($_POST["item"])) {
+    $item_id = $_POST["item"];
+    addToCart($item_id);
+}
+
 foreach ($items as $item) {
     $name = $item->getName();
     $summary = $item->getSummary();
     $quantity = $item->getQuantity();
     $price = $item->getPrice();
+    $id = $item->getID();
     echo '<div class="col-md-9"><div class="card b-1 hover-shadom mb-20"><div class="media card-body">';
     echo "<div class=\"media-body\"><h2>$name</h2><p>$summary</p></div>";
     echo "<div style=\"margin-right: 70px;\" class=\"media-right text-right d-none d-md-block\"><h3>$$price</h3></div>";
-    echo '<div class="card-hover-show"><a class="btn btn-xs fs-10 btn-bold btn-block btn-info" href="#">Add to Cart</a></div>';
+    echo '<div class="card-hover-show"><button type="submit" name="item" value="'.$id.'" class="btn btn-xs fs-10 btn-bold btn-block btn-info">Add to Cart</a></div>';
     echo '</div></div></div>';
     echo '<br>';
 }

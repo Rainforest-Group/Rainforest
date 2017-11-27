@@ -16,4 +16,18 @@ function getItems($search) {
 
     return $items;
 }
+
+function addToCart($item_id) {
+    $user_id = getCurrentUser()->getUsername();
+    $cookie = "cart".$user_id;
+    if (isset($_COOKIE[$cookie])) {
+        $cart = Cart::getFromCookie($_COOKIE[$cookie]);
+    }
+    else {
+        $cart = new Cart();
+    }
+    $cart->addItem($item_id);
+
+    setcookie($cookie, $cart->toCookie(), time() + 604800);
+}
 ?>
