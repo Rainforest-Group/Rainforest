@@ -11,7 +11,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     <script type="text/javascript">
 	  function logIn(){  window.location='login.php';  }
-	   function shop(){  window.location='viewItems.php';  }
+	   function shop(){  window.location='inventory.php';  }
           function logOut() { window.location='logout.php'; }
   </script>
 </head>
