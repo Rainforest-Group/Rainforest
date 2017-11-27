@@ -228,28 +228,112 @@ function testOrder() {
 }
 
 function testUser() {
-    //TODO: Test constructor
-    //TODO: Test getFullAddress()
-    //TODO: Test getCart()
-    //TODO: Test setCart()
-    //TODO: Test getCountry()
-    //TODO: Test setCountry()
-    //TODO: Test getZip()
-    //TODO: Test setZip()
-    //TODO: Test getState()
-    //TODO: Test getCity()
-    //TODO: Test setCity()
-    //TODO: Test getStreetAddress()
-    //TODO: Test getPassword()
-    //TODO: Test setPassword()
-    //TODO: Test getEmail()
-    //TODO: Test setEmail()
-    //TODO: Test getUsername()
-    //TODO: Test setUsername()
+    //Test constructor
+    $testUser = new User("testUser", "testPass", "test@email.com", "123 Street Rd.", "Jackson", "MS", 39202, "USA", false);
+
+    //Test getFullAddress()
+    echo("getFullAddress...");
+    if ($testUser->getFullAddress() == "123 Street Rd.<br>Jackson, MS 39202<br>USA") {
+        echo(" Pass<br/>");
+    } else { echo("Fail<br/>"); }
+
+    //Test setCart()
+    echo("set/getCart...");
+    $itemList[1] = 3;
+    $newOrder = new Order(-1, "testUser", $itemList, false, false);
+    $testUser->setCart($newOrder);
+
+    //Test getCart()
+    $tempCart = $testUser->getCart();
+    if (count($tempCart->getItemList()) == 1) {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
+
+    //Test setCountry()
+    echo("set/getCountry...");
+    $testUser->setCountry("Turkey");
+
+    //Test getCountry()
+    if ($testUser->getCountry() == "Turkey") {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
+
+    //Test setZip()
+    echo("set/getZip...");
+    $testUser->setZip(12345);
+
+    //Test getZip()
+    if ($testUser->getZip() == 12345) {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
+
+    //Test setState()
+    echo("set/getState...");
+    $testUser->setState("TX");
+
+    //Test getState()
+    if ($testUser->getState() == "TX") {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
+
+    //Test setCity()
+    echo("set/getCity...");
+    $testUser->setCity("Austin");
+
+    //Test getCity()
+    if ($testUser->getCity() == "Austin") {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
+
+    //Test setStreetAddress()
+    echo("set/getStreetAddress...");
+    $testUser->setStreetAddress("321 Road St.");
+
+    //Test getStreetAddress()
+    if ($testUser->getStreetAddress() == "321 Road St.") {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
+
+    //Test setPassword()
+    echo("set/getPassword...");
+    $testUser->setPassword("TestPass2");
+
+    //Test getPassword()
+    if ($testUser->getPassword() == "TestPass2") {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
+    
+    //Test setEmail()
+    echo("set/getEmail...");
+    $testUser->setEmail("testMail@mail.mail");
+
+    //Test getEmail()
+    if ($testUser->getEmail() == "testMail@mail.mail") {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
+
+    //Test setUsername()
+    echo("set/getUsername...");
+    $testUser->setUsername("nameuserTest");
+
+    //Test getUsername()
+    if ($testUser->getUsername() == "nameuserTest") {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
+
     //TODO: Test getOrderIds()
+    // Test order needs to be made.
+
     //TODO: Test updatePastOrders()
-    //TODO: Test isAdmin()
-    //TODO: Test setAdmin()
+
+    //Test setAdmin()
+    echo("set/getAdmin...");
+    $testUser->setAdmin(true);
+
+    //Test isAdmin()
+    if ($testUser->isAdmin() == true) {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
 }
 
 function printItem($item) {
@@ -280,7 +364,10 @@ echo("Testing Inventory class...<br/><br/>");
 //testInventory(); // Disable to prevent item creations.
 
 echo("Testing Order class...<br/>");
-testOrder();
+// testOrder(); // Diable to prevent order creations.
+
+echo("Testing User class...<br/>");
+testUser();
 
 ?>
 

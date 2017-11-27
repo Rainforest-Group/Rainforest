@@ -496,7 +496,7 @@ class User
     }
     
     // Takes the user's email as a parameter (string)
-    function setEmail() {
+    function setEmail($email) {
         $this->email = $email;
         
         modifyUser($this->username, "email", $email);
