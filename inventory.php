@@ -10,7 +10,7 @@
   </script>
 </head>
 <body>
-<header>
+
 <!-- navbar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Links -->
@@ -49,7 +49,7 @@
       </div>
      </div>
       <br>
-  </header>
+
 
 
 
