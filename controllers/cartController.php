@@ -24,6 +24,7 @@ function getCartItems() {
     $cart = getCart();
     if ($cart) {
         foreach ($cart->getItems() as $item_id) {
+            echo "getting item $item_id";
             $items[] = new Item($item_id);
         }
     }

@@ -610,7 +610,7 @@ class Cart {
         $item_s = $payload[0];
         $quant_s = $payload[1];
 
-        $cart = new Cart(explode(",", $item_s), explode(",", $quant_s));
+        $cart = new Cart($item_s ? explode(",", $item_s): array(), $quant_s ? explode(",", $quant_s): array());
         return $cart;
     }
 
