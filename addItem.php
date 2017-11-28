@@ -6,17 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="Register.css">
-    <script type="text/javascript">
-	  function logOut(){  window.location='Index.php';  }
-	   function Home(){  window.location='main.html';  }
-  </script>
 </head>
 <body>
-<?php
-require_once("controllers/registerController.php");
 
-$errors = "";
-?>
 
 <header>
     <!-- navbar -->
@@ -32,9 +24,23 @@ $errors = "";
           <input class="form-control input-lg" type="text" placeholder="Search" name="q">
           <button class="btn btn-info" type="submit" id="pull">Search</button>
         </form>
+<?php
+require_once("controllers/helpers.php");
+require_once("rainforestClasses.php");
 
-        <button type="button" class="btn btn-success" id="login" onclick="logOut();">Log Out</button>
-        <button type="button" class="btn btn-success" id="home" onclick="Home();">Home</button>
+getLoginButton();
+
+if (isset($_POST["createProfile"])) {
+    try {
+        $item = new Item(-1, $_POST["name"], $_POST["price"], $_POST["description"], false, $_POST["quantity"]);
+        header("Location: inventory.php");
+        die();
+    }
+    catch (Exception $e) {
+        echo '<div class="alert alert-danger">Could not add item</div>';
+    }
+}
+?>
 		</nav>
   </header>
 
@@ -42,24 +48,29 @@ $errors = "";
   <mid>
 		<div class="col-xs-6" id="Logform">    <!--  Allow adjacent divs login and the big note-->
 		<div class="modal-dialog">
-		<div class="modal-content" id="padd"> <!--  adds boarders to the window!-->
+		<div class="modal-content" id="padd" style="padding: 15px;"> <!--  adds boarders to the window!-->
+<form action="addItem.php" method="POST">
 		<div class="modal-header"><h3>Adding New Item</h3></div><br>
-                            <label for="username" class="control-label">Name:</label>
-                            <input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="new Item">
-                            <br>
-                            <label for="password" class="control-label">Description:</label>
-                            <input type="text" class="form-control" id="password" name="password" value="" required=""  placeholder="Used">
-                            <br>
-                            <label for="address" class="control-label">Quantity In Stock:</label>
-                            <input type="number" class="form-control" min="0" id="address" name="address" required="" />
-                            <br>
-                            <label for="city" class="control-label">Image Link:</label>
-                            <input type="text" class="form-control" id="city" name="city" required="" />
-                            <br>
-                              <button type="submit" name="createProfile" value="submit" class="btn btn-success">Add to Inventory</button>
+                            <div class="form-group">
+                                <label for="name" class="control-label">Name:</label>
+                                <input type="text" class="form-control" id="username" name="name" value="" required=""  placeholder="new Item">
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="control-label">Description:</label>
+                                <input type="text" class="form-control" id="password" name="description" value="" required=""  placeholder="Used">
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity" class="control-label">Quantity In Stock:</label>
+                                <input type="number" class="form-control" min="0" id="address" name="quantity" required="" />
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="control-label">Price:</label>
+                                <input type="number" class="form-control" min="0" step="0.01" name="price" required="" />
+                            </div>
+                            <button type="submit" name="createProfile" value="submit" class="btn btn-success">Add to Inventory</button>
                         </div>
 
-                    </form>
+</form>
                 </div>
             </div>
         </div>
