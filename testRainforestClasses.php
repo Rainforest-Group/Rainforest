@@ -8,6 +8,15 @@
 <body>
 
 <?php
+
+/* To use this file:
+ * All tests are called at the end of this file.
+ * Uncomment the test(s) you want to run. All tests
+ * are compatible with each other but each of them
+ * will create new users, orders, and items in the
+ * database with test data in each of them.
+*/
+
 error_reporting(E_ALL); 
 ini_set('display_errors', 1);
 
@@ -321,10 +330,15 @@ function testUser() {
         echo(" Pass<br/>");
     } else { echo(" Fail<br/>"); }
 
-    //TODO: Test getOrderIds()
-    // Test order needs to be made.
-
     //TODO: Test updatePastOrders()
+    $testUser->updatePastOrders();
+
+    //TODO: Test getOrderIds()
+    $newOrder->processOrder();
+    $orderList = $testUser->getOrderIds();
+    if (count($orderList) == 1) {
+        echo(" Pass<br/>");
+    } else { echo(" Fail<br/>"); }
 
     //Test setAdmin()
     echo("set/getAdmin...");
@@ -357,17 +371,21 @@ function printItem($item) {
             . "</td><td>$dbprice</td><td>$dbexp</td></tr></table><br><br>";
 }
 
-echo("Testing Item class...<br/><br/>");
-//testItem(); // Disable to prevent item creations.
+// ITEM TEST:
+// Disable to prevent item creations.
+//echo("Testing Item class...<br/><br/>"); testItem();
 
-echo("Testing Inventory class...<br/><br/>");
-//testInventory(); // Disable to prevent item creations.
+// INVENTORY TEST:
+// Disable to prevent item creations.
+//echo("Testing Inventory class...<br/><br/>"); testInventory();
 
-echo("Testing Order class...<br/>");
-// testOrder(); // Diable to prevent order creations.
+// ORDER TEST:
+// Diable to prevent order creations.
+//echo("Testing Order class...<br/>"); testOrder(); 
 
-echo("Testing User class...<br/>");
-testUser();
+// USER TEST:
+// Running this test will create a user and order data in the DB.
+//echo("Testing User class...<br/>"); testUser();
 
 ?>
 

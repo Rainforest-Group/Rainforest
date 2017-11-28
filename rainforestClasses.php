@@ -378,13 +378,19 @@ class User
      * If no password is given, the constructor will automatically fill in the
      * remaining info from the database, using the username provided.
      * If at least a username and password are given, a new user will be created
-     * in the database using the given info.
+     * in the database using the given info.  If you give it only the username, 
+     * it will return false when there is no matching username in the database.
+     * When you give it username and at least password, it will return false if
+     * the given username already exists in the database.
      */
     function __construct($username, $password = "", $email = "", $address = "", $city = "", 
                         $state = "", $zip = "", $country = "", $is_admin = false)
     {
         if ($password == "") {
             $data = getUserInfo($username);
+            if (!$data) {
+                return false;
+            }
             $this->setVariables($data);
             $this->past_orders = getAllUserOrders($username);
         } else {
@@ -397,7 +403,10 @@ class User
             $this->zip = $zip;
             $this->country = $country;
             $this->is_admin = $is_admin;
-            addUser($this);
+            $created = addUser($this);
+            if (!$created) {
+                return false;
+            }
         }
     }
 

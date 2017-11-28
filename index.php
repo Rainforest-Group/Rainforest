@@ -59,26 +59,10 @@ getLoginButton();
 
         <!-- navs -->
 			<div class="container text-muted">
+				<br><br>
 				<h2 class="display-4 py-5 mt-5 text-center">What do you need today ...</h2>
 
-				<nav class="nav justify-content-center nav-pills flex-column flex-md-row">
-					<a class="nav-link active" href="#elec" data-toggle="tab">Electronics</a>
-					<a class="nav-link" href="#" data-toggle="tab">Furniture</a>
-					<a class="nav-link" href="#" data-toggle="tab">Outdoors</a>
-					<a class="nav-link" href="#" data-toggle="tab">School stuff</a>
-				</nav>
-
-				<div class="tab-content py-5">  <!--  divs to be used !-->
-					<div class="tab-pane active" >
-
-					</div>
-					<div class="tab-pane fade" >
-					</div>
-					<div class="tab-pane fade">
-					</div>
-					<div class="tab-pane fade">
-					</div>
-				</div>
+				
 
 			</div>
       </body>

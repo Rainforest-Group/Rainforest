@@ -194,7 +194,7 @@
         
         $result = executeQuery($query);
         if (!$result) {
-            return $query;
+            return false;
         }
         return true;
     }
