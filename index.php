@@ -27,25 +27,20 @@
 		  <!-- Links -->
 		  <ul class="navbar-nav">
 			<li class="nav-item">
-			  <a class="nav-link" href="#">New Arrivals</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="#">Clearance</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="#" id="lastlink">About us</a>
+			  <a class="nav-link" href="admin.php">Administrators</a>
 			</li>
 		  </ul>
-			<!--Search form -->
-			<form class="form-inline" >
-			  <input class="form-control input-lg" type="text" placeholder="Search">
-			  <button class="btn btn-info" type="submit" id="pull">Search</button>
-			</form>
 
 <?php require_once("controllers/indexController.php"); 
 getLoginButton();
 ?>
             <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
+            
+            <!--Search form -->
+            <form class="form-inline" >
+              <input class="form-control input-lg" type="text" placeholder="Search">
+              <button class="btn btn-info" type="submit" id="pull">Search</button>
+            </form>
 
     </nav>
 	
