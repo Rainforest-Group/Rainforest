@@ -33,7 +33,7 @@ getLoginButton();
       <div class="img"></div>  <!-- TODO add background Image !-->
     <div class="col-lg-4">  <img src="" class="img-rounded">    </div>
       <div class="container">
-          <h4 class="display-3">Your Cart</h4>
+          <h4 class="display-3">Your Cart</h4> <a class="btn btn-info" href="inventory.php">Back to Shop</a>
       </div>
      </div>
       <br>
