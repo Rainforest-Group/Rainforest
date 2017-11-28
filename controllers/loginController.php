@@ -15,7 +15,9 @@ require_once("rainforestClasses.php");
  *****/
 function currentLogin()
 {
-    session_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
     if (isset($_SESSION['username'])) {
       if ($_SESSION['type'] == 'admin') {
           $url = "index.php";

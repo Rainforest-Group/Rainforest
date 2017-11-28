@@ -5,28 +5,44 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="register.css">
+  <link rel="stylesheet" href="static/css/design.css">
   <script type="text/javascript">
-   function Home(){  window.location='main.html';  }
+    function Home(){  window.location='main.html';  }
+    function logIn(){  window.location='login.php';  }
+    function shop(){  window.location='inventory.php';  }
+    function logOut() { window.location='logout.php'; }
   </script>
 </head>
 <body>
 <header>
+<!-- navbar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-
-        <form class="form-inline" method="get" action="inventory.php">
-            <input class="form-control input-lg" type="text" placeholder="Search" name="q">
-            <button class="btn btn-info" type="submit" id="pull">Search</button>
-        </form>
-        <div class="row">
-<div class="col-md-4"></div>
-<div class="col-md-4">
-<?php
-require_once("controllers/cartController.php");
-
-getLoginButton();
-?>
-</div>
-
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="navbar-brand" href="index.php">
+                    <img src="rainforest_logo.png" width="30" height="30">
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php">Administrators</a>
+            </li>
+                
+            <li>
+                <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
+            </li>
+            <li>
+                <!--Search form -->
+                <form class="form-inline" method="get" action="inventory.php">
+                  <input class="form-control input-lg" type="text" placeholder="Search" name="q">
+                  <button class="btn btn-info" type="submit" id="pull">Search</button>
+                </form>
+            </li>
+            <?php 
+                require_once("controllers/cartController.php"); 
+                getLoginButton();
+            ?>
+        </ul>
     </nav>
     <br>
     <div class="jumbotron jumbotron-billboard text-black text-center">
