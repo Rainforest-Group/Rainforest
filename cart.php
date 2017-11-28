@@ -51,30 +51,36 @@ if (isset($_POST["item"])) {
     die();
 }
 
-$items = getCartItems();
-$quantities = getCartQuantities();
+try {
+    $items = getCartItems();
+    $quantities = getCartQuantities();
 
-for ($i = 0; $i < count($items); $i++) {
-    $item = $items[$i];
-    $quantity = $quantities[$i];
-    $name = $item->getName();
-    $summary = $item->getSummary();
-    $price = $item->getPrice();
-    $id = $item->getID();
-    echo '<div class="col-md-9"><div class="card b-1 hover-shadom mb-20"><div class="media card-body">';
-    echo "<div class=\"media-body\"><h2>$name</h2><p>$summary</p></div>";
-    echo "<div style=\"margin-right: 70px;\" class=\"media-right text-right d-none d-md-block\"><h3>$$price</h3></div>";
-    echo "<div style=\"margin-right: 40px;\" class=\"media-right text-right\"><h4>$quantity</h4></div>";
-    echo '<div class="card-hover-show"><button type="submit" name="item" value="'.$id.'" class="btn btn-xs fs-10 btn-bold btn-block btn-danger">&times;</a></div>';
-    echo '</div></div></div>';
-    echo '<br>';
+    for ($i = 0; $i < count($items); $i++) {
+        $item = $items[$i];
+        $quantity = $quantities[$i];
+        $name = $item->getName();
+        $summary = $item->getSummary();
+        $price = $item->getPrice();
+        $id = $item->getID();
+        echo '<div class="col-md-9"><div class="card b-1 hover-shadom mb-20"><div class="media card-body">';
+        echo "<div class=\"media-body\"><h2>$name</h2><p>$summary</p></div>";
+        echo "<div style=\"margin-right: 70px;\" class=\"media-right text-right d-none d-md-block\"><h3>$$price</h3></div>";
+        echo "<div style=\"margin-right: 40px;\" class=\"media-right text-right\"><h4>$quantity</h4></div>";
+        echo '<div class="card-hover-show"><button type="submit" name="item" value="'.$id.'" class="btn btn-xs fs-10 btn-bold btn-block btn-danger">&times;</a></div>';
+        echo '</div></div></div>';
+        echo '<br>';
+    }
+    echo '<div class="container text-center">';
+    echo '<a href="placeOrder.php" class="btn btn-success">Place Order</a>';
+    echo '</div>';
+}
+catch (Exception $e) {
+    echo '<div class="container jumbotron text-center"><h2>Cart is Empty</h2></div>';
 }
 ?>
 </form>
 
-  <div class="container text-center">
-       <a href="placeOrder.php" class="btn btn-success">Place Order</a>
-  </div>
+
   </mid>
       </body>
   </html>
