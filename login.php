@@ -21,7 +21,6 @@
   </script>
 </head>
 <body>
-<header>
     <!-- navbar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Links -->
@@ -34,31 +33,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="admin.php">Administrators</a>
             </li>
-                
-            <li>
-                <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
-            </li>
-            <li>
-                <!--Search form -->
-                <form class="form-inline" method="get" action="inventory.php">
-                  <input class="form-control input-lg" type="text" placeholder="Search" name="q">
-                  <button class="btn btn-info" type="submit" id="pull">Search</button>
-                </form>
-            </li>
-            <?php 
-                require_once("controllers/indexController.php"); 
-                getLoginButton();
-            ?>
+
         </ul>
     </nav>
 	
-  </header>
   
   
   
 	<mid> 
 		<div class="row">
-		<div class="col-xs-6">  <div id="Logform">     <!--  Allow adjacent divs login and the big note-->
 		<div class="modal-dialog">
 		<div class="modal-content" id="padd"> <!--  adds boarders to the window!-->
 <?php
@@ -89,34 +72,38 @@ else {
 }
 ?>
     
-		<div class="modal-header"><h3>Log In</h3></div>
-						<form method="POST" action="login.php">
-						
-							<div class="form-group">
-								<label for="username" class="control-label">Username</label>
-<?php
-    $username = isset($_GET["username"]) ? $_GET["username"] : ""; 
-    echo "<input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" value=\"$username\" required=\"\"  placeholder=\"example@gmail.com\">";
-?>
-								<label for="password" class="control-label">Password</label>
-								<input type="password" class="form-control" id="password" name="password" value="" required="" placeholder="your password">
-							</div>
-							
-							<button type="submit" name="login" value="submit" class="btn btn-success">Login</button>
-							<a href="#Optional" class="btn btn-default btn-block">Forgot My Password</a>
-							
-						</form>
-                                             <?php
-                                             if ($errors) echo "<div class=\"alert alert-danger\">$errors</div>";
-                                             ?>
-					</div> 
-				</div>
-			</div>
-		</div>
+                    <div class="modal-header"><h3>Log In</h3></div><br>
+         
+                    <form method="POST" action="login.php">
 
-		<div class="col-xs-6"><h2 class="display-4 py-5 mt-5 text-right" id="note">Or join the family</h2>
-		<button type="button" class="btn btn-success" onclick="register();" id="buttonLeft">Create an Account</button></div>  <!-- button !-->
-
+                        <div class="form-group">
+                            <label for="username" class="control-label">Username</label>
+                                <?php
+                                $username = isset($_GET["username"]) ? $_GET["username"] : ""; 
+                                echo "<input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" value=\"$username\" required=\"\"  placeholder=\"example@gmail.com\">";
+                                ?>
+                            <label for="password" class="control-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" value="" required="" placeholder="your password">
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <button type="submit" name="login" value="submit" class="btn btn-success">Login</button>
+                            </div>
+                            <div class="col">                     
+                                <a href="register.php" class="btn btn-info">Create an Account</a>
+                            </div>
+                        </div>
+                        <div>
+                            <br>
+                            <a href="#Optional" class="btn btn-default btn-block">Forgot My Password</a>
+                        </div>
+                    </form>
+                    <?php
+                    if ($errors) echo "<div class=\"alert alert-danger\">$errors</div>";
+                    ?>
+                    </div> 
+                    </div>
+                    </div>   
 
   </mid>
   
