@@ -80,7 +80,7 @@ else {
                             <label for="username" class="control-label">Username</label>
                                 <?php
                                 $username = isset($_GET["username"]) ? $_GET["username"] : ""; 
-                                echo "<input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" value=\"$username\" required=\"\"  placeholder=\"example@gmail.com\">";
+                                echo "<input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" value=\"$username\" required=\"\"  placeholder=\"your username\">";
                                 ?>
                             <label for="password" class="control-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" value="" required="" placeholder="your password">
