@@ -9,9 +9,12 @@ function validateProfile($username, $password, $verify_password, $address, $city
     }
     else {
         // Check if username exists
-        $user = User::fetchUser($username);
-        if ($user) {
+        try {
+            $user = new User($username);
             $errors = $errors . "<br>Username taken.";
+        }
+        catch (Exception $e) {
+            ;
         }
     }
     if (!$password) {
