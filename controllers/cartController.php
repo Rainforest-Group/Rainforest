@@ -33,27 +33,34 @@ function getCartItems() {
 
 function getCartQuantities() {
     $cart = getCart();
+    if (!$cart) throw new Exception();
     return $cart->getQuantities();
 }
 
 function removeFromCart($item_id) {
     $cart = getCart();
+    if (!$cart) throw new Exception();
     $cart->removeItem($item_id);
 
     setcookie(getCartKey(), $cart->toCookie(), time() + 604800);
 }
 
 function placeOrder() {
-    echo "Placed";
     $username = getCurrentUser()->getUsername();
     $cart = getCart();
 
     $items = $cart->getItems();
     $quants = $cart->getQuantities();
 
-    $is = array_fill_keys($items, $quants);
+    $is = array_combine($items, $quants);
 
     $order = new Order(-1, $username, $is);
+    $order->processOrder();
+
+    setcookie(getCartKey(), "", time() - 100);
+
+    header("Location: inventory.php");
+    die();
 }
 
 ?>

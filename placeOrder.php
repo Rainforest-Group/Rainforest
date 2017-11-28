@@ -42,7 +42,7 @@ if (isset($_POST["order"])) {
 
 $cart = getCart();
 $items = $cart->getItems();
-$quants = $cart->getCartQuantities();
+$quants = $cart->getQuantities();
 
 $total = 0;
 for ($i = 0; $i < count($items); $i++) {
