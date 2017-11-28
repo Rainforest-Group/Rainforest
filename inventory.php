@@ -86,7 +86,7 @@ foreach ($items as $item) {
     echo '<div class="col-md-9"><div class="card b-1 hover-shadom mb-20"><div class="media card-body">';
     echo "<div class=\"media-body\"><h2>$name</h2><p>$summary</p></div>";
     echo "<div style=\"margin-right: 70px;\" class=\"media-right text-right d-none d-md-block\"><h3>$$price</h3></div>";
-    echo '<div class="card-hover-show"><button type="submit" name="item" value="'.$id.'"  class="btn btn-success" class="btn btn-xs fs-10 btn-bold btn-block btn-info">View detail</a></div>';
+    echo '<div class="card-hover-show"><a href="detailedItem.php?item='.$id.'" class="btn btn-success">View detail</a></div>';
     echo '<div class="card-hover-show"><button type="submit" name="item" value="'.$id.'" class="btn btn-xs fs-10 btn-bold btn-block btn-info">Add to Cart</a></div>';
     echo '</div></div></div>';
     echo '<br>';

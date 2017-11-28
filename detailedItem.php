@@ -21,11 +21,32 @@
   <div class="col-md-4"> <button type="button" class="btn btn-success" id="login" onclick="Home();">Home</button></div>
     </nav>
     <br>
+<?php
+require_once("rainforestClasses.php");
+
+if (!isset($_REQUEST["item"])) {
+    header("Location: inventory.php");
+    die();
+}
+
+try {
+    $item = new Item($_REQUEST["item"]);
+    $name = $item->getName();
+    $desc = $item->getDescription();
+    $price = $item->getPrice();
+}
+catch (Exception $e) {
+    $name = "Item does not exist";
+    $desc = "Could not find item.";
+    $price = "0.00";
+}
+
+?>
     <div class="jumbotron jumbotron-billboard text-black text-center">
       <div class="img"></div>  <!-- TODO add background Image !-->
-    <div class="col-lg-4">  <img src="" class="img-rounded">    </div>
+    <div class="col-lg-4"> </div>
       <div class="container">
-          <h4 class="display-3" >I Phone X</h4>
+      <h4 class="display-3" ><?php echo "$name -- $$price"; ?></h4>
       </div>
      </div>
       <br>
@@ -33,15 +54,6 @@
 
   <mid>
 <!--  new item       !-->
-<div class="col-md-9">
-    <div class="card b-1 hover-shadow mb-20">
-        <div class="media card-body">
-            <div class="media-left pr-12">
-                <img style="padding:50px;" src="https://cdn.macrumors.com/article-new/2017/09/iphonexfrontback-800x573.jpg">
-            </div>
-    </div>
-
-</div>
 </div>
 
 <br><br>
@@ -49,16 +61,23 @@
         <!--  the lower discription box  !-->
           <div class="card card-body">
               <!--   Titles  !-->
-                    <h3 class="card-title">Description:<small  style="margin-left:1050px;">Price:</small><small class="card-title" style="margin-left:30px;">999$</small></h3>
+                    <h3 class="card-title">Description:</h3>
 
-                    <!--   the quantity box  !-->
-                <p class="card-text">Please buy this iphone to prove that you are a big Apple fan.</p>
+                    <p class="card-text"><?php echo $desc; ?></p>
+                    <!--   the quantity box  
                 <div class="form-group row"><div class="col-xs-2">
                   <input class="form-control"  min="1" max="5" style="margin:20px" id="ex1" type="number">
                 </div></div>
-
+!-->
                 <!--   Button !-->
-                <a href="#" class="btn btn-info btn-lg btn-block ">Add to Cart</a>
+                <?php
+                if (isset($_REQUEST["item"])) {
+                    $id = $_REQUEST["item"];
+                    echo '<form action="inventory.php" method="POST">';
+                    echo '<button type="submit" name="item" value="'.$id.'" class="btn btn-success">Add to Cart</button>';
+                    echo '</form>';
+                }
+                ?>
           </div>
 
   </mid>
