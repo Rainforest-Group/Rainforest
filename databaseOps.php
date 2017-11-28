@@ -83,7 +83,25 @@
         $result->close();
         return $ids;
     }
-    
+
+     // Returns a numerical array of all user IDs in the database.  No parameters
+    function getAllUsernames() {
+        $query = "SELECT username FROM Users";
+        $result = executeQuery($query);
+        $rows = $result->num_rows;
+        $ids = array();
+        if (!$rows) {
+            return false;
+        }
+        for ($i = 0; $i < $rows; $i++) {
+            $result->data_seek($i);
+            $row = $result->fetch_array(MYSQLI_NUM);
+            $ids[] = $row[0];
+        }
+        $result->close();
+        return $ids;
+    }
+   
     // Returns a numerical array with all the order IDs associated with the
     // given username.
     function getAllUserOrders($username) {
