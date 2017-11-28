@@ -22,7 +22,7 @@
         <!-- Links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.php">
+                <a class="navbar-brand" href="index.php">
                     <img scr="rainforestLogo.php" width="30" height="30">
                 </a>
             </li>
