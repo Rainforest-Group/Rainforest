@@ -13,10 +13,10 @@
 <header>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 
-        <form class="form-inline" >
-          <input  id="pull" class="form-control input-lg" type="text" placeholder="Search">
-          <button class="btn btn-info" type="submit" id="pull">Search</button>
-        </form>
+    <form class="form-inline" method="get" action="inventory.php">
+        <input class="form-control input-lg" type="text" placeholder="Search" name="q">
+        <button class="btn btn-info" type="submit" id="pull">Search</button>
+    </form>
 
         <a class="btn btn-success" id="login" href="inventory.php">Shop</a>
     </nav>

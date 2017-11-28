@@ -13,9 +13,9 @@
 <header>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 
-        <form class="form-inline" >
-        <input  name="q" id="pull" class="form-control input-lg" type="text" placeholder="Search" value="<?php if (isset($_REQUEST["q"])) echo $_REQUEST["q"]; ?>">
-          <button class="btn btn-info" type="submit" id="pull">Search</button>
+        <form class="form-inline" method="get" action="inventory.php">
+            <input class="form-control input-lg" type="text" placeholder="Search" name="q">
+            <button class="btn btn-info" type="submit" id="pull">Search</button>
         </form>
         <div class="row">
 <div class="col-md-4"></div>
