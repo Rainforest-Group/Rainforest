@@ -19,17 +19,17 @@
 
     <!-- navbar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		  <!-- Brand/logo -->
-                  <a class="navbar-brand" href="#">
-                      <img src="rainforestLogo.jpg" width="30" height="30" alt="">
-		  </a>
-
-		  <!-- Links -->
-		  <ul class="navbar-nav">
-			<li class="nav-item">
-			  <a class="nav-link" href="admin.php">Administrators</a>
-			</li>
-		  </ul>
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.php">
+                    <img scr="rainforestLogo.php" width="30" height="30" alt ="">
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php">Administrators</a>
+            </li>
+        </ul>
 
 <?php require_once("controllers/indexController.php"); 
 getLoginButton();
