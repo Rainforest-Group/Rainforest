@@ -12,20 +12,24 @@
 <body>
 <header>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <form class="form-inline" >
+       <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
 
-        <form class="form-inline" >
-        <input  name="q" id="pull" class="form-control input-lg" type="text" placeholder="Search" value="<?php if (isset($_REQUEST["q"])) echo $_REQUEST["q"]; ?>">
-          <button class="btn btn-info" type="submit" id="pull">Search</button>
-        </form>
-        <div class="row">
-<div class="col-md-4"></div>
-<div class="col-md-4">
+            <input  name="q" id="pull" class="form-control input-lg" type="text" placeholder="Search" value="<?php if (isset($_REQUEST["q"])) echo $_REQUEST["q"]; ?>">
+          </li>
+          <li class="nav-item">
+              <button class="btn btn-info" type="submit" id="pull">Search</button>
+          </li>
+          <li class="nav-item">
 <?php
 require_once("controllers/inventoryController.php");
 
 getLoginButton();
 ?>
-</div>
+</li>
+</ul>
+            </form>
 
     </nav>
     <br>
