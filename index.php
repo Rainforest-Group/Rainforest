@@ -43,7 +43,7 @@
                   <button class="btn btn-info" type="submit" id="pull">Search</button>
                 </form>
             </li>
-
+        </ul>
     </nav>
 	
     <div class="jumbotron jumbotron-billboard text-black text-center">
