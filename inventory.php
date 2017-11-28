@@ -62,7 +62,6 @@
 
   <mid>
 
-<form action="inventory.php" method="POST">
 <?php
 
 if (isset($_REQUEST["q"])) {
@@ -77,6 +76,8 @@ if (isset($_POST["item"])) {
     addToCart($item_id);
 }
 
+$user = getCurrentUser();
+
 foreach ($items as $item) {
     $name = $item->getName();
     $summary = $item->getSummary();
@@ -87,7 +88,15 @@ foreach ($items as $item) {
     echo "<div class=\"media-body\"><h2>$name</h2><p>$summary</p></div>";
     echo "<div style=\"margin-right: 70px;\" class=\"media-right text-right d-none d-md-block\"><h3>$$price</h3></div>";
     echo '<div class="card-hover-show"><a href="detailedItem.php?item='.$id.'" class="btn btn-success">View detail</a></div>';
+    echo '<form action="inventory.php" method="POST">';
     echo '<div class="card-hover-show"><button type="submit" name="item" value="'.$id.'" class="btn btn-xs fs-10 btn-bold btn-block btn-info">Add to Cart</a></div>';
+    echo '</form>';
+
+    if ($user && $user->isAdmin()) {
+        echo '<form action="controllers/deleteItemController.php" method="POST">';
+        echo '<button type="submit" class="btn btn-danger" name="item" value="'.$id.'">&times;</button>';
+        echo '</form>';
+    }
     echo '</div></div></div>';
     echo '<br>';
 }

@@ -9,7 +9,7 @@ function getItems($search) {
     $items = array();
     foreach ($item_ids as $id) {
         $item = new Item($id);
-        if (!$search || substr($item->getName(), 0, strlen($search)) == $search) {
+        if ((!$search || substr($item->getName(), 0, strlen($search)) == $search) && !$item->isExpired()) {
             $items[] = $item;
         }
     }
