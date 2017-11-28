@@ -29,18 +29,20 @@
             <li class="nav-item">
                 <a class="nav-link" href="admin.php">Administrators</a>
             </li>
-        </ul>
-
-<?php require_once("controllers/indexController.php"); 
-getLoginButton();
-?>
-            <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
-            
-            <!--Search form -->
-            <form class="form-inline" method="get" action="inventory.php">
-              <input class="form-control input-lg" type="text" placeholder="Search" name="q">
-              <button class="btn btn-info" type="submit" id="pull">Search</button>
-            </form>
+                <?php 
+                require_once("controllers/indexController.php"); 
+                getLoginButton();
+                ?>
+            <li>
+                <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
+            </li>
+            <li>
+                <!--Search form -->
+                <form class="form-inline" method="get" action="inventory.php">
+                  <input class="form-control input-lg" type="text" placeholder="Search" name="q">
+                  <button class="btn btn-info" type="submit" id="pull">Search</button>
+                </form>
+            </li>
 
     </nav>
 	
