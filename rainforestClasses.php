@@ -259,6 +259,9 @@ class Order
         if($o_id > 0) {
             // If they gave a positive ID, get info from the database
             $data = getOrderInfo($o_id);
+            if (!$data) {
+                throw new Exception("Order ID does not exist.");
+            }
             $this->order_id = $o_id;
             $this->username = $data['username'];
             $this->placed = true;
@@ -389,7 +392,7 @@ class User
         if ($password == "") {
             $data = getUserInfo($username);
             if (!$data) {
-                return false;
+                throw new Exception("Username does not exist.");
             }
             $this->setVariables($data);
             $this->past_orders = getAllUserOrders($username);
@@ -405,7 +408,7 @@ class User
             $this->is_admin = $is_admin;
             $created = addUser($this);
             if (!$created) {
-                return false;
+                throw new Exception("Username already exists.");
             }
         }
     }
@@ -587,7 +590,7 @@ class User
  * Getters and Setters:
  * getUsername - returns the username of the cart's owner
  */
-class Cart {
+/*class Cart {
     private $items = array();
     private $quantities = array();
 
