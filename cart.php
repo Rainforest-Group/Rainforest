@@ -7,7 +7,10 @@
   <link rel="stylesheet" href="register.css">
   <link rel="stylesheet" href="static/css/design.css">
   <script type="text/javascript">
-   function Home(){  window.location='main.html';  }
+    function Home(){  window.location='main.html';  }
+    function logIn(){  window.location='login.php';  }
+    function shop(){  window.location='inventory.php';  }
+    function logOut() { window.location='logout.php'; }
   </script>
 </head>
 <body>
