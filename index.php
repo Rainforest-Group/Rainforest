@@ -29,10 +29,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="admin.php">Administrators</a>
             </li>
-                <?php 
-                require_once("controllers/indexController.php"); 
-                getLoginButton();
-                ?>
+                
             <li>
                 <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
             </li>
@@ -43,6 +40,10 @@
                   <button class="btn btn-info" type="submit" id="pull">Search</button>
                 </form>
             </li>
+            <?php 
+                require_once("controllers/indexController.php"); 
+                getLoginButton();
+            ?>
         </ul>
     </nav>
 	
