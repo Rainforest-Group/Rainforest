@@ -41,6 +41,8 @@ checkAdmin();
     <div class="col-lg-4">  <img src="" class="img-rounded">    </div>
       <div class="container">
           <h4 class="display-3">User Listing</h4>
+<br>
+          <a href="admin.php" class="btn btn-info">Back to Admin</a>
       </div>
      </div>
       <br>

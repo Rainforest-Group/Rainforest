@@ -40,7 +40,9 @@ checkAdmin();
       <div class="img"></div>  <!-- TODO add background Image !-->
     <div class="col-lg-4">  <img src="" class="img-rounded">    </div>
       <div class="container">
-          <h4 class="display-3">User Listing</h4>
+          <h4 class="display-3">Order Listing</h4>
+          <br>
+          <a href="admin.php" class="btn btn-info">Back to Admin</a>
       </div>
      </div>
       <br>
@@ -50,7 +52,7 @@ checkAdmin();
 
   <mid>
 
-<form action="viewUsers.php" method="POST">
+<form action="viewOrders.php" method="POST">
 <?php
 
 if (isset($_POST["order"])) {
@@ -65,7 +67,7 @@ foreach ($orders as $order) {
     $name = $order->getUsername();
     $address = buildAddress($name);
     $filled = $order->isFilled();
-    $button = $filled ? "<h5>Filled</h5" : '<button type="submit" name="order" value="'.$id.'" class="btn btn-success">Mark as Filled</button>';
+    $button = $filled ? "<h5>Filled</h5>" : '<button type="submit" name="order" value="'.$id.'" class="btn btn-success">Mark as Filled</button>';
     echo '<div class="col-md-9"><div class="card b-1 hover-shadom mb-20"><div class="media card-body">';
     echo "<div class=\"media-body\"><h2>$name</h2></div>";
     echo "<div class=\"card-body\">$address</div>";

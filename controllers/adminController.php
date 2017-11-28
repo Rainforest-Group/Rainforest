@@ -44,6 +44,8 @@ function buildAddress($name) {
 }
 
 function fillOrder($order_id) {
-    ;
+    $order = new Order($order_id);
+
+    $order->setFilled(true);
 }
 ?>
