@@ -44,16 +44,16 @@ function removeFromCart($item_id) {
 }
 
 function placeOrder() {
-    echo "Placed";
     $username = getCurrentUser()->getUsername();
     $cart = getCart();
 
     $items = $cart->getItems();
     $quants = $cart->getQuantities();
 
-    $is = array_fill_keys($items, $quants);
+    $is = array_combine($items, $quants);
 
     $order = new Order(-1, $username, $is);
+    $order->processOrder();
 }
 
 ?>
