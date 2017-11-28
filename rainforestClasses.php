@@ -590,7 +590,7 @@ class User
  * Getters and Setters:
  * getUsername - returns the username of the cart's owner
  */
-/*class Cart {
+class Cart {
     private $items = array();
     private $quantities = array();
 
