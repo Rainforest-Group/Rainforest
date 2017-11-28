@@ -35,11 +35,21 @@
 
 <?php
 require_once("controllers/cartController.php");
+require_once('databaseOps.php');
 if (isset($_POST["order"])) {
     placeOrder();
 }
 
-$total = 5;
+$cart = getCart();
+$items = $cart->getItems();
+$quants = $cart->getCartQuantities();
+
+$total = 0;
+for ($i = 0; $i < count($items); $i++) {
+    $query = "SELECT price FROM Items WHERE item_id = $items[$i]";
+    $result = getAssocArray($query);
+    $total = $total + ($result['price'] * $quants[$i]);
+}
 
 echo "<h2>Payment amount: $$total</h2>";
 ?>
