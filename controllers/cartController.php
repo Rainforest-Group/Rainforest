@@ -23,9 +23,14 @@ function getCartItems() {
 
     $cart = getCart();
     if ($cart) {
-        foreach ($cart->getItems() as $item_id) {
+        $item_ids = $cart->getItems();
+        if (!$item_ids) throw new Exception();
+        foreach ($item_ids as $item_id) {
             $items[] = new Item($item_id);
         }
+    }
+    else {
+        throw new Exception();
     }
 
     return $items;
