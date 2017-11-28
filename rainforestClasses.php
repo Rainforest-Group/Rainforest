@@ -629,6 +629,25 @@ class User
             $this->quantities[$key] += 1;
         }
     }
+
+    // Decrement item quantity. If zero remove.
+    public function removeItem($item_id) {
+        $key = array_search($item_id, $this->items);
+        if ($key === false) return false;
+
+        $this->quantities[$key] -= 1;
+        if ($this->quantities[$key] <= 0) {
+            unset($this->quantities[$key]);
+            unset($this->items[$key]);
+        }
+        return true;
+    }
+
+    public function getItems() {
+        return $this->items;
+    }
+
+    public function getQuantities() { return $this->quantities; }
 }
 
 /*class Cart {
