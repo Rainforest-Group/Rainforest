@@ -37,8 +37,8 @@ getLoginButton();
             <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
             
             <!--Search form -->
-            <form class="form-inline" >
-              <input class="form-control input-lg" type="text" placeholder="Search">
+            <form class="form-inline" method="get" action="inventory.php">
+              <input class="form-control input-lg" type="text" placeholder="Search" name="q">
               <button class="btn btn-info" type="submit" id="pull">Search</button>
             </form>
 
