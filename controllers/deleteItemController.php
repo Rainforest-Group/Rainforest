@@ -7,7 +7,7 @@ $item = new Item($item_id);
 
 $item->setExpired(true);
 
-//header("Location: ../inventory.php");
+header("Location: ../inventory.php");
 die();
 
 ?>
