@@ -27,4 +27,23 @@ function toggleAdmin($username) {
 
     $user->setAdmin(!$user->isAdmin());
 }
+
+function getOrders() {
+    $order_ids = getAllOrders();
+
+    $orders = array();
+    foreach ($order_ids as $id) {
+        $orders[] = new Order($id);
+    }
+
+    return $orders;
+}
+
+function buildAddress($name) {
+    return "Address";
+}
+
+function fillOrder($order_id) {
+    ;
+}
 ?>
