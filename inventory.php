@@ -13,9 +13,14 @@
   <script type="text/javascript">
    function Home(){  window.location='main.html';  }
   </script>
+<script type="text/javascript">
+	function logIn(){  window.location='login.php';  }
+	function shop(){  window.location='inventory.php';  }
+	function logOut() { window.location='logout.php'; }
+</script>
 </head>
 <body>
-    
+
     <!-- navbar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Links -->
