@@ -41,7 +41,8 @@
                 </form>
             </li>
             <?php 
-                require_once("controllers/adminController.php"); 
+                require_once("controllers/adminController.php");
+				require_once("rainforestClasses.php");
                 getLoginButton();
             ?>
         </ul>
@@ -79,7 +80,10 @@ foreach ($users as $user) {
     $button = $admin ? "Demote to Customer" : "Promote to Admin";
     echo '<div class="col-md-9"><div class="card b-1 hover-shadom mb-20"><div class="media card-body">';
     echo "<div class=\"media-body\"><h2>$name</h2></div>";
-    echo '<div class="card-hover-show"><button type="submit" name="user" value="'.$name.'" class="btn btn-xs fs-10 btn-bold btn-block btn-info">'.$button.'</a></div>';
+	// Don't let admins demote themselves.
+	if ($name != getCurrentUser()->getUsername()) {
+		echo '<div class="card-hover-show"><button type="submit" name="user" value="'.$name.'" class="btn btn-xs fs-10 btn-bold btn-block btn-info">'.$button.'</a></div>';
+	}
     echo '</div></div></div>';
     echo '<br>';
 }
