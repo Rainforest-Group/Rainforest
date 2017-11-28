@@ -6,30 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="Register.css">
+  <link rel="stylesheet" href="static/css/design.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 
-<header>
-    <!-- navbar -->
+<!-- navbar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="navbar-brand" href="index.php">
+                    <img src="rainforest_logo.png" width="30" height="30">
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php">Administrators</a>
+            </li>
+                
+            <li>
+                <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
+            </li>
+            <li>
+                <!--Search form -->
+                <form class="form-inline" method="get" action="inventory.php">
+                  <input class="form-control input-lg" type="text" placeholder="Search" name="q">
+                  <button class="btn btn-info" type="submit" id="pull">Search</button>
+                </form>
+            </li>
+            <?php 
+                require_once("controllers/helpers.php"); 
+                require_once("rainforestClasses.php");
+                getLoginButton();
+            ?>
+        </ul>
+    </nav>
 
-      <!-- Brand/logo -->
-      <a class="navbar-brand" href="#">
-    <!-- add logo Image   !-->
-      </a>
-
-        <!--Search form -->
-        <form class="form-inline" method="get" action="inventory.php">
-          <input class="form-control input-lg" type="text" placeholder="Search" name="q">
-          <button class="btn btn-info" type="submit" id="pull">Search</button>
-        </form>
 <?php
-require_once("controllers/helpers.php");
-require_once("rainforestClasses.php");
-
-getLoginButton();
-
 if (isset($_POST["createProfile"])) {
     try {
         $item = new Item(-1, $_POST["name"], $_POST["price"], $_POST["description"], false, $_POST["quantity"]);
@@ -41,8 +57,6 @@ if (isset($_POST["createProfile"])) {
     }
 }
 ?>
-		</nav>
-  </header>
 
 
   <mid>
