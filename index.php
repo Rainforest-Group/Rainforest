@@ -23,16 +23,13 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="navbar-brand" href="index.php">
-                    <img src="rainforest_logo.jpg" width="40" height="40">
+                    <img src="rainforest_logo.png" width="30" height="30">
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="admin.php">Administrators</a>
             </li>
-                <?php 
-                require_once("controllers/indexController.php"); 
-                getLoginButton();
-                ?>
+                
             <li>
                 <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
             </li>
@@ -43,7 +40,11 @@
                   <button class="btn btn-info" type="submit" id="pull">Search</button>
                 </form>
             </li>
-
+            <?php 
+                require_once("controllers/indexController.php"); 
+                getLoginButton();
+            ?>
+        </ul>
     </nav>
 	
     <div class="jumbotron jumbotron-billboard text-black text-center">

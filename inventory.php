@@ -10,27 +10,35 @@
   </script>
 </head>
 <body>
-<header>
+
+<!-- navbar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <form class="form-inline" >
-       <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-
-            <input  name="q" id="pull" class="form-control input-lg" type="text" placeholder="Search" value="<?php if (isset($_REQUEST["q"])) echo $_REQUEST["q"]; ?>">
-          </li>
-          <li class="nav-item">
-              <button class="btn btn-info" type="submit" id="pull">Search</button>
-          </li>
-          <li class="nav-item">
-<?php
-require_once("controllers/inventoryController.php");
-
-getLoginButton();
-?>
-</li>
-</ul>
-            </form>
-
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="navbar-brand" href="index.php">
+                    <img src="rainforest_logo.png" width="30" height="30">
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php">Administrators</a>
+            </li>
+                
+            <li>
+                <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
+            </li>
+            <li>
+                <!--Search form -->
+                <form class="form-inline" method="get" action="inventory.php">
+                  <input class="form-control input-lg" type="text" placeholder="Search" name="q">
+                  <button class="btn btn-info" type="submit" id="pull">Search</button>
+                </form>
+            </li>
+            <?php 
+                require_once("controllers/indexController.php"); 
+                getLoginButton();
+            ?>
+        </ul>
     </nav>
     <br>
     <div class="jumbotron jumbotron-billboard text-black text-center">
@@ -41,7 +49,7 @@ getLoginButton();
       </div>
      </div>
       <br>
-  </header>
+
 
 
 
