@@ -27,13 +27,7 @@
 		  <!-- Links -->
 		  <ul class="navbar-nav">
 			<li class="nav-item">
-			  <a class="nav-link" href="#">New Arrivals</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="#">Clearance</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="#" id="lastlink">About us</a>
+			  <a class="nav-link" href="admin.php">Administrators</a>
 			</li>
 		  </ul>
 			<!--Search form -->
