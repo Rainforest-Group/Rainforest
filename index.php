@@ -22,25 +22,27 @@
         <!-- Links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.php">
-                    <img scr="rainforestLogo.php" width="30" height="30">
+                <a class="navbar-brand" href="index.php">
+                    <img src="rainforest_logo.jpg" width="40" height="40">
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="admin.php">Administrators</a>
             </li>
-        </ul>
-
-<?php require_once("controllers/indexController.php"); 
-getLoginButton();
-?>
-            <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
-            
-            <!--Search form -->
-            <form class="form-inline" method="get" action="inventory.php">
-              <input class="form-control input-lg" type="text" placeholder="Search" name="q">
-              <button class="btn btn-info" type="submit" id="pull">Search</button>
-            </form>
+                <?php 
+                require_once("controllers/indexController.php"); 
+                getLoginButton();
+                ?>
+            <li>
+                <button type="button" class="btn btn-success" id="home" onclick="shop();">Shop</button>
+            </li>
+            <li>
+                <!--Search form -->
+                <form class="form-inline" method="get" action="inventory.php">
+                  <input class="form-control input-lg" type="text" placeholder="Search" name="q">
+                  <button class="btn btn-info" type="submit" id="pull">Search</button>
+                </form>
+            </li>
 
     </nav>
 	
