@@ -81,7 +81,14 @@ if (isset($_POST["createProfile"])) {
                                 <label for="price" class="control-label">Price:</label>
                                 <input type="number" class="form-control" min="0" step="0.01" name="price" required="" />
                             </div>
-                            <button type="submit" name="createProfile" value="submit" class="btn btn-success">Add to Inventory</button>
+                            <div class="form-row">
+                                <div class="col">
+                                    <button type="submit" name="createProfile" value="submit" class="btn btn-success">Add to Inventory</button>
+                                </div>
+                                <div class="col">
+                                    <a href="admin.php" class="btn btn-info">Back to Admin</a>
+                                </div>
+                            </div>
                         </div>
 
 </form>
