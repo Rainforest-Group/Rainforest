@@ -23,7 +23,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="navbar-brand" href="index.php">
-                    <img src="rainforest_logo.png" width="35" height="35">
+                    <img src="rainforest_logo.png" width="30" height="30">
                 </a>
             </li>
             <li class="nav-item">
