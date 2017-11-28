@@ -47,8 +47,8 @@ $errors = "";
 
               <!--             When using this page old data for that Item should be
               displayed in the text feild as value="old item value"!-->
-
-
+						<form method="POST" action="AccountIn">
+							<div class="form-group">
                             <label for="username" class="control-label">Name:</label>
                             <input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="new Item">
                             <br>
