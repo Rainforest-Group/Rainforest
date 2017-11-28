@@ -18,7 +18,13 @@ function getItems($search) {
 }
 
 function addToCart($item_id) {
-    $user_id = getCurrentUser()->getUsername();
+    $user = getCurrentUser();
+    if (!$user) {
+        echo '<div class="container text-center"><h3>Must <a href="login.php">login</a> to add an item to your cart.';
+        echo '<br><a href="inventory.php">Back to Shop</a></h3></div>';
+        die();
+    }
+    $user_id = $user->getUsername();
     $cookie = "cart".$user_id;
     if (isset($_COOKIE[$cookie])) {
         $cart = Cart::getFromCookie($_COOKIE[$cookie]);
