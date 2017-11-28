@@ -20,8 +20,8 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		  <!-- Brand/logo -->
-		  <a class="navbar-brand" href="#">
-		<!-- add logo Image   !-->
+                  <a class="navbar-brand" href="#">
+                      <img src="rainforestLogo.jpg" width="30" height="30" alt="">
 		  </a>
 
 		  <!-- Links -->
