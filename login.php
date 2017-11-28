@@ -72,38 +72,38 @@ else {
 }
 ?>
     
-                    <div class="modal-header"><h3>Log In</h3></div><br>
-         
-                    <form method="POST" action="login.php">
+    <div class="modal-header"><h3>Log In</h3></div><br>
 
-                        <div class="form-group">
-                            <label for="username" class="control-label">Username</label>
-                                <?php
-                                $username = isset($_GET["username"]) ? $_GET["username"] : ""; 
-                                echo "<input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" value=\"$username\" required=\"\"  placeholder=\"your username\">";
-                                ?>
-                            <label for="password" class="control-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" value="" required="" placeholder="your password">
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <button type="submit" name="login" value="submit" class="btn btn-success">Login</button>
-                            </div>
-                            <div class="col">                     
-                                <a href="register.php" class="btn btn-info">Create an Account</a>
-                            </div>
-                        </div>
-                        <div>
-                            <br>
-                            <a href="#Optional" class="btn btn-default btn-block">Forgot My Password</a>
-                        </div>
-                    </form>
-                    <?php
-                    if ($errors) echo "<div class=\"alert alert-danger\">$errors</div>";
-                    ?>
-                    </div> 
-                    </div>
-                    </div>   
+    <form method="POST" action="login.php">
+
+        <div class="form-group">
+            <label for="username" class="control-label">Username</label>
+                <?php
+                $username = isset($_GET["username"]) ? $_GET["username"] : ""; 
+                echo "<input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" value=\"$username\" required=\"\"  placeholder=\"your username\">";
+                ?>
+            <label for="password" class="control-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" value="" required="" placeholder="your password">
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <button type="submit" name="login" value="submit" class="btn btn-success">Login</button>
+            </div>
+            <div class="col">                     
+                <a href="register.php" class="btn btn-info">Create an Account</a>
+            </div>
+        </div>
+        <div>
+            <br>
+            <a href="#Optional" class="btn btn-default btn-block">Forgot My Password</a>
+        </div>
+    </form>
+    <?php
+    if ($errors) echo "<div class=\"alert alert-danger\">$errors</div>";
+    ?>
+    </div> 
+    </div>
+    </div>
 
   </mid>
   

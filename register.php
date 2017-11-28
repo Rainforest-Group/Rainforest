@@ -91,7 +91,7 @@ if (isset($_POST["createProfile"])) {
                             <input type="text" class="form-control" id="lastname" name="lastname" value="" required=""  placeholder="Last name">
 -->
                             <label for="username" class="control-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="example@gmail.com">
+                            <input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="your username">
 
                             <label for="password" class="control-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" value="" required=""  placeholder="your password">
