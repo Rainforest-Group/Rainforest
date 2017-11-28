@@ -18,7 +18,7 @@
           <button class="btn btn-info" type="submit" id="pull">Search</button>
         </form>
 
-        <button type="button" class="btn btn-success" id="login" onclick="Home();">Home</button>
+        <a class="btn btn-success" id="login" href="inventory.php">Shop</a>
     </nav>
   </header>
 
@@ -33,7 +33,16 @@
                         </div>
                         <form action="" method="post">
 
-                                <h2>Payment amount: .....</h2>
+<?php
+require_once("controllers/cartController.php");
+if (isset($_POST["order"])) {
+    placeOrder();
+}
+
+$total = 5;
+
+echo "<h2>Payment amount: $$total</h2>";
+?>
 
                             <div class="form-group has-success">
                                   <label class="control-label">Name on card</label>
@@ -58,7 +67,7 @@
                             </div>
 
                                 <br>
-                                <button type="submit" class="btn btn-lg btn-success btn-block">Place Order</button>
+                                <button type="submit" class="btn btn-lg btn-success btn-block" name="order" value="place">Place Order</button>
 
                         </form>
                     </div>

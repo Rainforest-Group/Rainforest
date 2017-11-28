@@ -71,6 +71,10 @@ for ($i = 0; $i < count($items); $i++) {
 }
 ?>
 </form>
+
+  <div class="container text-center">
+       <a href="placeOrder.php" class="btn btn-success">Place Order</a>
+  </div>
   </mid>
       </body>
   </html>

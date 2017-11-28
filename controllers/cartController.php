@@ -43,5 +43,18 @@ function removeFromCart($item_id) {
     setcookie(getCartKey(), $cart->toCookie(), time() + 604800);
 }
 
+function placeOrder() {
+    echo "Placed";
+    $username = getCurrentUser()->getUsername();
+    $cart = getCart();
+
+    $items = $cart->getItems();
+    $quants = $cart->getQuantities();
+
+    $is = array_fill_keys($items, $quants);
+
+    $order = new Order(-1, $username, $is);
+}
+
 ?>
 
