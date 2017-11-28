@@ -39,13 +39,16 @@ function getOrders() {
     return $orders;
 }
 
-function buildAddress($name) {
-    return "Address";
-}
 
 function fillOrder($order_id) {
     $order = new Order($order_id);
 
     $order->setFilled(true);
+}
+
+function buildAddress($username) {
+    $user = new User($username);
+
+    return $user->getFullAddress();
 }
 ?>
