@@ -5,7 +5,7 @@ require_once("controllers/helpers.php");
 function checkAdmin() {
     $user = getCurrentUser();
 
-    if (!$user->isAdmin()) {
+    if (!$user || !$user->isAdmin()) {
         echo '<div class="text-center"><h4>You do not have administrative privileges.</h4></div>';
         die();
     }

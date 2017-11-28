@@ -61,13 +61,9 @@
 
   <mid>
 <?php
+require_once("admin.php");
 
-$user = getCurrentUser();
-
-if (!$user->isAdmin()) {
-    echo '<div class="text-center"><h4>You do not have administrative privileges</h4></div>';
-    die();
-}
+checkAdmin();
 
 
 ?>
