@@ -58,7 +58,7 @@
         <!-- navs -->
 			<div class="container text-muted">
 				<br><br>
-				<h2 class="display-4 py-5 mt-5 text-center">What do you need today ...</h2>
+				<h2 class="display-4 py-5 mt-5 text-center">What do you need today?</h2>
 
 				
 
