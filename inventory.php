@@ -93,9 +93,11 @@ foreach ($items as $item) {
     echo "<div class=\"media-body\"><h2>$name</h2><p>$summary<br>$quantity in stock</p></div>";
     echo "<div style=\"margin-right: 70px;\" class=\"media-right text-right d-none d-md-block\"><h3>$$price</h3></div>";
     echo '<div class="card-hover-show"><a href="detailedItem.php?item='.$id.'" class="btn btn-success">View detail</a></div>';
-    echo '<form action="inventory.php" method="POST">';
-    echo '<div class="card-hover-show"><button type="submit" name="item" value="'.$id.'" class="btn btn-xs fs-10 btn-bold btn-block btn-info">Add to Cart</a></div>';
-    echo '</form>';
+    if ($quantity > 0) {
+        echo '<form action="inventory.php" method="POST">';
+        echo '<div class="card-hover-show"><button type="submit" name="item" value="'.$id.'" class="btn btn-xs fs-10 btn-bold btn-block btn-info">Add to Cart</a></div>';
+        echo '</form>';
+    }
 
     if ($user && $user->isAdmin()) {
         echo '<form action="controllers/deleteItemController.php" method="POST">';

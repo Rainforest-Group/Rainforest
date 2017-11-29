@@ -358,6 +358,13 @@ class Order
         if (!$this->placed) {
             $this->placed = true;
             $this->order_id = addOrder($this);
+            foreach ($this->item_list as $item_id => $quant) {
+                $item = new Item($item_id);
+                if ($quant > $item->getQuantity()) throw new Exception();
+                else {
+                    $item->setQuantity($item->getQuantity() - $quant);
+                }
+            }
         }
     }
 }
@@ -625,6 +632,13 @@ class Cart {
     public function addItem($item_id) {
         // If item is already in the cart, increment quantity
         $key = array_search($item_id, $this->items);
+
+        // Ensure there are enough items in stock
+        $item = new Item($item_id);
+        if (($key === false && $item->getQuantity() == 0) || ($this->quantities[$key] >= $item->getQuantity())) {
+            return false;
+        }
+
         if ($key === FALSE) {
             $this->items[] = $item_id;
             $this->quantities[] = 1;
@@ -632,6 +646,8 @@ class Cart {
         else {
             $this->quantities[$key] += 1;
         }
+
+        return true;
     }
 
     // Decrement item quantity. If zero remove.

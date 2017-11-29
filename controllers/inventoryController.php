@@ -32,7 +32,12 @@
         else {
             $cart = new Cart();
         }
-        $cart->addItem($item_id);
+        $success = $cart->addItem($item_id);
+
+        if (!$success) {
+            echo '<div class="container text-center"><h4 class="alert alert-danger">Could not add item to cart. There are not enough remaining items.</h4></div>';
+            die();
+        }
 
         setcookie($cookie, $cart->toCookie(), time() + 604800);
     }
