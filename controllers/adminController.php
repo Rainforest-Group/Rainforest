@@ -36,6 +36,8 @@
             $orders[] = new Order($id);
         }
 
+        usort($orders, function($a, $b) { return $a->isFilled() > $b->isFilled(); });
+
         return $orders;
     }
 
