@@ -84,7 +84,7 @@
                             </div>
                             <div>
                                 <br>
-                                <a href="#Optional" class="btn btn-default btn-block">Forgot My Password</a>
+                                <a href="resetPassword.php" class="btn btn-default btn-block">Forgot My Password</a>
                             </div>
                         </form>
                         <?php
