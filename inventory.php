@@ -90,7 +90,7 @@ foreach ($items as $item) {
     $price = $item->getPrice();
     $id = $item->getID();
     echo '<div class="col-md-9"><div class="card b-1 hover-shadom mb-20"><div class="media card-body">';
-    echo "<div class=\"media-body\"><h2>$name</h2><p>$summary</p></div>";
+    echo "<div class=\"media-body\"><h2>$name</h2><p>$summary<br>$quantity in stock</p></div>";
     echo "<div style=\"margin-right: 70px;\" class=\"media-right text-right d-none d-md-block\"><h3>$$price</h3></div>";
     echo '<div class="card-hover-show"><a href="detailedItem.php?item='.$id.'" class="btn btn-success">View detail</a></div>';
     echo '<form action="inventory.php" method="POST">';
