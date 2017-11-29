@@ -47,6 +47,7 @@
                         <div class="modal-header"><h3>Registration</h3></div>
                         <?php 
                             require_once("controllers/registerController.php");
+                            $username = $email = $address = $state = $city = $zip = "";
                             if (isset($_POST["createProfile"])) {
                                 $username = $_POST["username"];
                                 $password = $_POST["password"];
@@ -87,7 +88,7 @@
                                 <input type="text" class="form-control" id="lastname" name="lastname" value="" required=""  placeholder="Last name">
                                 -->
                                 <label for="username" class="control-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="Create a username">
+                                <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" required=""  placeholder="Create a username">
 
                                 <label for="password" class="control-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" value="" required=""  placeholder="Create a password">
@@ -95,19 +96,19 @@
                                 <input type="password" class="form-control" id="verify_password" name="verify_password" value="" required=""  placeholder="Confirm password">
                                 
                                 <label for="email" class="control-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required="" placeholder="email@host.com" />
+                                <input type="email" class="form-control" id="email" name="email" required="" placeholder="email@host.com" value="<?php echo $email; ?>"/>
                                 
                                 <label for="address" class="control-label">Address</label>
-                                <input type="text" class="form-control" id="address" name="address" required="" />
+                                <input type="text" class="form-control" id="address" name="address" required="" value="<?php echo $address; ?>"/>
 
                                 <label for="city" class="control-label">City</label>
-                                <input type="text" class="form-control" id="city" name="city" required="" />
+                                <input type="text" class="form-control" id="city" name="city" required="" value="<?php echo $city ?>" />
 
                                 <label for="state" class="control-label">State</label>
-                                <input type="text" class="form-control" id="state" name="state" required="" />
+                                <input type="text" class="form-control" id="state" name="state" required="" value="<?php echo $state ?>"/>
     
                                 <label for="zip" class="control-label">Zip</label>
-                                <input type="text" class="form-control" id="zip" name="zip" required="" />
+                                <input type="text" class="form-control" id="zip" name="zip" required="" value="<?php echo $zip ?>" />
                             </div>
                             <button type="submit" name="createProfile" value="submit" class="btn btn-success">Sign up</button>
                         </form>
