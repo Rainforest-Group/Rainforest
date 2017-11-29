@@ -60,12 +60,17 @@ function placeOrder() {
     $is = array_combine($items, $quants);
 
     $order = new Order(-1, $username, $is);
-    $order->processOrder();
+    try {
+        $order->processOrder();
+        setcookie(getCartKey(), "", time() - 100);
 
-    setcookie(getCartKey(), "", time() - 100);
+        header("Location: inventory.php");
+        die();
+    }
+    catch (Exception $e) {
+        echo '<div class="container text-center"><h4 class="alert alert-danger">Not enough items in stock to fill order.</h4></div>';
+    }
 
-    header("Location: inventory.php");
-    die();
 }
 
 ?>
