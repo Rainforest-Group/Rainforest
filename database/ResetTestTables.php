@@ -39,7 +39,6 @@
     
     $conn->close();
     
-    
     // This function takes a string that can contain multiple queries and
     // returns an array where each element is a single query.  The ';' is used
     // as a delimiter between queries.  You must end each query with a ';'.

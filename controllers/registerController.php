@@ -1,74 +1,71 @@
 <?php
-require_once("rainforestClasses.php");
 
-function validateProfile($username, $password, $verify_password, $email, $address, $city, $state, $zip)
-{
-    $errors = "";
-    if (!$username) {
-        $errors = $errors . "Must specify username.";
-    }
-    else {
-        // Check if username exists
-        try {
-            $user = new User($username);
-            $errors = $errors . "Username taken.";
+    function validateProfile($username, $password, $verify_password, $email, $address, $city, $state, $zip)
+    {
+        $errors = "";
+        if (!$username) {
+            $errors = $errors . "Must specify username.";
         }
-        catch (Exception $e) {
-            ;
+        else {
+            // Check if username exists
+            try {
+                $user = new User($username);
+                $errors = $errors . "Username taken.";
+            }
+            catch (Exception $e) {
+                ;
+            }
         }
-    }
-    if (!$password) {
-        if ($errors != "") {
-            $errors = $errors . "<br>";
+        if (!$password) {
+            if ($errors != "") {
+                $errors = $errors . "<br>";
+            }
+            $errors = $errors . "Must specify a password.";
         }
-        $errors = $errors . "Must specify a password.";
-    }
-    else if ($verify_password != $password) {
-        if ($errors != "") {
-            $errors = $errors . "<br>";
+        else if ($verify_password != $password) {
+            if ($errors != "") {
+                $errors = $errors . "<br>";
+            }
+            $errors = $errors . "Passwords do not match.";
         }
-        $errors = $errors . "Passwords do not match.";
-    }
-    if (!$email) {
-        if ($errors != "") {
-            $errors = $errors . "<br>";
+        if (!$email) {
+            if ($errors != "") {
+                $errors = $errors . "<br>";
+            }
+            $errors = $errors . "Must specify email.";
         }
-        $errors = $errors . "Must specify email.";
-    }
-    if (!$address) {
-        if ($errors != "") {
-            $errors = $errors . "<br>";
+        if (!$address) {
+            if ($errors != "") {
+                $errors = $errors . "<br>";
+            }
+            $errors = $errors . "Must specify address.";
         }
-        $errors = $errors . "Must specify address.";
-    }
-    if (!$city) {
-        if ($errors != "") {
-            $errors = $errors . "<br>";
+        if (!$city) {
+            if ($errors != "") {
+                $errors = $errors . "<br>";
+            }
+            $errors = $errors . "Must specify city.";
         }
-        $errors = $errors . "Must specify city.";
-    }
-    if (!$state) {
-        if ($errors != "") {
-            $errors = $errors . "<br>";
+        if (!$state) {
+            if ($errors != "") {
+                $errors = $errors . "<br>";
+            }
+            $errors = $errors . "Must specify state.";
         }
-        $errors = $errors . "Must specify state.";
-    }
-    if (!$zip) {
-        if ($errors != "") {
-            $errors = $errors . "<br>";
+        if (!$zip) {
+            if ($errors != "") {
+                $errors = $errors . "<br>";
+            }
+            $errors = $errors . "Must specify zip.";
         }
-        $errors = $errors . "Must specify zip.";
-    }
-    
-    return $errors;
-}
 
-function createAccount($username, $password, $email, $address, $city, $state, $zip)
-{
-    // Assume all the fields are valid
-    $new_user = new User($username, encrypt($password), $email, $address, $city, $state, $zip);
+        return $errors;
+    }
 
-    return $new_user;
-}
-
+    function createAccount($username, $password, $email, $address, $city, $state, $zip)
+    {
+        // Assume all the fields are valid
+        $new_user = new User($username, encrypt($password), $email, $address, $city, $state, $zip);
+        return $new_user;
+    }
 ?>

@@ -1,13 +1,12 @@
 <?php
-require_once("../rainforestClasses.php");
+    require_once("../rainforestClasses.php");
 
-$item_id = $_POST["item"];
+    $item_id = $_POST["item"];
 
-$item = new Item($item_id);
+    $item = new Item($item_id);
 
-$item->setExpired(true);
+    $item->setExpired(true);
 
-header("Location: ../inventory.php");
-die();
-
+    header("Location: ../inventory.php");
+    die();
 ?>
