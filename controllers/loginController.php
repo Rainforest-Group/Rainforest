@@ -37,7 +37,12 @@
     
     function checkCredentials($username, $password)
     {
-        $user = new User($username);
+        try {
+            $user = new User($username);
+        }
+        catch (Exception $e) {
+            return false;
+        }
 
         return $user && encrypt($password) == $user->getPassword();
     }
