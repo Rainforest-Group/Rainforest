@@ -1,72 +1,71 @@
 <?php
-require_once("rainforestClasses.php");
-require_once("controllers/helpers.php");
+    require_once("rainforestClasses.php");
+    require_once("controllers/helpers.php");
 
-function getCartKey() {
-    $user_id = getCurrentUser()->getUsername();
-    return "cart".$user_id;
-}
-
-function getCart() {
-    $cookie = getCartKey();
-    $items = array();
-    if (isset($_COOKIE[$cookie])) {
-        $cart = Cart::getFromCookie($_COOKIE[$cookie]);
-        return $cart;
+    function getCartKey() {
+        $user_id = getCurrentUser()->getUsername();
+        return "cart".$user_id;
     }
-    else return false;
-}
 
-
-function getCartItems() {
-    $items = array();
-
-    $cart = getCart();
-    if ($cart) {
-        $item_ids = $cart->getItems();
-        if (!$item_ids) throw new Exception();
-        foreach ($item_ids as $item_id) {
-            $items[] = new Item($item_id);
+    function getCart() {
+        $cookie = getCartKey();
+        $items = array();
+        if (isset($_COOKIE[$cookie])) {
+            $cart = Cart::getFromCookie($_COOKIE[$cookie]);
+            return $cart;
         }
-    }
-    else {
-        throw new Exception();
+        else return false;
     }
 
-    return $items;
-}
 
-function getCartQuantities() {
-    $cart = getCart();
-    if (!$cart) throw new Exception();
-    return $cart->getQuantities();
-}
+    function getCartItems() {
+        $items = array();
 
-function removeFromCart($item_id) {
-    $cart = getCart();
-    if (!$cart) throw new Exception();
-    $cart->removeItem($item_id);
+        $cart = getCart();
+        if ($cart) {
+            $item_ids = $cart->getItems();
+            if (!$item_ids) throw new Exception();
+            foreach ($item_ids as $item_id) {
+                $items[] = new Item($item_id);
+            }
+        }
+        else {
+            throw new Exception();
+        }
 
-    setcookie(getCartKey(), $cart->toCookie(), time() + 604800);
-}
+        return $items;
+    }
 
-function placeOrder() {
-    $username = getCurrentUser()->getUsername();
-    $cart = getCart();
+    function getCartQuantities() {
+        $cart = getCart();
+        if (!$cart) throw new Exception();
+        return $cart->getQuantities();
+    }
 
-    $items = $cart->getItems();
-    $quants = $cart->getQuantities();
+    function removeFromCart($item_id) {
+        $cart = getCart();
+        if (!$cart) throw new Exception();
+        $cart->removeItem($item_id);
 
-    $is = array_combine($items, $quants);
+        setcookie(getCartKey(), $cart->toCookie(), time() + 604800);
+    }
 
-    $order = new Order(-1, $username, $is);
-    $order->processOrder();
+    function placeOrder() {
+        $username = getCurrentUser()->getUsername();
+        $cart = getCart();
 
-    setcookie(getCartKey(), "", time() - 100);
+        $items = $cart->getItems();
+        $quants = $cart->getQuantities();
 
-    header("Location: inventory.php");
-    die();
-}
+        $is = array_combine($items, $quants);
 
+        $order = new Order(-1, $username, $is);
+        $order->processOrder();
+
+        setcookie(getCartKey(), "", time() - 100);
+
+        header("Location: inventory.php");
+        die();
+    }
 ?>
 
