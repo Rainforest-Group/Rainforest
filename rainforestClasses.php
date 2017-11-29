@@ -635,9 +635,8 @@ class Cart {
 
         // Ensure there are enough items in stock
         $item = new Item($item_id);
-        if (($key === false && $item->getQuantity() == 0) || ($this->quantities[$key] >= $item->getQuantity())) {
-            return false;
-        }
+        if ($key === false) {if ($item->getQuantity() == 0) return false;}
+        else if ($this->quantities[$key] >= $item->getQuantity())  return false;
         if ($key === FALSE) {
             $this->items[] = $item_id;
             $this->quantities[] = 1;
