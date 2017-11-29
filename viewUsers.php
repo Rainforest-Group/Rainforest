@@ -48,6 +48,7 @@
         </ul>
     </nav>
     <br>
+    <?php checkAdmin(); ?>
     <div class="jumbotron jumbotron-billboard text-black text-center">
       <div class="img"></div>  <!-- TODO add background Image !-->
     <div class="col-lg-4">  <img src="" class="img-rounded">    </div>
