@@ -75,7 +75,7 @@
                             $price = $item->getPrice();
                             $id = $item->getID();
                             echo '<div class="col-md-9"><div class="card b-1 hover-shadom mb-20"><div class="media card-body">';
-                            echo "<div class=\"media-body\"><h2>$name</h2><p>$summary</p></div>";
+                            echo "<div class=\"media-body\"><h2><a href=\"detailedItem.php?item=".$id."\"  style=\"color:black\">$name</a></h2><p>$summary</p></div>";
                             echo "<div style=\"margin-right: 70px;\" class=\"media-right text-right d-none d-md-block\"><h3>$$price</h3></div>";
                             echo "<div style=\"margin-right: 40px;\" class=\"media-right text-right\"><h4>$quantity</h4></div>";
                             echo '<div class="card-hover-show"><button type="submit" name="item" value="'.$id.'" class="btn btn-xs fs-10 btn-bold btn-block btn-danger">&times;</a></div>';
