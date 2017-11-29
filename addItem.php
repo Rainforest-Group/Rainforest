@@ -72,11 +72,11 @@ if (isset($_POST["createProfile"])) {
 		<div class="modal-header"><h3>Adding New Item</h3></div><br>
                             <div class="form-group">
                                 <label for="name" class="control-label">Name:</label>
-                                <input type="text" class="form-control" id="username" name="name" value="" required=""  placeholder="new Item">
+                                <input type="text" class="form-control" id="username" name="name" value="" required=""  placeholder="Enter item name">
                             </div>
                             <div class="form-group">
                                 <label for="description" class="control-label">Description:</label>
-                                <input type="text" class="form-control" id="password" name="description" value="" required=""  placeholder="Used">
+                                <input type="text" class="form-control" id="password" name="description" value="" required=""  placeholder="Enter description">
                             </div>
                             <div class="form-group">
                                 <label for="quantity" class="control-label">Quantity In Stock:</label>
