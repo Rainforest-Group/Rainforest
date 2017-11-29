@@ -1,4 +1,5 @@
 <?php
+    require_once("rainforestClasses.php");
 
     function validateProfile($username, $password, $verify_password, $email, $address, $city, $state, $zip)
     {
