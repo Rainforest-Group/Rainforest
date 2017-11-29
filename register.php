@@ -51,11 +51,12 @@
                                 $username = $_POST["username"];
                                 $password = $_POST["password"];
                                 $verify_password = $_POST["verify_password"];
+                                $email    = $_POST["email"];
                                 $address  = $_POST["address"];
                                 $state    = $_POST["state"];
                                 $city     = $_POST["city"];
                                 $zip      = $_POST["zip"];
-                                $errors   = validateProfile($username, $password, $verify_password, $address, $state, $city, $zip);
+                                $errors   = validateProfile($username, $password, $verify_password, $email, $address, $state, $city, $zip);
 
                                 if ($errors) {
                                     echo '<div class="alert alert-danger">';
@@ -63,7 +64,7 @@
                                     echo '</div>';
                                 }
                                 else {
-                                    $success = createAccount($username, $password, $address, $state, $city, $zip);
+                                    $success = createAccount($username, $password, $email, $address, $state, $city, $zip);
                                     if (!$success) {
                                         echo '<div class="alert alert-danger">';
                                         echo 'The server encountered an issue creating your account.';
@@ -86,13 +87,16 @@
                                 <input type="text" class="form-control" id="lastname" name="lastname" value="" required=""  placeholder="Last name">
                                 -->
                                 <label for="username" class="control-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="your username">
+                                <input type="text" class="form-control" id="username" name="username" value="" required=""  placeholder="Create a username">
 
                                 <label for="password" class="control-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" value="" required=""  placeholder="your password">
+                                <input type="password" class="form-control" id="password" name="password" value="" required=""  placeholder="Create a password">
                                 <label for="password" class="control-label">Confirm Password</label>
                                 <input type="password" class="form-control" id="verify_password" name="verify_password" value="" required=""  placeholder="Confirm password">
-
+                                
+                                <label for="email" class="control-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required="" placeholder="email@host.com" />
+                                
                                 <label for="address" class="control-label">Address</label>
                                 <input type="text" class="form-control" id="address" name="address" required="" />
 

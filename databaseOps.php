@@ -261,9 +261,9 @@
         return $order_id;
     }
     
-/******************************************************************************/
-/*                      Helper Functions - Do Not Call                        */
-/******************************************************************************/
+    /******************************************************************************/
+    /*                      Helper Functions - Do Not Call                        */
+    /******************************************************************************/
     
     function addOrderItem($orderID, $itemID, $quant) {
         $query = "INSERT INTO OrderItems (order_id, item_id, item_quantity)"
@@ -319,11 +319,11 @@
         return $ret_val;
     }
 
-function encrypt($pwd)
-{
-    $salt1    = "qm&h*";
-    $salt2    = "pg!@";
+    function encrypt($pwd)
+    {
+        $salt1    = "qm&h*";
+        $salt2    = "pg!@";
 
-    return hash('ripemd128', "$salt1$pwd$salt2");
-}
+        return hash('ripemd128', "$salt1$pwd$salt2");
+    }
 ?>
