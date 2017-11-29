@@ -7,6 +7,10 @@
         if (!$username) {
             $errors = $errors . "Must specify username.";
         }
+        else if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+            if ($errors != "") $errors = $errors . "<br>";
+            $errors = $errors . "Username cannot have special characters.";
+        }
         else {
             // Check if username exists
             try {
@@ -58,6 +62,10 @@
                 $errors = $errors . "<br>";
             }
             $errors = $errors . "Must specify zip.";
+        }
+        else if (!preg_match("/^[0-9]{5}$/", $zip)) {
+            if ($errors != "") $errors = $errors . "<br>";
+            $errors = $errors . "Zip must be a 5 digit number.";
         }
 
         return $errors;

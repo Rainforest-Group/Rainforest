@@ -187,8 +187,8 @@
     // Takes an Item object and adds it to the database.  Returns Item ID.
     function addItem($item) {
         global $hn, $un, $pw, $db;
-        $name = $item->getName();
-        $desc = $item->getDescription();
+        $name = sanitize($item->getName());
+        $desc = sanitize($item->getDescription());
         $price = $item->getPrice();
         $exp = quoteStrings($item->isExpired());
         $quant = $item->getQuantity();
@@ -215,11 +215,11 @@
     function addUser($user) {
         $username = $user->getUsername();
         $password = $user->getPassword(); // May need to change this
-        $email = $user->getEmail();
-        $street = $user->getStreetAddress();
-        $city = $user->getCity();
-        $state = $user->getState();
-        $country = $user->getCountry();
+        $email = sanitize($user->getEmail());
+        $street = sanitize($user->getStreetAddress());
+        $city = sanitize($user->getCity());
+        $state = sanitize($user->getState());
+        $country = sanitize($user->getCountry());
         $zip = $user->getZip();
         $admin = quoteStrings($user->isAdmin());
         
@@ -325,5 +325,10 @@
         $salt2    = "pg!@";
 
         return hash('ripemd128', "$salt1$pwd$salt2");
+    }
+
+    function sanitize($s) {
+        $s = strip_tags($s);
+        return addslashes($s);
     }
 ?>
