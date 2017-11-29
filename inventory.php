@@ -100,6 +100,10 @@
                 echo '</div></div></div>';
                 echo '<br>';
             }
+            if (!count($items)) {
+                echo '<br>';
+                echo '<div class="container alert alert-info text-center"><h4>No items matched your search.</h4></div>';
+            }
         ?>
         </mid>
     </body>
