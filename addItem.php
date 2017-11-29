@@ -41,7 +41,7 @@
                     </form>
                 </li>
                 <?php 
-                    require_once("controllers/helpers.php"); 
+                    require_once("controllers/adminController.php"); 
                     require_once("rainforestClasses.php");
                     getLoginButton();
                 ?>
@@ -49,6 +49,7 @@
         </nav>
 
         <?php
+            checkAdmin();
             if (isset($_POST["createProfile"])) {
                 try {
                     $item = new Item(-1, $_POST["name"], $_POST["price"], $_POST["description"], false, $_POST["quantity"]);
