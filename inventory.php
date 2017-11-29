@@ -79,6 +79,8 @@ else {
 if (isset($_POST["item"])) {
     $item_id = $_POST["item"];
     addToCart($item_id);
+    header("location:cart.php");
+    die();
 }
 
 $user = getCurrentUser();
